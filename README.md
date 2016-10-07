@@ -6,6 +6,7 @@ An application for the Advanced Software Engineering course at the DHBW.
 - Marco
 - Leon
 - Tobi
+- Ines
 
 # Setup 
 
