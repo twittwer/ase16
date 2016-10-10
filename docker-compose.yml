@@ -1,0 +1,35 @@
+version: '2'
+services:
+ nginx-proxy:
+  image: jwilder/nginx-proxy
+  container_name: nginx-proxy
+  ports:
+   - "80:80"
+  volumes:
+   - /var/run/docker.sock:/tmp/docker.sock:ro
+  environment:
+   - DEFAULT_HOST=www.*
+
+ backend:
+  image: node:latest
+  working_dir: /app
+  command: node_modules/.bin/nodemon /app/index.js
+  container_name: backend
+  expose:
+   - "8000"
+  volumes:
+   - ./backend:/app
+  environment:
+   - VIRTUAL_HOST=api.*
+
+ frontend:
+  image: node:latest
+  working_dir: /app
+  command: npm start
+  container_name: frontend
+  expose:
+   - "3000"
+  volumes:
+   - ./frontend:/app
+  environment:
+   - VIRTUAL_HOST=www.*

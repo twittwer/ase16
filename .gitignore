@@ -1,0 +1,17 @@
+# IDE
+.idea
+
+# Logs
+logs
+*.log
+npm-debug.log*
+
+# Dependencies
+node_modules
+
+# Caches
+.npm
+*.swp
+
+# REPL
+.node_repl_history

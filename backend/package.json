@@ -1,0 +1,13 @@
+{
+  "name": "meanDocker-backend",
+  "version": "0.0.1",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "express": "",
+    "socket.io": ""
+  },
+  "devDependencies": {
+    "nodemon": ""
+  }
+}
