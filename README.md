@@ -1,16 +1,9 @@
 # ase16
 An application for the Advanced Software Engineering course at the DHBW.
 
-# Our Team
-- Sarah
-- Marco
-- Leon
-- Tobi
-- Ines
+## Setup 
 
-# Setup 
-
-### Prerequisites
+#### Prerequisites
 - Docker
 - Docker-Compose
 - Node
@@ -32,3 +25,15 @@ An application for the Advanced Software Engineering course at the DHBW.
 ´
 	docker-compose up
 ´
+
+## Usage
+
+Frontend: [localhost](http://localhost/)
+Backend: [api.localhost](http://api.localhost/)
+
+## Our Team
+- Sarah
+- Marco
+- Leon
+- Tobi
+- Ines
