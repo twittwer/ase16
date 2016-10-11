@@ -1,36 +1,32 @@
 # ase16
-Our application for the Advanced Software Engineering course at the DHBW will be a chat webapplication.
+
+This project will end in an Chat Application including 2-person and group chats with the possibility of votings.
+
+> DHBW course for Advanced Software Engineering
 
 ## Technologies
 
-Backend:
-* nodejs
-* express
+> WebApp using a MEAN-Stack
 
+Backend:
+* [Node.js](https://nodejs.org/)
+* [Express.js](http://expressjs.com/)
+* [MongoDB](https://www.mongodb.com/)
 
 Frontend:
-* html
-* css
-* angular 2
-* java script
-* framework:
+* [Angular 2](https://angular.io/)
+* [Semantic UI](http://semantic-ui.com/)
 
-## Prerequisites
+## Setup
 
-* Docker & Docker-Compose
-  * Installation for [Windows](https://github.com/twittwer/meanDocker/wiki/Setup#docker-installation-for-windows)
-* Node & NPM
-
-## Project Setup
+* First install [NPM](https://docs.npmjs.com/getting-started/installing-node) & Docker ([Windows](https://github.com/twittwer/meanDocker/wiki/Setup#docker-installation-for-windows))
 
 1. Clone the repository
   * `git clone https://github.com/twittwer/ase16.git`
   * `cd ase16`
-
 2. Install Dependencies
   * `cd ./backend && npm install`
   * `cd ../frontend && npm install`
-
 3. Start Containers
   * `docker-compose up`
 
@@ -39,7 +35,7 @@ Frontend:
 * Ubuntu:  
   Frontend: [localhost](http://localhost/)
   Backend: [api.localhost](http://api.localhost/)
-* Windows:  
+* [Windows](https://github.com/twittwer/meanDocker/wiki/Setup#docker-installation-for-windows): (If you set the DockerVM IP to local in the hosts file.)  
   Frontend: [local](http://local/)
   Backend: [api.local](http://api.local/)
 
