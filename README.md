@@ -1,5 +1,19 @@
 # ase16
-An application for the Advanced Software Engineering course at the DHBW.
+Our application for the Advanced Software Engineering course at the DHBW will be a chat webapplication.
+
+## Technologies
+
+Backend:
+    * nodejs
+    * express
+
+
+Frontend:
+    * html
+    * css
+    * angular 2
+    * java script
+    * framework:
 
 ## Prerequisites
 
@@ -35,3 +49,5 @@ An application for the Advanced Software Engineering course at the DHBW.
 - Leon
 - Tobi
 - Ines
+
+
