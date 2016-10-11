@@ -4,16 +4,16 @@ Our application for the Advanced Software Engineering course at the DHBW will be
 ## Technologies
 
 Backend:
-    * nodejs
-    * express
+* nodejs
+* express
 
 
 Frontend:
-    * html
-    * css
-    * angular 2
-    * java script
-    * framework:
+* html
+* css
+* angular 2
+* java script
+* framework:
 
 ## Prerequisites
 
