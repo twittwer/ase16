@@ -1,13 +1,26 @@
 {
   "name": "meanDocker-backend",
   "version": "0.0.1",
-  "description": "",
-  "main": "index.js",
+  "scripts": {
+    "postinstall": "typings install",
+    "start": "tsc && concurrently \"tsc -w\" \"node_modules/.bin/nodemon -L build/\" "
+  },
+  "author": "Tobias Wittwer",
+  "license": "MIT",
   "dependencies": {
-    "express": "",
-    "socket.io": ""
+    "@types/body-parser": "0.0.33",
+    "@types/express": "^4.0.33",
+    "@types/mongoose": "^4.5.38",
+    "@types/node": "^6.0.45",
+    "@types/socket.io": "^1.4.27",
+    "body-parser": "^1.15.2",
+    "express": "^4.14.0",
+    "mongoose": "^4.6.3",
+    "socket.io": "^1.5.0"
   },
   "devDependencies": {
-    "nodemon": ""
+    "concurrently": "^3.1.0",
+    "nodemon": "^1.11.0",
+    "typescript": "^2.0.3"
   }
 }
