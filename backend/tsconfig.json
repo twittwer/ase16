@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+    "sourceRoot": "src",
+    "outDir": "build",
+    // compiling
+    "target": "es5",
+    "module": "commonjs",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    // checking
+    "noEmitOnError": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    // debug
+    "sourceMap": true,
+    //    "inlineSourceMap": true,
+    //    "listFiles": true,
+    // clean up
+    "removeComments": true
+  },
+  "include": [
+    "src/**/*",
+    // to define ES6 Promises
+    "typings/**/*"
+  ],
+  "exclude": [
+    "build",
+    "node_modules"
+  ]
+}
