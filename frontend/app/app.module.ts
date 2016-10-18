@@ -1,17 +1,22 @@
 import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {SuiModule} from 'ng2-semantic-ui/ng2-semantic-ui';
+import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 
 import { AppComponent }  from './app.component';
-import { HeaderComponent }  from './app-header.component';
-import { MessageBoxComponent }  from './app-messagebox.component';
+import { HeaderComponent }  from './header.component';
+import { MessageBoxComponent }  from './messagebox.component';
 
 @NgModule({
-  imports:      [ BrowserModule, SuiModule ],
-  declarations: [ AppComponent,
+  imports: [
+    BrowserModule,
+    NgbModule.forRoot()
+  ],
+  declarations: [
+    AppComponent,
     HeaderComponent,
     MessageBoxComponent
-   ],
-  bootstrap:    [ AppComponent ]
+  ],
+  bootstrap: [ AppComponent ]
 })
-export class AppModule { }
+export class AppModule {
+}

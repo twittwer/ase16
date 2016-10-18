@@ -1,21 +1,19 @@
-import * as Mongoose from "mongoose";
+import * as mongoose from "mongoose";
 
-export interface Post extends Mongoose.Document {
+export interface Message extends mongoose.Document {
   _id: string;
-  title: string;
   text: string;
   author: string;
-  created_at: Date;
+  send_at: Date;
 }
 
-let postSchema: Mongoose.Schema = new Mongoose.Schema({
-  title: String,
-  author: String,
+let messageSchema: mongoose.Schema = new mongoose.Schema({
   text: String,
+  author: String,
   created_at: {
     type: Date,
     default: Date.now
   }
 });
 
-export const PostModel = Mongoose.model<Post>('Post', postSchema);
+export const MessageModel = mongoose.model<Message>('Message', messageSchema);

@@ -4,7 +4,8 @@ import { Component } from '@angular/core';
   selector: 'messagebox',
   template: `
     <div>
-    message-Box
+      message-Box
+      <ngb-rating [rate]="2"></ngb-rating>
     </div>
   `
 })
