@@ -8,6 +8,13 @@ npm-debug.log*
 
 # Dependencies
 node_modules
+typings
+frontend/semantic
+
+# Builds
+build
+frontend/app/**/*.js
+frontend/app/**/*.js.map
 
 # Caches
 .npm
@@ -15,3 +22,7 @@ node_modules
 
 # REPL
 .node_repl_history
+
+# Application Data
+data/db/*
+!data/db/index.json
