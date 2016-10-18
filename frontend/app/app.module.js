@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 };
 var core_1 = require('@angular/core');
 var platform_browser_1 = require('@angular/platform-browser');
+var ng2_semantic_ui_1 = require('ng2-semantic-ui/ng2-semantic-ui');
 var app_component_1 = require('./app.component');
 var app_header_component_1 = require('./app-header.component');
 var app_messagebox_component_1 = require('./app-messagebox.component');
@@ -18,7 +19,7 @@ var AppModule = (function () {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule],
+            imports: [platform_browser_1.BrowserModule, ng2_semantic_ui_1.SuiModule],
             declarations: [app_component_1.AppComponent,
                 app_header_component_1.HeaderComponent,
                 app_messagebox_component_1.MessageBoxComponent
