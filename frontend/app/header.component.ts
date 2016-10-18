@@ -6,8 +6,12 @@ import { Component } from '@angular/core';
     <nav class="navbar navbar-default">
       <div class="container-fluid">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">Brand</a>
+          <a class="navbar-brand" href="#">Chat</a>
         </div>
+        <ul class="nav navbar-nav navbar-right">
+          <li><p class="navbar-text">Signed in as <a href="#" class="navbar-link">Anonym</a></p></li>
+          <li><button type="button" class="btn btn-default navbar-btn">Sign out</button></li>
+        </ul>
       </div>
     </nav>
   `})
