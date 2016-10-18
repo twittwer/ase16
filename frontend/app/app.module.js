@@ -13,7 +13,7 @@ var platform_browser_1 = require('@angular/platform-browser');
 var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
 var app_component_1 = require('./app.component');
 var header_component_1 = require('./header.component');
-var app_messagebox_component_1 = require('./messagebox.component.ts');
+var messagebox_component_1 = require('./messagebox.component');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -26,7 +26,7 @@ var AppModule = (function () {
             declarations: [
                 app_component_1.AppComponent,
                 header_component_1.HeaderComponent,
-                app_messagebox_component_1.MessageBoxComponent
+                messagebox_component_1.MessageBoxComponent
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 
