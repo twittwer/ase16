@@ -32,12 +32,10 @@ Frontend:
 
 ## Usage
 
-* Ubuntu:  
-  Frontend: [localhost](http://localhost/)
-  Backend: [api.localhost](http://api.localhost/)
-* [Windows](https://github.com/twittwer/meanDocker/wiki/Setup#docker-installation-for-windows): (If you set the DockerVM IP to local in the hosts file.)  
   Frontend: [local](http://local/)
   Backend: [api.local](http://api.local/)
+  
+> _local_ and _api.local_ had to be set to the IP of your docker machine (hosts-file)
 
 ## Our Team
 - Sarah
