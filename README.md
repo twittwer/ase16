@@ -32,8 +32,8 @@ Frontend:
 
 ## Usage
 
-  Frontend: [local](http://local/)
-  Backend: [api.local](http://api.local/)
+* Frontend: [local](http://local/)
+* Backend: [api.local](http://api.local/)
   
 > _local_ and _api.local_ had to be set to the IP of your docker machine (hosts-file)
 
