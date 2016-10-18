@@ -2,7 +2,7 @@
   "name": "meanDocker-frontend",
   "version": "0.0.1",
   "scripts": {
-    "postinstall": "typings install && gulp build",
+    "postinstall": "typings install",
     "start": "tsc && concurrently \"tsc -w\" \"lite-server\" "
   },
   "author": "Tobias Wittwer",
