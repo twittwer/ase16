@@ -106,20 +106,12 @@
     font-family: roboto;
 
 }
-div.modal-dialog .modal-content {
-    max-height: 600px;
-    overflow: auto;
-}
-.modal-content {
-    max-height: 600px;
-    width: 20%;
-    overflow: auto;
-}
-
 :host /deep/ .modal-dialog {
     padding: 30px;
     max-width: 350px;
     width: 100% !important;
 
        }
+
+
 
