@@ -11,6 +11,7 @@ import { Component } from '@angular/core';
                 <input type="text" class="form-control" placeholder="Write your Message here">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button">Send</button>
+                    <button class="btn btn-default" type="button">Voting</button>
                 </span>
             </div>
         </div>
