@@ -5,6 +5,7 @@ import { Component } from '@angular/core';
   template: `
   <header></header>
   <messagebox></messagebox>
+  <login></login>
   `
 
 })
