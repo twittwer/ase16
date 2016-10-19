@@ -11,7 +11,8 @@ import { Component } from '@angular/core';
                 <input type="text" class="form-control" placeholder="Write your Message here">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button">Send</button>
-                    <button class="btn btn-default" type="button">Voting</button>
+                    <votingForm (closeVotingForm)="closeVotingForm($event)" class="modal fade show in danger" id="myModal" role="dialog" *ngIf="showCreateVotingForm"></votingForm>
+                    <button class="btn btn-default" type="button" (click)="createNewVoting()">Voting</button>
                 </span>
             </div>
         </div>
@@ -19,4 +20,14 @@ import { Component } from '@angular/core';
   `
 })
 export class MessageBoxComponent {
+  public showCreateVotingForm: boolean;
+
+  createNewVoting(){
+    this.showCreateVotingForm = true;
+  }
+  closeVotingForm(show:boolean){
+    if(show == false){
+      this.showCreateVotingForm = false;
+    }
+  }
 }

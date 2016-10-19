@@ -14,6 +14,7 @@ var ng_bootstrap_1 = require("@ng-bootstrap/ng-bootstrap");
 var app_component_1 = require('./app.component');
 var header_component_1 = require('./header.component');
 var messagebox_component_1 = require('./messagebox.component');
+var voting_Form_component_1 = require('./voting-Form.component');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -26,7 +27,8 @@ var AppModule = (function () {
             declarations: [
                 app_component_1.AppComponent,
                 header_component_1.HeaderComponent,
-                messagebox_component_1.MessageBoxComponent
+                messagebox_component_1.MessageBoxComponent,
+                voting_Form_component_1.VotingFormComponent
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 

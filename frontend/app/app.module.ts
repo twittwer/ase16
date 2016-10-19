@@ -5,6 +5,7 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AppComponent }  from './app.component';
 import { HeaderComponent }  from './header.component';
 import { MessageBoxComponent }  from './messagebox.component';
+import { VotingFormComponent }  from './voting-Form.component';
 
 @NgModule({
   imports: [
@@ -14,7 +15,8 @@ import { MessageBoxComponent }  from './messagebox.component';
   declarations: [
     AppComponent,
     HeaderComponent,
-    MessageBoxComponent
+    MessageBoxComponent,
+    VotingFormComponent
   ],
   bootstrap: [ AppComponent ]
 })
