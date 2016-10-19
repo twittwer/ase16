@@ -1,13 +1,13 @@
-import { MessageModel, Message } from "../models/message.model";
 import { Result } from "../utils/result.interface";
 import { handleDBError } from "../utils/controller.utils";
+import { User, UserModel } from "../models/user.model";
 
-export default class MessageController {
+export default class UserController {
 
-  public static create(message: Message): Promise<Result> {
+  public static create(user: User): Promise<Result> {
     return new Promise((resolve, reject) => {
-      message.save()
-        .then((result: Message) => resolve({
+      user.save()
+        .then((result: User) => resolve({
           status: 201,
           json: result
         }))
@@ -17,8 +17,8 @@ export default class MessageController {
 
   public static list(conditions: any = {}): Promise<Result> {
     return new Promise((resolve, reject) => {
-      MessageModel.find(conditions)
-        .then((result: Message[]) => resolve({
+      UserModel.find(conditions)
+        .then((result: User[]) => resolve({
           status: 200,
           json: result
         }))
@@ -26,10 +26,10 @@ export default class MessageController {
     });
   }
 
-  public static get(id: string): Promise<Result> {
+  public static get(username: string): Promise<Result> {
     return new Promise((resolve, reject) => {
-      MessageModel.findOne({ _id: id })
-        .then((result: Message) => resolve({
+      UserModel.findOne({ username: username })
+        .then((result: User) => resolve({
           status: 200,
           json: result
         }))

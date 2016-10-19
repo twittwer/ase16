@@ -59,7 +59,8 @@ export class Server {
   private configureSockets(): void {
     let io = socketio(this.httpServer);
     new SocketConnector(io, [
-      ChatSocketController.setListener
+      // ChatSocketController.setListener
+      ChatSocketController.bootstrap
     ]);
   }
 }

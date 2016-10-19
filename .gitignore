@@ -25,4 +25,3 @@ frontend/app/**/*.js.map
 
 # Application Data
 data/db/**/*
-!data/db/index.json

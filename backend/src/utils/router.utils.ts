@@ -1,9 +1,9 @@
 import * as express from "express";
-import { Result } from "../controller/result.interface";
+import { Result } from "./result.interface";
 
 export type DateFilter = {
-  $lt?: Date;
-  $gt?: Date;
+  $lte?: Date;
+  $gte?: Date;
   $and?: DateFilter[];
   $or?: DateFilter[];
 };
@@ -25,14 +25,14 @@ export function sendResult(response: express.Response, result: Result): express.
   return response.send(result);
 }
 
-export function generateDateFilter(before: Date|null, after: Date|null): DateFilter|null {
-  let beforeFilter: DateFilter|null = null,
-    afterFilter: DateFilter|null = null;
+export function generateDateFilter(before: Date, after: Date): DateFilter {
+  let beforeFilter: DateFilter = null,
+    afterFilter: DateFilter = null;
 
   if (before)
-    beforeFilter = { $lt: before };
+    beforeFilter = { $lte: before };
   if (after)
-    afterFilter = { $gt: after };
+    afterFilter = { $gte: after };
 
   if (beforeFilter && afterFilter)
     return { $and: [ beforeFilter, afterFilter ] };
