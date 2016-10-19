@@ -10,7 +10,7 @@
     // checking
     "noEmitOnError": true,
     "noImplicitAny": true,
-    "strictNullChecks": true,
+    //    "strictNullChecks": true,
     // debug
     "sourceMap": true,
     //    "inlineSourceMap": true,

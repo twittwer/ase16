@@ -11,10 +11,10 @@ export default class MessageRouter extends AbstractRouter {
   configure(): void {
 
     this._router.get('/', (req: express.Request, res: express.Response) => {
-      let before: Date|null = req.query.before ? new Date(req.query.before) : null,
-        after: Date|null = req.query.after ? new Date(req.query.after) : null;
+      let before: Date = req.query.before ? new Date(req.query.before) : null,
+        after: Date = req.query.after ? new Date(req.query.after) : null;
 
-      let filter: DateFilter|null|MessageFilter = generateDateFilter(before, after);
+      let filter: DateFilter|MessageFilter = generateDateFilter(before, after);
       filter = filter ? { sent_at: filter } : {};
 
       MessageController.list(filter)

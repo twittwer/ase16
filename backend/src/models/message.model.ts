@@ -3,9 +3,9 @@ import * as mongoose from "mongoose";
 export interface Message extends mongoose.Document {
   _id: string;
   text: string;
-  author: string;
-  sent_at: Date;
-  room?: string;
+  author?: string;
+  sent_at?: Date;
+  room: string;
 }
 
 let messageSchema: mongoose.Schema = new mongoose.Schema({
@@ -13,6 +13,7 @@ let messageSchema: mongoose.Schema = new mongoose.Schema({
   author: String,
   sent_at: {
     type: Date,
+    required: true,
     default: Date.now
   },
   room: {
