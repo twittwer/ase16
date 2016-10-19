@@ -24,6 +24,7 @@ export class SocketConnector {
   }
 
   private configure(): void {
+
     this.socketServer.on('connection', (socket: Socket) => {
 
       socket.on('register', (data: any) => {

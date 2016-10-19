@@ -5,6 +5,7 @@ export interface Message extends mongoose.Document {
   text: string;
   author: string;
   sent_at: Date;
+  room?: string;
 }
 
 let messageSchema: mongoose.Schema = new mongoose.Schema({
@@ -13,6 +14,12 @@ let messageSchema: mongoose.Schema = new mongoose.Schema({
   sent_at: {
     type: Date,
     default: Date.now
+  },
+  room: {
+    type: String,
+    required: true,
+    default:'default',
+    index: true
   }
 });
 

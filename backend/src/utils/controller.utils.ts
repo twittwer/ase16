@@ -1,4 +1,4 @@
-import { Result } from "../controller/result.interface";
+import { Result } from "./result.interface";
 
 export function handleDBError(err: any): Result {
   let result: Result = {

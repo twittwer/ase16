@@ -2,7 +2,7 @@ import * as express from "express";
 
 import AbstractRouter from "./abstract-router";
 import MessageController from "../controller/message.controller";
-import { Result } from "../controller/result.interface";
+import { Result } from "../utils/result.interface";
 import { generateDateFilter, sendResult, DateFilter } from "../utils/router.utils";
 
 type MessageFilter = { sent_at: DateFilter };

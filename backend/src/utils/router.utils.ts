@@ -1,5 +1,5 @@
 import * as express from "express";
-import { Result } from "../controller/result.interface";
+import { Result } from "./result.interface";
 
 export type DateFilter = {
   $lt?: Date;
