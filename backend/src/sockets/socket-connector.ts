@@ -56,8 +56,7 @@ export class SocketConnector {
 
   private createDBUser(username: string): Promise<User> {
     return new Promise((resolve, reject) => {
-      let user: User = new User();
-      user.username = username;
+      let user: User = new UserModel({ username: username });
       user.save()
         .then((user: User) => resolve(user))
         .catch((err: any) => reject());
