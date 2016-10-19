@@ -6,7 +6,7 @@ import * as express from "express";
 import * as bodyParser from "body-parser";
 
 import RootRouter from "./router/root.router";
-import { Socket, SocketConnector } from "./sockets/socket-connector";
+import { SocketConnector } from "./sockets/socket-connector";
 import ChatSocketController from "./sockets/chat-socket.controller";
 
 export class Server {
@@ -59,7 +59,6 @@ export class Server {
   private configureSockets(): void {
     let io = socketio(this.httpServer);
     new SocketConnector(io, [
-      (socket: Socket) => console.log(`\n\n >> client registered #1: ${socket.username} << \n`),
       ChatSocketController.setListener
     ]);
   }
