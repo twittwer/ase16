@@ -26,3 +26,16 @@ body {
 .messagebox-sendmessage{
   margin-top: 10px;
 }
+
+.voting-buttons{
+  margin-top: 10px;
+  text-align: right;
+}
+
+.voting-option{
+  margin-bottom: 10px;
+}
+
+.voting-number{
+  width: 30%;
+}

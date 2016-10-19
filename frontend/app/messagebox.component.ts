@@ -12,8 +12,12 @@ import { Component } from '@angular/core';
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button">Send</button>
                     <votingForm (closeVotingForm)="closeVotingForm($event)" class="modal fade show in danger" id="myModal" role="dialog" *ngIf="showCreateVotingForm"></votingForm>
-                    <button class="btn btn-default" type="button" (click)="createNewVoting()">Voting</button>
                 </span>
+            </div>
+            <div class="voting-buttons">
+                  <button class="btn btn-default" type="button" (click)="createNewVoting()">Start Voting</button>
+                  <button class="btn btn-default" type="button" (click)="createNewVoting()">Change Voting</button>
+                  <button class="btn btn-default" type="button">Cancel Voting</button>
             </div>
         </div>
     </div>
