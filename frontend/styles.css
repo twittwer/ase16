@@ -13,3 +13,16 @@ body {
   margin: 2em;
 }
 
+.messagebox-container{
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.messagebox-showmessage{
+  overflow: scroll;
+  height: 70%;
+}
+
+.messagebox-sendmessage{
+  margin-top: 10px;
+}
