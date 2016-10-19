@@ -1,27 +1,29 @@
-import SocketServer = SocketIO.Server;
+export interface SocketServer extends SocketIO.Server {
+}
 
-export interface Socket extends SocketServer {
+export interface Socket extends SocketIO.Socket {
   username?: string;
 }
 
-type RegisterCallback = (socket: Socket) => void;
+type RegisterCallback = (socket: Socket, socketServer: SocketServer) => void;
 
 export class SocketConnector {
-  private socketServer: Socket;
+  private socketServer: SocketServer;
   private registerCallbacks: RegisterCallback[];
   private connectedSockets: { [key: string]: Socket } = {};
 
-  constructor(socketServer: Socket, registerCallback: RegisterCallback | RegisterCallback[]) {
+  constructor(socketServer: SocketServer, registerCallback: RegisterCallback | RegisterCallback[]) {
     this.socketServer = socketServer;
+
     if (registerCallback instanceof Array)
       this.registerCallbacks = registerCallback;
     else
       this.registerCallbacks = [ registerCallback ];
+
     this.configure();
   }
 
   private configure(): void {
-
     this.socketServer.on('connection', (socket: Socket) => {
 
       socket.on('register', (data: any) => {
@@ -34,7 +36,7 @@ export class SocketConnector {
             \n   >> socket list: ${Object.keys(this.connectedSockets)}
             \n`);
 
-        this.registerCallbacks.forEach((callback: RegisterCallback) => callback(socket));
+        this.registerCallbacks.forEach((callback: RegisterCallback) => callback(socket, this.socketServer));
       });
 
       socket.on('disconnect', () => {
