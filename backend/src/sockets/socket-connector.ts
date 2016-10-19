@@ -17,10 +17,11 @@ export class SocketConnector {
   constructor(socketServer: SocketServer, registerCallback: RegisterCallback | RegisterCallback[]) {
     this.socketServer = socketServer;
 
-    if (registerCallback instanceof Array)
+    if (registerCallback instanceof Array) {
       this.registerCallbacks = registerCallback;
-    else
+    } else { //noinspection TypeScriptValidateTypes
       this.registerCallbacks = [ registerCallback ];
+    }
 
     this.configure();
   }
