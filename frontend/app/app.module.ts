@@ -7,6 +7,7 @@ import { HeaderComponent }  from './header.component';
 import { MessageBoxComponent }  from './messagebox.component';
 import { NgbdModalBasic } from './modal-login.component';
 import { VotingComponent } from './voting.component';
+import { VotingFormComponent }  from './voting-Form.component';
 
 @NgModule({
   imports: [
@@ -18,7 +19,8 @@ import { VotingComponent } from './voting.component';
     HeaderComponent,
     MessageBoxComponent,
     NgbdModalBasic,
-    VotingComponent
+    VotingComponent,
+    VotingFormComponent
   ],
   bootstrap: [ AppComponent ]
 })
