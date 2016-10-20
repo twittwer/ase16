@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'messagebox',
@@ -11,7 +11,7 @@ import { Component } from '@angular/core';
                 <input type="text" class="form-control" placeholder="Write your Message here">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button">Send</button>
-                    <votingForm (closeVotingForm)="closeVotingForm($event)" class="modal fade show in danger" id="myModal" role="dialog" *ngIf="showCreateVotingForm"></votingForm>
+                    <votingForm (showVoting)="showVoting($event)" (closeVotingForm)="closeVotingForm($event)" class="modal fade show in danger" id="myModal" role="dialog" *ngIf="showCreateVotingForm"></votingForm>
                 </span>
             </div>
             <div class="voting-buttons">
@@ -24,6 +24,7 @@ import { Component } from '@angular/core';
   `
 })
 export class MessageBoxComponent {
+  @Output() displayVoting = new EventEmitter<boolean>();
   public showCreateVotingForm: boolean;
 
   createNewVoting(){
@@ -32,6 +33,12 @@ export class MessageBoxComponent {
   closeVotingForm(show:boolean){
     if(show == false){
       this.showCreateVotingForm = false;
+    }
+  }
+  showVoting(isVoting:boolean){
+    if(isVoting==true){
+        this.showCreateVotingForm = false;
+        this.displayVoting.emit(true);
     }
   }
 }
