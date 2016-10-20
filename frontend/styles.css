@@ -26,3 +26,14 @@ body {
 .messagebox-sendmessage{
   margin-top: 10px;
 }
+
+.onLeftSide{
+  width: 70%;
+}
+.voting-container{
+  width: 30%;
+}
+
+.messagebox-container{
+  float:left;
+}

@@ -6,6 +6,7 @@ import { AppComponent }  from './app.component';
 import { HeaderComponent }  from './header.component';
 import { MessageBoxComponent }  from './messagebox.component';
 import { NgbdModalBasic } from './modal-login.component';
+import { VotingComponent } from './voting.component';
 
 @NgModule({
   imports: [
@@ -16,7 +17,8 @@ import { NgbdModalBasic } from './modal-login.component';
     AppComponent,
     HeaderComponent,
     MessageBoxComponent,
-    NgbdModalBasic
+    NgbdModalBasic,
+    VotingComponent
   ],
   bootstrap: [ AppComponent ]
 })
