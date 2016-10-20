@@ -42,7 +42,7 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 <h1>Login to Your Account</h1><br>
-                <form>
+                <form onsubmit="loggedIn()">
                     <input type="text" name="user" placeholder="Username">
                     <input type="password" name="pass" placeholder="Password">
                     <input type="submit" name="login" class="login loginmodal-submit" value="Login">
@@ -57,9 +57,3 @@
 
 
 </template>
-
-<button class="btn btn-lg btn-outline-primary" (click)="open(content)">Launch demo modal</button>
-
-<hr>
-
-<pre>{{closeResult}}</pre>

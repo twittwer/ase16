@@ -12,8 +12,17 @@ var core_1 = require('@angular/core');
 var AppComponent = (function () {
     function AppComponent() {
     }
+    AppComponent.prototype.loginSuccess = function (login) {
+        if (login == true) {
+            this.isLoggedIn = true;
+        }
+    };
+    AppComponent.prototype.logout = function (successLogout) {
+        if (successLogout == true) {
+            this.isLoggedIn = false;
+        }
+    };
     AppComponent.prototype.displayVoting = function (showVot) {
-        console.log(showVot);
         if (showVot == true) {
             this.isShowVoting = true;
         }
@@ -24,7 +33,7 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: "\n  <header></header>\n  <div>\n    <div [ngClass]=\"{'onLeftSide': isShowVoting}\">\n      <messagebox (displayVoting)=\"displayVoting($event)\" class=\"messagebox-container\"></messagebox>\n    </div>\n    <voting class=\"voting-container\" *ngIf=\"isShowVoting\"></voting>\n  </div>\n  <login></login>\n  "
+            template: "\n  <header *ngIf=\"isLoggedIn\" (logout)=\"logout($event)\"></header>\n  <div *ngIf=\"isLoggedIn\">\n    <div [ngClass]=\"{'onLeftSide': isShowVoting}\">\n      <messagebox (displayVoting)=\"displayVoting($event)\" class=\"messagebox-container\"></messagebox>\n    </div>\n    <voting class=\"voting-container\" *ngIf=\"isShowVoting\"></voting>\n  </div>\n  <login  *ngIf=\"!isLoggedIn\" (loginSuccess)=\"loginSuccess($event)\"></login>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);

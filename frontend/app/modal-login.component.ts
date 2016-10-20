@@ -1,4 +1,4 @@
-// import {Component} from '@angular/core';
+ // import {Component} from '@angular/core';
 
 
 //
@@ -11,7 +11,7 @@
 // export class ModalLoginComponent {
 // }
 
-import {Component} from '@angular/core';
+import { Component, EventEmitter, Input, Output} from '@angular/core';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 
@@ -19,28 +19,29 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
     selector: 'login',
     moduleId: module.id,
     styleUrls: ['modal-login.component.css'],
-    templateUrl: './modal-component.html'
+    template: `
+    <div class="loginmodal-container">
+              <h1>Login to Your Account</h1><br>
+              <form onsubmit="loggedIn()">
+                  <input type="text" name="user" placeholder="Username">
+                  <!-- <input type="submit" name="login" class="login loginmodal-submit" value="Login" (click)="loggedIn()"> -->
+              </form>
+              <button class="btn btn-default" type="button" (click)="loggedIn()">Login</button>
+
+              <div class="login-help">
+                  <a href="#">Register</a> - <a href="#">Forgot Password</a>
+              </div>
+    </div>
+    `
 })
 export class NgbdModalBasic {
+    @Output() loginSuccess = new EventEmitter<boolean>();
+
     closeResult: string;
 
+    loggedIn(){
+      this.loginSuccess.emit(true);
+    };
+
     constructor(private modalService: NgbModal) {}
-
-    open(content) {
-        this.modalService.open(content).result.then((result) => {
-            this.closeResult = `Closed with: ${result}`;
-        }, (reason) => {
-            this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-        });
-    }
-
-    private getDismissReason(reason: any): string {
-        if (reason === ModalDismissReasons.ESC) {
-            return 'by pressing ESC';
-        } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
-            return 'by clicking on a backdrop';
-        } else {
-            return  `with: ${reason}`;
-        }
-    }
 }

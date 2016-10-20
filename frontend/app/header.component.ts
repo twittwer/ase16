@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'header',
@@ -10,9 +10,15 @@ import { Component } from '@angular/core';
         </div>
         <ul class="nav navbar-nav navbar-right">
           <li><p class="navbar-text">Signed in as <a href="#" class="navbar-link">Anonym</a></p></li>
-          <li><button type="button" class="btn btn-default navbar-btn">Sign out</button></li>
+          <li><button type="button" class="btn btn-default navbar-btn" (click)="userLogout()">Sign out</button></li>
         </ul>
       </div>
     </nav>
   `})
-export class HeaderComponent {}
+export class HeaderComponent {
+  @Output() logout = new EventEmitter<boolean>();
+
+  userLogout(){
+    this.logout.emit(true);
+  };
+}
