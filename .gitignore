@@ -25,3 +25,5 @@ frontend/app/**/*.js.map
 
 # Application Data
 data/db/**/*
+frontend/app/app.module.js.map
+*.js

@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'messagebox',
@@ -11,12 +11,34 @@ import { Component } from '@angular/core';
                 <input type="text" class="form-control" placeholder="Write your Message here">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button">Send</button>
-                    <button class="btn btn-default" type="button">Voting</button>
+                    <votingForm (showVoting)="showVoting($event)" (closeVotingForm)="closeVotingForm($event)" class="modal fade show in danger" id="myModal" role="dialog" *ngIf="showCreateVotingForm"></votingForm>
                 </span>
+            </div>
+            <div class="voting-buttons">
+                  <button class="btn btn-default" type="button" (click)="createNewVoting()">Start Voting</button>
+                  <button class="btn btn-default" type="button" (click)="createNewVoting()">Change Voting</button>
+                  <button class="btn btn-default" type="button">Cancel Voting</button>
             </div>
         </div>
     </div>
   `
 })
 export class MessageBoxComponent {
+  @Output() displayVoting = new EventEmitter<boolean>();
+  public showCreateVotingForm: boolean;
+
+  createNewVoting(){
+    this.showCreateVotingForm = true;
+  }
+  closeVotingForm(show:boolean){
+    if(show == false){
+      this.showCreateVotingForm = false;
+    }
+  }
+  showVoting(isVoting:boolean){
+    if(isVoting==true){
+        this.showCreateVotingForm = false;
+        this.displayVoting.emit(true);
+    }
+  }
 }
