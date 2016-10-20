@@ -12,10 +12,19 @@ var core_1 = require('@angular/core');
 var AppComponent = (function () {
     function AppComponent() {
     }
+    AppComponent.prototype.showVoting = function (showVot) {
+        console.log(showVot);
+        if (showVot == true) {
+            this.isShowVoting = true;
+        }
+        else {
+            this.isShowVoting = false;
+        }
+    };
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: "\n  <header></header>\n  <messagebox></messagebox>\n  "
+            template: "\n  <header (showVoting)=\"showVoting($event)\" ></header>\n  <div>\n    <div [ngClass]=\"{'onLeftSide': isShowVoting}\">\n      <messagebox class=\"messagebox-container\"></messagebox>\n    </div>\n    <voting class=\"voting-container\" *ngIf=\"isShowVoting\"></voting>\n  </div>\n  <login></login>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);
