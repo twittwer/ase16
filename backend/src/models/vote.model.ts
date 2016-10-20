@@ -3,9 +3,11 @@ import * as mongoose from "mongoose";
 export interface Vote extends mongoose.Document {
   _id: string;
   title: string;
+  description?: string;
   creator?: string;
   opened_at?: Date;
   closed_at?: Date;
+  room: string;
   options: {
     title: string;
     description?: string;
@@ -23,6 +25,7 @@ let voteSchema: mongoose.Schema = new mongoose.Schema({
     type: String,
     required: true
   },
+  description: String,
   creator: {
     type: String,
     required: true
@@ -32,6 +35,11 @@ let voteSchema: mongoose.Schema = new mongoose.Schema({
     default: Date.now
   },
   closed_at: Date,
+  room: {
+    type: String,
+    required: true,
+    default: 'default'
+  },
   options: [ {
     title: {
       type: String,
