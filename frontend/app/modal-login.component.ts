@@ -14,6 +14,7 @@
 import { Component, EventEmitter, Input, Output} from '@angular/core';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import { CookieService } from 'angular2-cookie/services/cookies.service';
 
 @Component({
     selector: 'login',
@@ -24,7 +25,7 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
               <h1>Login to Your Account</h1><br>
               <form onsubmit="loggedIn()">
                   <input type="text" name="user" placeholder="Username">
-                  <!-- <input type="submit" name="login" class="login loginmodal-submit" value="Login" (click)="loggedIn()"> -->
+                <input type="submit" name="login" class="login loginmodal-submit" value="Login" (click)="loggedIn()">
               </form>
               <button class="btn btn-default" type="button" (click)="loggedIn()">Login</button>
 
@@ -40,6 +41,7 @@ export class NgbdModalBasic {
     closeResult: string;
 
     loggedIn(){
+      CookieService.put("loggedIn",true);
       this.loginSuccess.emit(true);
     };
 
