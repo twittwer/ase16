@@ -4,13 +4,13 @@
 
 import {EventEmitter, Injectable} from '@angular/core';
 import {Cookie} from 'ng2-cookies';
-import * as io from "socket.io-client"
+import * as io from 'socket.io-client';
 
 
 @Injectable()
 export class UserService {
     private username: string = "";
-    private socket = null;
+    private socket: SocketIOClient.Socket = null;
     private cookiename: string;
 
     constructor() {

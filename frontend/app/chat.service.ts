@@ -14,7 +14,7 @@
 //     private messages:Message[];
 //     private vote:Vote;
 //     private us:UserService;
-//     private socket;
+//     private socket: SocketIOClient.Socket;
 //
 //     constructor(){
 //         this.username=this.us.getUsername();
@@ -38,7 +38,7 @@
 //      */
 //     joinRoom() : Message[]{
 //         if (this.socket==null) {
-//            this.socket= io('http://api.local');
+//            this.socket = io.connect('http://api.local');
 //         }
 //         io.emit("register", {room:'default'});
 //
