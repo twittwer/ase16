@@ -11,78 +11,77 @@ import {bootstrap} from "@angular/upgrade/src/angular_js";
 
 @Injectable()
 export class VoteService {
-    private joined: boolean;
-    private username: string;
     private currentVote: Vote;
-    private historicVote:Vote[];
-    private us: UserService;
-    private decisionObject:VoteOpinion;
-    private decisions : Opinion;
-    //private cs:ChatService;
-    private socket:any;
+    private historicVote: Vote[];
+    // private decisionObject:VoteOpinion;
+    private socket: SocketIOClient.Socket;
 
-    constructor() {
-
-        this.username = this.us.getUsername();
+    constructor(private us: UserService) {
         this.socket = this.us.getSocketConnection();
         this.setListener();
     }
 
-    private setListener(){
-        this.socket.on('updateVote',(updatedVote:Vote)=>{
-           this.currentVote=updatedVote;
+    private setListener() {
+        this.socket.on('updateVote', (updatedVote: Vote)=> {
+            this.currentVote = updatedVote;
         });
-        this.socket.on('newVote',(newVote:Vote)=>{
-            this.currentVote=newVote;
+        this.socket.on('newVote', (newVote: Vote)=> {
+            this.currentVote = newVote;
         });
     }
 
-    public getCurrentVote():Vote{
+    public getCurrentVote(): Vote {
         return this.currentVote;
     }
 
-    public getHistVote():Vote[]{
+    public getHistVote(): Vote[] {
         return this.historicVote;
     }
 
-    public createVote(actVote:Vote,cb: (currentVote: Vote)=>void) {
-        this.socket.emit('sendVote',actVote);
-        this.socket.on('sentVoteSucceded', (updatedVote : Vote)=>{
-            this.currentVote=updatedVote;
-            return this.currentVote;
-        });
-        this.socket.on('sentVoteFailed', ()=>{
-            this.currentVote= null;
-        });
+    public sendVote(actVote: Vote, cb: (currentVote: Vote)=>void) {
+        if (!actVote._id)
+            actVote._id = 'ab12bn3h4';
+        this.currentVote = actVote;
         cb(this.currentVote);
+
+        /*this.socket.emit('sendVote', actVote);
+        this.socket.on('sentVoteSucceded', (updatedVote: Vote)=> {
+            this.currentVote = updatedVote;
+            cb(this.currentVote);
+        });
+        this.socket.on('sentVoteFailed', ()=> {
+            this.currentVote = null;
+            cb(this.currentVote);
+        });*/
     }
 
-    public getOptions():any{
+    public getOptions(): any {
         return this.currentVote.options;
     }
 
 
-    public updateOption(updatevote:Vote,cb:(updatedvote:Vote)=> Vote):void{
+    public updateOption(updatevote: Vote, cb: (updatedvote: Vote)=> Vote): void {
         //this.socket.emit('updateOptions',{updatevote : Vote});
-        this.socket.on('updateOptionsSucceded', ()=>{
+        this.socket.on('updateOptionsSucceded', ()=> {
             cb(this.currentVote);
         });
-        this.socket.on('updateOptionsFailed', ()=>{
+        this.socket.on('updateOptionsFailed', ()=> {
             cb(null);
         });
 
     };
 
-    public setOpinion(decisions:Opinion[]){
+    public setOpinion(decisions: Opinion[]) {
 
-        //decisionObject.vote_id=this.currentVote._id;
-        //decisionObject.decision=decisions;
-        //VoteOpinions:
-        //this.socket.emit('sendOpinion',{decisionObject});
-        this.socket.on('sendOpinionsSucceded', ()=>{
+        this.decisionObject.vote_id = this.currentVote._id;
+        this.decisionObject.decision = decisions;
+        this.socket.emit('sendOpinion', {this.decisionObject
+    })
+        ;
+        this.socket.on('sendOpinionsSucceded', ()=> {
 
         });
-        this.socket.on('sendOpinionsFailed', ()=>{
+        this.socket.on('sendOpinionsFailed', ()=> {
 
         });
         return true;
@@ -90,17 +89,19 @@ export class VoteService {
 
 }
 
-export interface VoteOpinion{
-    vote_id:string;
-    decision:Opinion[];
+export interface VoteOpinion {
+    vote_id: string;
+    decision: Opinion[];
 }
 
-export interface Opinion{
+export interface Opinion {
     option_title: string;
-    decision:boolean;
-}[];
+    decision: boolean;
+}
+;
 
-export interface Vote{
+
+export interface Vote {
     _id: string;
     title: string;
     creator?: string;

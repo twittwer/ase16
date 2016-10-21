@@ -16,7 +16,6 @@ export class UserService {
     constructor() {
         this.username = null;
         this.cookiename = "ChatApp";
-        // this.socket = io.connect('http://localhost:4000/');
         this.socket = io.connect('http://api.local/');
         this.checkNameExists();
     }
