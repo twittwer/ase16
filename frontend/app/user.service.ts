@@ -4,19 +4,19 @@
 
 import {EventEmitter, Injectable} from '@angular/core';
 import {Cookie} from 'ng2-cookies';
-import * as io from "socket.io-client"
+import * as io from 'socket.io-client';
 
 
 @Injectable()
 export class UserService {
     private username: string = "";
-    private socket = null;
+    private socket: SocketIOClient.Socket = null;
     private cookiename: string;
 
     constructor() {
         this.username = "";
         this.cookiename = "ChatApp";
-        this.socket = io('http://api.local/');
+        this.socket = io.connect('http://api.local/');
         this.checkNameExists();
     }
 
@@ -24,7 +24,7 @@ export class UserService {
         return this.username;
     }
 
-    public getSocketConnection(): io {
+    public getSocketConnection(): SocketIOClient.Socket {
         return this.socket;
     }
 
@@ -54,10 +54,6 @@ export class UserService {
         if (Cookie.check(this.cookiename)) {
             this.username = Cookie.get(this.cookiename);
         }
-    }
-
-    public getUsername(): string {
-        return this.username;
     }
 
     disconnect(): boolean {

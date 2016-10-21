@@ -14,6 +14,7 @@
 import { Component, EventEmitter, Input, Output} from '@angular/core';
 
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
+import {UserService} from './user.service';
 
 @Component({
     selector: 'login',
@@ -23,20 +24,22 @@ import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
     <div class="loginmodal-container">
               <h1>Login to Your Account</h1><br>
               <form onsubmit="loggedIn()">
-                  <input type="text" name="user" placeholder="Username">
-                  <input type="submit" name="login" class="login loginmodal-submit" value="Login" (click)="loggedIn()">
+                  <input type="text" name="user" placeholder="Username" #username>
+                  <input type="submit" name="login" class="login loginmodal-submit" value="Login" (click)="loggedIn(username.value)">
               </form>
     </div>
     `
 })
 export class NgbdModalBasic {
+    constructor(private modalService: NgbModal, private userservice:UserService) {}
     @Output() loginSuccess = new EventEmitter<boolean>();
-
     closeResult: string;
 
-    loggedIn(){
-      this.loginSuccess.emit(true);
+    loggedIn(username: string){
+      this.userservice.reg(username, ()=>{
+        this.loginSuccess.emit(true);
+      });
     };
 
-    constructor(private modalService: NgbModal) {}
+
 }

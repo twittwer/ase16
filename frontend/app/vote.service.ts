@@ -4,9 +4,9 @@
 
 
 import {EventEmitter, Injectable} from '@angular/core';
-import {UserService} from 'user.service';
-import {ChatService} from 'chat.service';
-import * as io from "socket.io-client";
+import {UserService} from './user.service';
+// import {ChatService} from './chat.service';
+import io = require("socket.io-client");
 import {bootstrap} from "@angular/upgrade/src/angular_js";
 
 @Injectable()
