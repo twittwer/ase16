@@ -42,11 +42,7 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-<<<<<<< HEAD
             template: "\n  <header *ngIf=\"isCookieSet()\" (logout)=\"logout($event)\"></header>\n  <div *ngIf=\"isCookieSet()\">\n    <div [ngClass]=\"{'onLeftSide': isShowVoting}\">\n      <messagebox (displayVoting)=\"displayVoting($event)\" class=\"messagebox-container\"></messagebox>\n    </div>\n    <voting class=\"voting-container\" *ngIf=\"isShowVoting\"></voting>\n  </div>\n  <login  *ngIf=\"!isCookieSet()\" (loginSuccess)=\"loginSuccess($event)\"></login>\n  "
-=======
-            template: "\n  <header></header>\n  <messagebox></messagebox>\n  <login></login>\n  "
->>>>>>> bcfb52f0381d5c220ac0d4bb1378a5719c286c15
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);

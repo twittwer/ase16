@@ -4,72 +4,94 @@
 
 
 import {EventEmitter, Injectable} from '@angular/core';
-import {UserService} from 'user.service';
-import {ChatService} from 'chat.service';
+import {UserService} from './user.service';
+//import {ChatService} from './chat.service';
 import * as io from "socket.io-client";
-import {bootstrap} from "@angular/upgrade/src/angular_js";
+
 
 @Injectable()
 export class VoteService {
     private joined: boolean;
     private username: string;
-    private vote: Vote;
+    private currentVote: Vote;
+    private historicVote:Vote[];
     private us: UserService;
-    private cs:ChatService;
-    private socket;
+    //private cs:ChatService;
+    private socket:any;
     private upVote:boolean;
 
     constructor() {
+
         this.username = this.us.getUsername();
         this.socket = this.us.getSocketConnection();
-        this.vote = this.cs.getVote();
+
     }
 
-    getVote():Vote{
-        return this.vote;
+    private setListener(){
+        this.socket.on('updateVote')
     }
-    createVote(title:string,):Vote{
-        io.emit('sendVote',{});
-        io.on('sentVoteSucceded', (updatedVote : Vote)=>{
-
-            this.vote=updatedVote;
-            return this.vote
-        });
-        io.on('sentVoteFail', ()=>{
-            return false;
-        });
-        io.on('newVote', ()=>{
-
-        });
-        io.on('updateVote', (upVote:Vote)=>{
-            this.vote=upVote;
-        });
-        return this.vote;
+    public getCurrentVote():Vote{
+        return this.currentVote;
     }
 
-    updateOpinion():boolean{
-        io.emit('updateOptions',{});
-        io.on('updateOptionsSucceded', ()=>{
+    public getHistVote():Vote[]{
+        return this.historicVote;
+    }
+
+    public createVote(actVote:Vote,cb: (currentVote: Vote)=>void) {
+        this.socket.emit('sendVote',actVote);
+        this.socket.on('sentVoteSucceded', (updatedVote : Vote)=>{
+            this.currentVote=updatedVote;
+            return this.currentVote;
+        });
+        this.socket.on('sentVoteFail', ()=>{
+            return null;
+        });
+        this.socket.on('newVote', (newVote : Vote)=>{
+            this.currentVote=newVote;
+        });
+        this.socket.on('updateVote', (upVote:Vote)=>{
+            this.currentVote=upVote;
+        });
+
+        cb(this.currentVote);
+    }
+
+    public closeVote(closeDate:Date){
+        this.socket.emit('closeVote',closeDate);
+        this.
+
+    }
+
+    public getOptions():any{
+        return this.currentVote.options;
+    }
+
+
+    public updateOpinion():boolean{
+        this.socket.emit('updateOptions',{});
+        this.socket.on('updateOptionsSucceded', ()=>{
 
         });
-        io.on('updateOptionsFailed', ()=>{
+        this.socket.on('updateOptionsFailed', ()=>{
 
         });
         return true;
     }
 
-    setOpinion(opt:boolean):boolean{
-        io.emit('sendOptions',{opt});
-        io.on('sendOptionsSucceded', ()=>{
+    public setOpinion(opt:boolean):boolean{
+        this.socket.emit('sendOptions',{opt});
+        this.socket.on('sendOptionsSucceded', ()=>{
 
         });
-        io.on('sendOptionsFailed', ()=>{
+        this.socket.on('sendOptionsFailed', ()=>{
 
         });
         return true;
     }
 
 }
+
 export interface Vote{
     _id: string;
     title: string;
