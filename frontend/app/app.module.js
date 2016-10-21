@@ -15,8 +15,9 @@ var app_component_1 = require('./app.component');
 var header_component_1 = require('./header.component');
 var messagebox_component_1 = require('./messagebox.component');
 var modal_login_component_1 = require('./modal-login.component');
-var voting_component_1 = require('./voting.component');
-var voting_Form_component_1 = require('./voting-Form.component');
+var user_service_1 = require("./user.service");
+var voting_Form_component_1 = require("./voting-Form.component");
+var voting_component_1 = require("./voting.component");
 var question_list_component_1 = require('./question-list.component');
 var AppModule = (function () {
     function AppModule() {
@@ -28,6 +29,7 @@ var AppModule = (function () {
                 ng_bootstrap_1.NgbModule.forRoot()
             ],
             declarations: [
+                modal_login_component_1.NgbdModalBasic,
                 app_component_1.AppComponent,
                 header_component_1.HeaderComponent,
                 messagebox_component_1.MessageBoxComponent,
@@ -36,6 +38,7 @@ var AppModule = (function () {
                 voting_Form_component_1.VotingFormComponent,
                 question_list_component_1.QuestionListComponent
             ],
+            providers: [user_service_1.UserService],
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])

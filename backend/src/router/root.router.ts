@@ -1,8 +1,6 @@
 import * as express from "express";
-
 import AbstractRouter from "./abstract-router";
 import MessageRouter from "./message.router";
-
 import { sendResult } from "../utils/router.utils";
 import UserRouter from "./user.router";
 
@@ -17,7 +15,8 @@ export default class RootRouter extends AbstractRouter {
       sendResult(res, {
         status: 200,
         json: {
-          messages: '/messages'
+          messages: '/messages',
+          users: '/users'
         }
       });
     });

@@ -24,7 +24,7 @@ services:
   links:
    - mongodb
   expose:
-   - "3000"
+   - "4000"
   volumes:
    - ./backend:/app
   environment:

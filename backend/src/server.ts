@@ -4,10 +4,10 @@ import http = require("http");
 
 import * as express from "express";
 import * as bodyParser from "body-parser";
-
 import RootRouter from "./router/root.router";
 import { SocketConnector } from "./sockets/socket-connector";
 import ChatSocketController from "./sockets/chat-socket.controller";
+import VoteSocketController from "./sockets/vote-socket.controller";
 
 export class Server {
   private httpServer: http.Server;
@@ -59,8 +59,8 @@ export class Server {
   private configureSockets(): void {
     let io = socketio(this.httpServer);
     new SocketConnector(io, [
-      // ChatSocketController.setListener
-      ChatSocketController.bootstrap
+      ChatSocketController.bootstrap,
+      VoteSocketController.bootstrap
     ]);
   }
 }
