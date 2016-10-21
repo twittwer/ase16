@@ -57,7 +57,6 @@ export class VoteService {
         cb(this.currentVote);
     }
 
-
     public getOptions():any{
         return this.currentVote.options;
     }

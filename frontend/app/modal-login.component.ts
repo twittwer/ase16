@@ -23,20 +23,23 @@ import {UserService} from './user.service';
     template: `
     <div class="loginmodal-container">
               <h1>Login to Your Account</h1><br>
-              <form onsubmit="loggedIn()">
+              <div class="input-group" >
                   <input type="text" name="user" placeholder="Username" #username>
                   <input type="submit" name="login" class="login loginmodal-submit" value="Login" (click)="loggedIn(username.value)">
-              </form>
+              </div>
     </div>
     `
 })
 export class NgbdModalBasic {
-    constructor(private modalService: NgbModal, private userservice:UserService) {}
     @Output() loginSuccess = new EventEmitter<boolean>();
     closeResult: string;
 
+    constructor(private modalService: NgbModal, private userservice:UserService) {}
+
     loggedIn(username: string){
-      this.userservice.reg(username, ()=>{
+      console.log('loggedIn',username);
+      this.userservice.reg(username, (username: string) => {
+        console.log('loggedIn-callback',username)
         this.loginSuccess.emit(true);
       });
     };
