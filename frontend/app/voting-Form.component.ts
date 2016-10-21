@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output} from '@angular/core';
+import {VoteService} from './vote.service';
 
 @Component({
     selector: 'votingForm',
@@ -14,7 +15,7 @@ import { Component, EventEmitter, Input, Output} from '@angular/core';
                     <div class="input-group">
                         <div class="input-group">
                             <span class="input-group-addon" id="sizing-addon2">Question</span>
-                            <input type="text" class="form-control" placeholder="Your Question here" aria-describedby="sizing-addon2">
+                            <input type="text" class="form-control" placeholder="Your Question here" aria-describedby="sizing-addon2" #voteDescription>
                         </div>
                         <div class="input-group voting-option">
                             <span class="input-group-addon" id="sizing-addon2">Expiration Date</span>
@@ -28,7 +29,7 @@ import { Component, EventEmitter, Input, Output} from '@angular/core';
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" (click)="startVoting()">Finish</button>
+                <button type="button" class="btn btn-default" (click)="startVoting(voteDescription.value)">Finish</button>
                 <button type="button" class="btn btn-default" (click)="closeCreateVotingForm()">Close</button>
             </div>
         </div>
@@ -39,8 +40,22 @@ export class VotingFormComponent {
     @Output() closeVotingForm = new EventEmitter<boolean>();
     @Output() showVoting = new EventEmitter<boolean>();
 
-    startVoting(){
-      this.showVoting.emit(true);
+    constructor(private voteservice:VoteService) {}
+
+    startVoting(description){
+        let newVote = {
+            title: description,
+            room: "default",
+            options: [
+                {title: "option1"},
+                {title: "option2"}
+            ]
+        };
+
+        this.voteservice.sendVote(newVote, (newVote: any) => {
+            console.log("get Vote");
+            this.showVoting.emit(true);
+        });
     };
     closeCreateVotingForm(){
         this.closeVotingForm.emit(false);

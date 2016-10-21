@@ -15,6 +15,10 @@ var app_component_1 = require('./app.component');
 var header_component_1 = require('./header.component');
 var messagebox_component_1 = require('./messagebox.component');
 var modal_login_component_1 = require('./modal-login.component');
+<<<<<<< HEAD
+=======
+var user_service_1 = require("./user.service");
+>>>>>>> intermediate
 var voting_component_1 = require('./voting.component');
 var voting_Form_component_1 = require('./voting-Form.component');
 var question_list_component_1 = require('./question-list.component');
@@ -28,6 +32,10 @@ var AppModule = (function () {
                 ng_bootstrap_1.NgbModule.forRoot()
             ],
             declarations: [
+<<<<<<< HEAD
+=======
+                modal_login_component_1.NgbdModalBasic,
+>>>>>>> intermediate
                 app_component_1.AppComponent,
                 header_component_1.HeaderComponent,
                 messagebox_component_1.MessageBoxComponent,
@@ -36,6 +44,10 @@ var AppModule = (function () {
                 voting_Form_component_1.VotingFormComponent,
                 question_list_component_1.QuestionListComponent
             ],
+<<<<<<< HEAD
+=======
+            providers: [user_service_1.UserService],
+>>>>>>> intermediate
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])

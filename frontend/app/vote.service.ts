@@ -73,18 +73,18 @@ export class VoteService {
 
     public setOpinion(decisions: Opinion[]) {
 
-        this.decisionObject.vote_id = this.currentVote._id;
-        this.decisionObject.decision = decisions;
-        this.socket.emit('sendOpinion', {this.decisionObject
-    })
-        ;
-        this.socket.on('sendOpinionsSucceded', ()=> {
+        //this.decisionObject.vote_id = this.currentVote._id;
+       // this.decisionObject.decision = decisions;
+        //this.socket.emit('sendOpinion', {this.decisionObject
+    //})
+      //  ;
+        //this.socket.on('sendOpinionsSucceded', ()=> {
 
-        });
-        this.socket.on('sendOpinionsFailed', ()=> {
+        //});
+        //this.socket.on('sendOpinionsFailed', ()=> {
 
-        });
-        return true;
+//        });
+  //      return true;
     }
 
 }
