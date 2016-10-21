@@ -17,7 +17,7 @@ import {VoteService} from './vote.service';
             </div>
             <div class="voting-buttons">
                   <button class="btn btn-default" type="button" (click)="createNewVoting()">Start Voting</button>
-                  <button class="btn btn-default" type="button">Cancel Voting</button>
+                  <button class="btn btn-default" type="button" (click)="cancelVoting()">Cancel Voting</button>
             </div>
         </div>
     </div>
@@ -26,6 +26,8 @@ import {VoteService} from './vote.service';
 export class MessageBoxComponent {
   @Output() displayVoting = new EventEmitter<boolean>();
   public showCreateVotingForm: boolean;
+
+  constructor(private voteservice:VoteService){};
 
   createNewVoting(){
     this.showCreateVotingForm = true;
@@ -40,5 +42,14 @@ export class MessageBoxComponent {
         this.showCreateVotingForm = false;
         this.displayVoting.emit(true);
     }
+  }
+  cancelVoting(){
+    let currentDate = new Date();
+    let currentVote = this.voteservice.getCurrentVote();
+    currentVote.closed_at = currentDate;
+    this.voteservice.sendVote(currentVote, (test: any)=>{
+      console.log(test);
+    });
+    this.displayVoting.emit(false);
   }
 }

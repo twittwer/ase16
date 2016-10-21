@@ -24,8 +24,4 @@ frontend/app/*.js.map
 .node_repl_history
 
 # Application Data
-data/db/**/*
-frontend/app/app.module.js.map
-*.js
-*.js
-frontend/app/app.module.js.map
+data/db/*
