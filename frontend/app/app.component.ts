@@ -6,14 +6,17 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
 @Component({
   selector: 'my-app',
   template: `
-  <header *ngIf="isCookieSet()" (logout)="logout($event)"></header>
+  <!--<header *ngIf="isCookieSet()" (logout)="logout($event)"></header> -->
+  <pie-demo></pie-demo>
+ <!--
   <div *ngIf="isCookieSet()">
     <div [ngClass]="{'onLeftSide': isShowVoting}">
       <messagebox (displayVoting)="displayVoting($event)" class="messagebox-container"></messagebox>
     </div>
     <voting class="voting-container" *ngIf="isShowVoting"></voting>
+    
   </div>
-  <login  *ngIf="!isCookieSet()" (loginSuccess)="loginSuccess($event)"></login>
+  <login  *ngIf="!isCookieSet()" (loginSuccess)="loginSuccess($event)"></login> -->
   `
 
 })

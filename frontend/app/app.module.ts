@@ -10,6 +10,7 @@ import { UserService } from "./user.service";
 import { VotingComponent } from './voting.component';
 import { VotingFormComponent }  from './voting-Form.component';
 import { QuestionListComponent }  from './question-list.component';
+import { ChartOne }  from './vote-result.component';
 
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 
@@ -26,7 +27,8 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
     NgbdModalBasic,
     VotingComponent,
     VotingFormComponent,
-    QuestionListComponent
+    QuestionListComponent,
+    ChartOne
   ],
   providers: [ UserService ],
   bootstrap: [ AppComponent ]

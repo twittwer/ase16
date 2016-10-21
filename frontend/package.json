@@ -21,6 +21,7 @@
     "@types/socket.io-client": "^1.4.27",
     "angular-in-memory-web-api": "~0.1.5",
     "bootstrap": "^3.3.7",
+    "chart.js": "^2.3.0",
     "core-js": "^2.4.1",
     "ng2-cookies": "^1.0.2",
     "reflect-metadata": "^0.1.8",
