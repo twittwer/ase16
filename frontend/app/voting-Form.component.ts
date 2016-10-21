@@ -19,7 +19,7 @@ import {VoteService} from './vote.service';
                         </div>
                         <div class="input-group voting-option">
                             <span class="input-group-addon" id="sizing-addon2">Expiration Date</span>
-                            <input type="date" class="form-control" placeholder="Date" aria-describedby="sizing-addon2">
+                            <input type="date" class="form-control" placeholder="Date" aria-describedby="sizing-addon2" #date>
                         </div>
                     </div>
                     <div class="voting-answers">
@@ -29,7 +29,7 @@ import {VoteService} from './vote.service';
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" (click)="startVoting(voteDescription.value)">Finish</button>
+                <button type="button" class="btn btn-default" (click)="startVoting(voteDescription.value, date.value)">Finish</button>
                 <button type="button" class="btn btn-default" (click)="closeCreateVotingForm()">Close</button>
             </div>
         </div>
@@ -44,7 +44,10 @@ export class VotingFormComponent {
     constructor(private voteservice:VoteService){};
 
 
-    startVoting(description){
+    startVoting(description, date){
+
+      console.log(new Date(date));
+
       this.showVoting.emit(true);
       let options: any = [];
       this.optionsArray.forEach((option: string) => {
@@ -53,6 +56,7 @@ export class VotingFormComponent {
       var newVote = {
             title: description,
             room: "default",
+            closed_at: new Date(date),
             options: options
         };
 
