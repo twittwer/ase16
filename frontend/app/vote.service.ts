@@ -60,29 +60,27 @@ export class VoteService {
     }
 
 
-    public updateOption(updatevote: Vote, cb: (updatedvote: Vote)=> Vote): void {
+    public updateOption(updatevote: Vote, cb: (success: boolean)=> void): void {
         //this.socket.emit('updateOptions',{updatevote : Vote});
         this.socket.on('updateOptionsSucceded', ()=> {
-            cb(this.currentVote);
+            cb(true);
         });
         this.socket.on('updateOptionsFailed', ()=> {
-            cb(null);
+            cb(false);
         });
 
     };
 
-    public setOpinion(decisions: Opinion[]) {
-
-        this.decisionObject.vote_id = this.currentVote._id;
-        this.decisionObject.decision = decisions;
-        this.socket.emit('sendOpinion', {this.decisionObject
-    })
-        ;
+    public setOpinion(decisions: Opinion[], cb: any) {
+        let decisionObject: VoteOpinion;
+        decisionObject.vote_id = this.currentVote._id;
+        decisionObject.decisions = decisions;
+        this.socket.emit('sendOpinion', decisionObject);
         this.socket.on('sendOpinionsSucceded', ()=> {
-
+            cb(true);
         });
         this.socket.on('sendOpinionsFailed', ()=> {
-
+            cb(false);
         });
         return true;
     }
@@ -91,7 +89,7 @@ export class VoteService {
 
 export interface VoteOpinion {
     vote_id: string;
-    decision: Opinion[];
+    decisions: Opinion[];
 }
 
 export interface Opinion {
@@ -102,8 +100,9 @@ export interface Opinion {
 
 
 export interface Vote {
-    _id: string;
+    _id?: string;
     title: string;
+    room:string;
     creator?: string;
     opened_at?: Date;
     closed_at?: Date;
@@ -112,9 +111,9 @@ export interface Vote {
         description?: string;
         yes_votes?: number;
         no_votes?: number;
-        opinions: {
-            decider: string;
-            decision: boolean;
+        opinions?: {
+            decider?: string;
+            decision?: boolean;
         }[];
     }[];
 }
