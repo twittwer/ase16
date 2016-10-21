@@ -16,20 +16,27 @@ export class VoteService {
     private currentVote: Vote;
     private historicVote:Vote[];
     private us: UserService;
+    private decisionObject:VoteOpinion;
+    private decisions : Opinion;
     //private cs:ChatService;
     private socket:any;
-    private upVote:boolean;
 
     constructor() {
 
         this.username = this.us.getUsername();
         this.socket = this.us.getSocketConnection();
-
+        this.setListener();
     }
 
     private setListener(){
-        this.socket.on('updateVote')
+        this.socket.on('updateVote',(updatedVote:Vote)=>{
+           this.currentVote=updatedVote;
+        });
+        this.socket.on('newVote',(newVote:Vote)=>{
+            this.currentVote=newVote;
+        });
     }
+
     public getCurrentVote():Vote{
         return this.currentVote;
     }
@@ -44,53 +51,55 @@ export class VoteService {
             this.currentVote=updatedVote;
             return this.currentVote;
         });
-        this.socket.on('sentVoteFail', ()=>{
-            return null;
+        this.socket.on('sentVoteFailed', ()=>{
+            this.currentVote= null;
         });
-        this.socket.on('newVote', (newVote : Vote)=>{
-            this.currentVote=newVote;
-        });
-        this.socket.on('updateVote', (upVote:Vote)=>{
-            this.currentVote=upVote;
-        });
-
         cb(this.currentVote);
     }
 
-    public closeVote(closeDate:Date){
-        this.socket.emit('closeVote',closeDate);
-        this.
-
-    }
 
     public getOptions():any{
         return this.currentVote.options;
     }
 
 
-    public updateOpinion():boolean{
-        this.socket.emit('updateOptions',{});
+    public updateOption(updatevote:Vote,cb:(updatedvote:Vote)=> Vote):void{
+        //this.socket.emit('updateOptions',{updatevote : Vote});
         this.socket.on('updateOptionsSucceded', ()=>{
-
+            cb(this.currentVote);
         });
         this.socket.on('updateOptionsFailed', ()=>{
+            cb(null);
+        });
+
+    };
+
+    public setOpinion(decisions:Opinion[]){
+
+        //decisionObject.vote_id=this.currentVote._id;
+        //decisionObject.decision=decisions;
+        //VoteOpinions:
+        //this.socket.emit('sendOpinion',{decisionObject});
+        this.socket.on('sendOpinionsSucceded', ()=>{
 
         });
-        return true;
-    }
-
-    public setOpinion(opt:boolean):boolean{
-        this.socket.emit('sendOptions',{opt});
-        this.socket.on('sendOptionsSucceded', ()=>{
-
-        });
-        this.socket.on('sendOptionsFailed', ()=>{
+        this.socket.on('sendOpinionsFailed', ()=>{
 
         });
         return true;
     }
 
 }
+
+export interface VoteOpinion{
+    vote_id:string;
+    decision:Opinion[];
+}
+
+export interface Opinion{
+    option_title: string;
+    decision:boolean;
+}[];
 
 export interface Vote{
     _id: string;

@@ -46,10 +46,10 @@
         main: 'ng2-cookies.js',
         defaultExtension: 'js'
       },
-      'socket.io-client': {
-        main: 'socket.io',
-        defaultExtension: 'js'
-      },
+      // 'socket.io-client': {
+      //   main: 'socket.io',
+      //   defaultExtension: 'js'
+      // },
     }
   });
 })(this);

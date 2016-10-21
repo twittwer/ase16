@@ -99,7 +99,7 @@ export default class VoteSocketController {
 
     this.socket.emit(event + 'Succeeded', { vote: vote });
 
-    let broadcastEvent;
+    let broadcastEvent: any;
     switch (eventType) {
       case EventType.Create:
         broadcastEvent = 'newVote';

@@ -14,7 +14,7 @@ export class UserService {
     private cookiename: string;
 
     constructor() {
-        this.username = "";
+        this.username = null;
         this.cookiename = "ChatApp";
         this.socket = io.connect('http://api.local/');
         this.checkNameExists();
@@ -34,7 +34,10 @@ export class UserService {
      * @return data
      */
     public reg(user: string, cb: (username: string)=>void): void {
-        if (user !== null && user !== "") {
+        this.username = 'FooBar';
+        cb('FooBar');
+
+        /*if (user !== null && user !== "") {
             this.socket.emit("register", {username: user});
             this.socket.on('registered', (user: any)=> {
                 this.username = user.username;
@@ -43,7 +46,7 @@ export class UserService {
             });
         } else {
             cb(null);
-        }
+        }*/
     };
 
     /**
@@ -53,23 +56,6 @@ export class UserService {
     private checkNameExists() {
         if (Cookie.check(this.cookiename)) {
             this.username = Cookie.get(this.cookiename);
-        }
-    }
-
-    disconnect(): boolean {
-        if (this.username == "") {
-            return false;
-        } else {
-            if (this.socket == null) {
-                return false;
-            } else {
-                this.socket.emit('disconnect', {username: this.username});
-                this.socket.on('disconnected', ()=> {
-                    this.socket.close();
-                    return true;
-                });
-
-            }
         }
     }
 }
