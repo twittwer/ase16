@@ -8,6 +8,7 @@ import { MessageBoxComponent }  from './messagebox.component';
 import { NgbdModalBasic } from './modal-login.component';
 import { VotingComponent } from './voting.component';
 import { VotingFormComponent }  from './voting-Form.component';
+import { QuestionListComponent }  from './question-list.component';
 
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 
@@ -23,7 +24,8 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
     MessageBoxComponent,
     NgbdModalBasic,
     VotingComponent,
-    VotingFormComponent
+    VotingFormComponent,
+    QuestionListComponent
   ],
   bootstrap: [ AppComponent ]
 })

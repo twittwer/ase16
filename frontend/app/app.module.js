@@ -17,6 +17,7 @@ var messagebox_component_1 = require('./messagebox.component');
 var modal_login_component_1 = require('./modal-login.component');
 var voting_component_1 = require('./voting.component');
 var voting_Form_component_1 = require('./voting-Form.component');
+var question_list_component_1 = require('./question-list.component');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -32,7 +33,8 @@ var AppModule = (function () {
                 messagebox_component_1.MessageBoxComponent,
                 modal_login_component_1.NgbdModalBasic,
                 voting_component_1.VotingComponent,
-                voting_Form_component_1.VotingFormComponent
+                voting_Form_component_1.VotingFormComponent,
+                question_list_component_1.QuestionListComponent
             ],
             bootstrap: [app_component_1.AppComponent]
         }), 
