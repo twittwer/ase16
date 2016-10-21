@@ -71,9 +71,9 @@ export default class VoteSocketController {
 
   private handleUpdateOptions(data: UpdateOptionsData) {
     // TODO: handle update vote options
-    // VoteModel.findOne({ _id: data.vote_id })
-    //   .then()
-    //   .catch((err: any) => this.responseUpdateOptions({ msg: handleDBError(err).msg }, null));
+    VoteModel.findOne({ _id: data.vote_id })
+      .then()
+      .catch((err: any) => this.responseUpdateOptions({ msg: handleDBError(err).msg }, null));
   }
 
   private handleSendOpinion(data: SendOpinionData) {
@@ -129,6 +129,25 @@ class VoteManager {
   }
 
   public static updateVote(updatedVote: Vote): Promise<Vote|SimpleError> {
+    return new Promise((resolve, reject) => {
+      VoteModel.findOne({ _id: updatedVote._id })
+        .then((vote: Vote) => {
+          if (!vote)
+            reject({ msg: 'vote not found' });
+          if (vote.creator !== updatedVote.creator)
+            reject({ msg: 'forbidden update' });
+          if (vote.closed_at.getTime() < new Date().getTime())
+            reject({ msg: 'vote already closed' });
+          Object.assign(vote, updatedVote);
+          vote.save()
+            .then(resolve)
+            .catch((err: any) => reject({ msg: handleDBError(err).msg }));
+        })
+        .catch((err: any) => reject({ msg: handleDBError(err).msg }));
+    });
+  }
+
+  public static updateVoteOptions(updatedVote: Vote): Promise<Vote|SimpleError> {
     return new Promise((resolve, reject) => {
       VoteModel.findOne({ _id: updatedVote._id })
         .then((vote: Vote) => {
