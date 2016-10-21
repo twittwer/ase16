@@ -16,7 +16,6 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
             </div>
             <div class="voting-buttons">
                   <button class="btn btn-default" type="button" (click)="createNewVoting()">Start Voting</button>
-                  <button class="btn btn-default" type="button" (click)="createNewVoting()">Change Voting</button>
                   <button class="btn btn-default" type="button">Cancel Voting</button>
             </div>
         </div>
