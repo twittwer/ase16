@@ -16,7 +16,8 @@ export class UserService {
     constructor() {
         this.username = "";
         this.cookiename = "ChatApp";
-        this.socket = io.connect('http://localhost:4000/');
+        // this.socket = io.connect('http://localhost:4000/');
+        this.socket = io.connect('http://api.local/');
         this.checkNameExists();
     }
 
@@ -36,9 +37,9 @@ export class UserService {
     public reg(user: string, cb: any): void {
         if (user !== null && user !== "") {
           console.log('UserService reg',user);
-            this.socket.emit("register", {username: user});
-            this.socket.on("registered", (user: any)=> {
-                this.username = user.username;
+            this.socket.emit("register", { username: user });
+            this.socket.on("registered", (data: any)=> {
+                this.username = data.user.username;
                 Cookie.set(this.cookiename, this.username);
                 cb(this.username);
             });
