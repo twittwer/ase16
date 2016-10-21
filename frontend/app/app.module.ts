@@ -13,7 +13,6 @@ import { QuestionListComponent }  from './question-list.component';
 
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 
-
 @NgModule({
   imports: [
     BrowserModule,
@@ -24,7 +23,6 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
     AppComponent,
     HeaderComponent,
     MessageBoxComponent,
-
     NgbdModalBasic,
     VotingComponent,
     VotingFormComponent,
