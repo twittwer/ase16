@@ -5,17 +5,18 @@
 
 import {EventEmitter, Injectable} from '@angular/core';
 import {UserService} from './user.service';
-//import {ChatService} from './chat.service';
 import io = require("socket.io-client");
 import {bootstrap} from "@angular/upgrade/src/angular_js";
 
+const DEBUG: boolean = true;
+
 @Injectable()
 export class VoteService {
-    private currentVote: Vote;
-    private historicVote: Vote[];
-    // private decisionObject:VoteOpinion;
     private socket: SocketIOClient.Socket;
+    private currentVote: Vote;
+    private historicVote: Vote[] = [];
 
+    /* Init */
     constructor(private us: UserService) {
         this.socket = this.us.getSocketConnection();
         this.setListener();
@@ -24,94 +25,136 @@ export class VoteService {
     private setListener() {
         this.socket.on('updateVote', (updatedVote: Vote)=> {
             this.currentVote = updatedVote;
+            //Datum prüfen mit aktuellem
         });
         this.socket.on('newVote', (newVote: Vote)=> {
             this.currentVote = newVote;
+            //Datum prüfen mit aktuellem
         });
     }
 
+    /* Getter */
     public getCurrentVote(): Vote {
         return this.currentVote;
     }
 
-    public getHistVote(): Vote[] {
+    public getHistoricVotes(): Vote[] {
         return this.historicVote;
     }
 
-    public sendVote(actVote: Vote, cb: (currentVote: Vote)=>void) {
-        if (!actVote._id)
-            actVote._id = 'ab12bn3h4';
-        this.currentVote = actVote;
-        cb(this.currentVote);
-
-        /*this.socket.emit('sendVote', actVote);
-        this.socket.on('sentVoteSucceded', (updatedVote: Vote)=> {
-            this.currentVote = updatedVote;
-            cb(this.currentVote);
-        });
-        this.socket.on('sentVoteFailed', ()=> {
-            this.currentVote = null;
-            cb(this.currentVote);
-        });*/
-    }
-
-    public getOptions(): any {
+    public getOptions(): Option[] {
         return this.currentVote.options;
     }
 
-
-    public updateOption(updatevote: Vote, cb: (success: boolean)=> void): void {
-        //this.socket.emit('updateOptions',{updatevote : Vote});
-        this.socket.on('updateOptionsSucceded', ()=> {
+    /* Sender */
+    public sendVote(vote: Vote, cb: (success: boolean)=>void) {
+        if (DEBUG) {
+            if (!vote._id) {
+                vote._id = 'ab12bn3h4';
+                vote.creator = this.us.getUsername();
+                vote.opened_at = new Date();
+            }
+            this.currentVote = vote;
             cb(true);
-        });
-        this.socket.on('updateOptionsFailed', ()=> {
-            cb(false);
-        });
+        } else {
+            this.socket.emit('sendVote', {vote: vote});
+            this.socket.on('sentVoteSucceeded', ()=> {
+                cb(true);
+            });
+            this.socket.on('sentVoteFailed', ()=> {
+                this.currentVote = null;
+                cb(false);
+            });
+        }
+    }
 
+    public updateOptions(options: Option[], cb: (success: boolean)=> void): void {
+        if (DEBUG) {
+            this.currentVote.options = options;
+            this.currentVote.options.forEach((option: string, index: number, options: Option[])=> {
+                options[index].creator = this.us.getUsername();
+                options[index].opinions = [];
+            });
+            cb(true);
+        } else {
+            let optionData: OptionsData = {
+                vote_id: this.currentVote._id,
+                options: options
+            };
+            this.socket.emit('updateOptions', optionData);
+            this.socket.on('updateOptionsSucceeded', ()=> {
+                cb(true);
+            });
+            this.socket.on('updateOptionsFailed', ()=> {
+                cb(false);
+            });
+        }
     };
 
-    public setOpinion(decisions: Opinion[], cb: any) {
-        let decisionObject: VoteOpinion;
-        decisionObject.vote_id = this.currentVote._id;
-        decisionObject.decisions = decisions;
-        this.socket.emit('sendOpinion', decisionObject);
-        this.socket.on('sendOpinionsSucceded', ()=> {
+    public sendOpinion(decisions: Opinion[], cb: (success: boolean)=> void): void {
+        if (DEBUG) {
+            if (this.currentVote.options.length) {
+                this.currentVote.options[0].opinions.push({
+                    decision: decisions[0].decision,
+                    decider: this.us.getUsername()
+                });
+                if (decisions[0].decision)
+                    this.currentVote.options[0].yes_votes++;
+                else
+                    this.currentVote.options[0].no_votes++;
+            }
             cb(true);
-        });
-        this.socket.on('sendOpinionsFailed', ()=> {
-            cb(false);
-        });
-        return true;
+        } else {
+            let decisionObject: OpinionData = {
+                vote_id: this.currentVote._id,
+                decisions: decisions
+            };
+            this.socket.emit('sendOpinion', decisionObject);
+            this.socket.on('sendOpinionSucceeded', ()=> {
+                cb(true);
+            });
+            this.socket.on('sendOpinionFailed', ()=> {
+                cb(false);
+            });
+        }
     }
 
 }
 
-export interface VoteOpinion {
+export interface Vote {
+    _id?: string;
+    title: string;
+    room: string;
+    creator?: string;
+    opened_at?: Date;
+    closed_at?: Date;
+    options: Option[];
+}
+
+export interface Option {
+    title: string;
+    description?: string;
+    yes_votes?: number;
+    no_votes?: number;
+    opinions?: {
+        decider?: string;
+        decision?: boolean;
+    }[]
+}
+
+interface VoteRef {
     vote_id: string;
+}
+
+export interface OptionsData extends VoteRef {
+    options: Option[];
+}
+
+export interface OpinionData extends VoteRef {
     decisions: Opinion[];
 }
 
 export interface Opinion {
     option_title: string;
     decision: boolean;
-}
-
-export interface Vote {
-    _id?: string;
-    title: string;
-    room:string;
-    creator?: string;
-    opened_at?: Date;
-    closed_at?: Date;
-    options: {
-        title: string;
-        description?: string;
-        yes_votes?: number;
-        no_votes?: number;
-        opinions?: {
-            decider?: string;
-            decision?: boolean;
-        }[];
-    }[];
 }
