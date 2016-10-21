@@ -22,12 +22,9 @@
     "bootstrap": "^3.3.7",
     "chart.js": "^2.3.0",
     "core-js": "^2.4.1",
-<<<<<<< c337ab5b4d0c94076793dfe9888bdcb8c4aa7672
     "ng2-cookies": "^1.0.2",
-=======
     "ng2-charts": "^1.4.0",
     "node-sass": "^3.10.1",
->>>>>>> commit
     "reflect-metadata": "^0.1.8",
     "rxjs": "5.0.0-beta.12",
     "socket.io-client": "^1.5.0",
