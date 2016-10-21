@@ -26,7 +26,7 @@ export class QuestionListComponent {
 
     questions: string[]=[];
 
-    addQuestion(description){
+    addQuestion(description: any){
         this.questions.push(description.value);
         description.value = '';
         this.getOptions.emit(this.questions);

@@ -1,24 +1,32 @@
 import { Component } from '@angular/core';
+import {VoteService} from './vote.service';
 
 @Component({
   selector: 'voting',
   template: `
     <div class="panel panel-default">
-      <div class="panel-body">
-        <div *ngFor="let voting of votingOptions" class="input-group input-group-lg">
+      <div class="panel-body" #myPanel>
+        <div *ngFor="let option of voteOptions" class="input-group input-group-lg">
             <label class="checkbox-inline">
-              <input type="checkbox" id={{voting.id}} value={{voting.description}}>{{voting.description}}
+              <input type="checkbox" id={{option.key}} value={{option.title}} >{{option.title}}
             </label>
         </div>
-        <button class="btn btn-default" type="button">Vote</button>
+        <button class="btn btn-default" type="button" (click)="sendVote(myPanel)">Vote</button>
       </div>
     </div>
   `})
 export class VotingComponent {
-  private votingOptions =[
-    {id:1, description: 'Monday'},
-    {id:2, description: 'Tuesday'},
-    {id:3, description: 'Friday'},
-    {id:4, description: 'Sunday'},
-  ]
+  constructor(private voteservice:VoteService){};
+  private currentVote = this.voteservice.getCurrentVote();
+  public voteOptions = this.currentVote.options;
+
+
+
+  sendVote(parent: any) {
+    console.log("test", parent);
+    let elements = parent.children;
+    for(let i = 0;i<element.length-2;i++) {
+      elements[i]
+    }
+  }
 }
