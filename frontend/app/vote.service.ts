@@ -96,8 +96,6 @@ export interface Opinion {
     option_title: string;
     decision: boolean;
 }
-;
-
 
 export interface Vote {
     _id?: string;
