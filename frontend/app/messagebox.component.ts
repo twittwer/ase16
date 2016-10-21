@@ -27,6 +27,8 @@ export class MessageBoxComponent {
   @Output() displayVoting = new EventEmitter<boolean>();
   public showCreateVotingForm: boolean;
 
+  constructor(private voteservice:VoteService){};
+
   createNewVoting(){
     this.showCreateVotingForm = true;
   }
@@ -43,9 +45,9 @@ export class MessageBoxComponent {
   }
   cancelVoting(){
     let currentDate = new Date();
-    let currentVote = VoteService.getCurrentVote();
+    let currentVote = this.voteservice.getCurrentVote();
     currentVote.closed_at = currentDate;
-    VoteService.sendVote(currentVote, ()=>{});
+    this.voteservice.sendVote(currentVote, ()=>{});
     this.displayVoting.emit(false);
   }
 }
