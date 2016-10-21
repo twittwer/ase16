@@ -47,7 +47,9 @@ export class MessageBoxComponent {
     let currentDate = new Date();
     let currentVote = this.voteservice.getCurrentVote();
     currentVote.closed_at = currentDate;
-    this.voteservice.sendVote(currentVote, ()=>{});
+    this.voteservice.sendVote(currentVote, (test: any)=>{
+      console.log(test);
+    });
     this.displayVoting.emit(false);
   }
 }
