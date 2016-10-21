@@ -24,7 +24,7 @@ import {VoteService} from './vote.service';
                     </div>
                     <div class="voting-answers">
                         <h3>Anwers</h3>
-                        <question-list></question-list>
+                        <question-list (getOptions)="getOptions($event)"></question-list>
                     </div>
                 </div>
             </div>
@@ -39,28 +39,34 @@ import {VoteService} from './vote.service';
 export class VotingFormComponent {
     @Output() closeVotingForm = new EventEmitter<boolean>();
     @Output() showVoting = new EventEmitter<boolean>();
+    public optionsArray: any = [];
 
-    constructor(private voteservice:VoteService) {}
+    constructor(private voteservice:VoteService){};
+
 
     startVoting(description){
-        let newVote = {
+      this.showVoting.emit(true);
+      let options: any = [];
+      this.optionsArray.forEach((option: string) => {
+        options.push({title:option});
+      });
+      var newVote = {
             title: description,
             room: "default",
-            options: [
-                {title: "option1"},
-                {title: "option2"}
-            ]
+            options: options
         };
 
         this.voteservice.sendVote(newVote, (newVote: any) => {
-            console.log("get Vote");
             this.showVoting.emit(true);
         });
     };
+
     closeCreateVotingForm(){
         this.closeVotingForm.emit(false);
     }
 
-
+    getOptions(options:Array<any>){
+      this.optionsArray = options;
+    }
 
 }

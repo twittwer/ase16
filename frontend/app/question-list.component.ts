@@ -1,5 +1,4 @@
-import {Component} from '@angular/core';
-import {Question} from './question.component';
+import {Component, EventEmitter, Input, Output} from '@angular/core';
 
 @Component({
     selector: 'question-list',
@@ -14,7 +13,7 @@ import {Question} from './question.component';
             </thead>
             <tbody>
                 <tr *ngFor="let question of questions" style="margin-bottom: 10px;">
-                    <td>{{question.descr}}</td><td><button  class="btn btn-primary" (click)="removeQuestion(question)">Delete</button></td>
+                    <td>{{question}}</td><td><button  class="btn btn-primary" (click)="removeQuestion(question)">Delete</button></td>
                 </tr>
             </tbody>
         </table>
@@ -23,12 +22,14 @@ import {Question} from './question.component';
 })
 
 export class QuestionListComponent {
-    questions: Array<Question> = [];
+    @Output() getOptions = new EventEmitter();
+
+    questions: string[]=[];
 
     addQuestion(description){
-        const question = new Question(description.value);
-        this.questions.push(question);
+        this.questions.push(description.value);
         description.value = '';
+        this.getOptions.emit(this.questions);
     }
 
     removeQuestion(question){

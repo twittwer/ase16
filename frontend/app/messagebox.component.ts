@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import {VoteService} from './vote.service';
 
 @Component({
   selector: 'messagebox',
