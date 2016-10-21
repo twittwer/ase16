@@ -1,12 +1,6 @@
-/**
- * Created by Ines Frey on 20.10.2016.
- */
-
-
-import {EventEmitter, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {UserService} from './user.service';
-import io = require("socket.io-client");
-import {bootstrap} from "@angular/upgrade/src/angular_js";
+import io = require('socket.io-client');
 
 const DEBUG: boolean = true;
 
