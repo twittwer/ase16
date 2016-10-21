@@ -14,11 +14,13 @@ const DEBUG: boolean = true;
 export class VoteService {
     private socket: SocketIOClient.Socket;
     private currentVote: Vote;
-    private historicVote: Vote[] = [];
+    private historicVotes: Vote[];
 
     /* Init */
     constructor(private us: UserService) {
         this.socket = this.us.getSocketConnection();
+        this.currentVote = null;
+        this.historicVotes = [];
         this.setListener();
     }
 
@@ -39,7 +41,7 @@ export class VoteService {
     }
 
     public getHistoricVotes(): Vote[] {
-        return this.historicVote;
+        return this.historicVotes;
     }
 
     public getOptions(): Option[] {
@@ -71,7 +73,7 @@ export class VoteService {
     public updateOptions(options: Option[], cb: (success: boolean)=> void): void {
         if (DEBUG) {
             this.currentVote.options = options;
-            this.currentVote.options.forEach((option: string, index: number, options: Option[])=> {
+            this.currentVote.options.forEach((option: Option, index: number, options: Option[])=> {
                 options[index].creator = this.us.getUsername();
                 options[index].opinions = [];
             });
