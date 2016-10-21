@@ -135,7 +135,7 @@ export interface Vote {
 
 export interface Option {
     title: string;
-    description?: string;
+    creator?: string;
     yes_votes?: number;
     no_votes?: number;
     opinions?: {
