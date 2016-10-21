@@ -1,26 +1,13 @@
- // import {Component} from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
 
-
-//
-// @Component({
-//     moduleId: module.id,
-//     selector: 'login',
-//     styleUrls: ['modal-login.component.css'],
-//     templateUrl: './modal-login.component.html'
-// })
-// export class ModalLoginComponent {
-// }
-
-import { Component, EventEmitter, Input, Output} from '@angular/core';
-
-import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
-import {UserService} from './user.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { UserService } from './user.service';
 
 @Component({
-    selector: 'login',
-    moduleId: module.id,
-    styleUrls: ['modal-login.component.css'],
-    template: `
+  selector: 'login',
+  moduleId: module.id,
+  styleUrls: [ 'modal-login.component.css' ],
+  template: `
     <div class="loginmodal-container">
               <h1>Login to Your Account</h1><br>
               <div class="input-group" >
@@ -31,18 +18,17 @@ import {UserService} from './user.service';
     `
 })
 export class NgbdModalBasic {
-    @Output() loginSuccess = new EventEmitter<boolean>();
-    closeResult: string;
+  @Output() loginSuccess = new EventEmitter<boolean>();
 
-    constructor(private modalService: NgbModal, private userservice:UserService) {}
+  constructor(private modalService: NgbModal, private userservice: UserService) {
+  }
 
-    loggedIn(username: string){
-      console.log('loggedIn',username);
-      this.userservice.reg(username, (username: string) => {
-        console.log('loggedIn-callback',username)
+  loggedIn(username: string) {
+    this.userservice.reg(username, (success: boolean) => {
+      if (success)
         this.loginSuccess.emit(true);
-      });
-    };
+    });
+  };
 
 
 }

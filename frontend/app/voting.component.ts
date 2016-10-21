@@ -24,9 +24,11 @@ export class VotingComponent {
 
   sendVote(parent: any) {
     console.log("test", parent);
+    /*
     let elements = parent.children;
     for(let i = 0;i<element.length-2;i++) {
       elements[i]
     }
+    */
   }
 }
