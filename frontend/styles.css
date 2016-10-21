@@ -33,6 +33,8 @@ body {
 }
 .voting-container{
   width: 30%;
+  float: right;
+  padding-right: 30px;
 }
 
 .messagebox-container{
@@ -51,4 +53,3 @@ body {
 .voting-number{
   width: 30%;
 }
-

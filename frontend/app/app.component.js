@@ -9,16 +9,25 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var core_1 = require('@angular/core');
+var ng2_cookies_1 = require('ng2-cookies/ng2-cookies');
 var AppComponent = (function () {
     function AppComponent() {
     }
+    AppComponent.prototype.isCookieSet = function () {
+        if (ng2_cookies_1.Cookie.get('userCookie')) {
+            return true;
+        }
+    };
     AppComponent.prototype.loginSuccess = function (login) {
+        ng2_cookies_1.Cookie.set('userCookie', 'test2');
         if (login == true) {
+            var myCookie = ng2_cookies_1.Cookie.get('userCookie');
             this.isLoggedIn = true;
         }
     };
     AppComponent.prototype.logout = function (successLogout) {
         if (successLogout == true) {
+            ng2_cookies_1.Cookie.delete('userCookie');
             this.isLoggedIn = false;
         }
     };
@@ -33,7 +42,7 @@ var AppComponent = (function () {
     AppComponent = __decorate([
         core_1.Component({
             selector: 'my-app',
-            template: "\n  <header *ngIf=\"isLoggedIn\" (logout)=\"logout($event)\"></header>\n  <div *ngIf=\"isLoggedIn\">\n    <div [ngClass]=\"{'onLeftSide': isShowVoting}\">\n      <messagebox (displayVoting)=\"displayVoting($event)\" class=\"messagebox-container\"></messagebox>\n    </div>\n    <voting class=\"voting-container\" *ngIf=\"isShowVoting\"></voting>\n  </div>\n  <login  *ngIf=\"!isLoggedIn\" (loginSuccess)=\"loginSuccess($event)\"></login>\n  "
+            template: "\n  <header *ngIf=\"isCookieSet()\" (logout)=\"logout($event)\"></header>\n  <div *ngIf=\"isCookieSet()\">\n    <div [ngClass]=\"{'onLeftSide': isShowVoting}\">\n      <messagebox (displayVoting)=\"displayVoting($event)\" class=\"messagebox-container\"></messagebox>\n    </div>\n    <voting class=\"voting-container\" *ngIf=\"isShowVoting\"></voting>\n  </div>\n  <login  *ngIf=\"!isCookieSet()\" (loginSuccess)=\"loginSuccess($event)\"></login>\n  "
         }), 
         __metadata('design:paramtypes', [])
     ], AppComponent);

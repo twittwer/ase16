@@ -9,7 +9,8 @@ import { NgbdModalBasic } from './modal-login.component';
 import { VotingComponent } from './voting.component';
 import { VotingFormComponent }  from './voting-Form.component';
 
-import { CookieService } from 'angular2-cookie/services/cookies.service';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
+
 
 @NgModule({
   imports: [
@@ -24,7 +25,6 @@ import { CookieService } from 'angular2-cookie/services/cookies.service';
     VotingComponent,
     VotingFormComponent
   ],
-  providers: [ CookieService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {

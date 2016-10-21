@@ -17,7 +17,6 @@ var messagebox_component_1 = require('./messagebox.component');
 var modal_login_component_1 = require('./modal-login.component');
 var voting_component_1 = require('./voting.component');
 var voting_Form_component_1 = require('./voting-Form.component');
-var cookies_service_1 = require('angular2-cookie/services/cookies.service');
 var AppModule = (function () {
     function AppModule() {
     }
@@ -35,7 +34,6 @@ var AppModule = (function () {
                 voting_component_1.VotingComponent,
                 voting_Form_component_1.VotingFormComponent
             ],
-            providers: [cookies_service_1.CookieService],
             bootstrap: [app_component_1.AppComponent]
         }), 
         __metadata('design:paramtypes', [])
