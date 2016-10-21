@@ -17,7 +17,7 @@ import {VoteService} from './vote.service';
             </div>
             <div class="voting-buttons">
                   <button class="btn btn-default" type="button" (click)="createNewVoting()">Start Voting</button>
-                  <button class="btn btn-default" type="button">Cancel Voting</button>
+                  <button class="btn btn-default" type="button" (click)="cancelVoting()">Cancel Voting</button>
             </div>
         </div>
     </div>
@@ -40,5 +40,12 @@ export class MessageBoxComponent {
         this.showCreateVotingForm = false;
         this.displayVoting.emit(true);
     }
+  }
+  cancelVoting(){
+    let currentDate = new Date();
+    let currentVote = VoteService.getCurrentVote();
+    currentVote.closed_at = currentDate;
+    VoteService.sendVote(currentVote, ()=>{});
+    this.displayVoting.emit(false);
   }
 }
