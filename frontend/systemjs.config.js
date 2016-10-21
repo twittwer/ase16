@@ -25,8 +25,13 @@
       'rxjs':                      'npm:rxjs',
       'angular-in-memory-web-api': 'npm:angular-in-memory-web-api',
       '@ng-bootstrap/ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js',
+<<<<<<< c337ab5b4d0c94076793dfe9888bdcb8c4aa7672
       'ng2-cookies': 'npm:ng2-cookies',
 
+=======
+      '@angular': 'node_modules/@angular',
+      'ng2-charts': 'node_modules/ng2-charts',
+>>>>>>> commit
     },
     // packages tells the System loader how to load when no filename and/or no extension
     packages: {
@@ -41,10 +46,14 @@
         main: './index.js',
         defaultExtension: 'js'
       },
+<<<<<<< c337ab5b4d0c94076793dfe9888bdcb8c4aa7672
       'ng2-cookies': {
         main: 'ng2-cookies.js', 
         defaultExtension: 'js'
       },
+=======
+      'ng2-charts': { main: 'ng2-charts.js', defaultExtension: 'js' }
+>>>>>>> commit
     }
   });
 })(this);

@@ -15,7 +15,7 @@ function drawChart() {
 
 
     var ja = getyes();
-    var nein = 3;
+    var nein = getno();
     var data = google.visualization.arrayToDataTable([
         ['Task', 'Hours per Day'],
         ['ja',     ja],

@@ -14,6 +14,7 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
     <voting class="voting-container" *ngIf="isShowVoting"></voting>
   </div>
   <login  *ngIf="!isCookieSet()" (loginSuccess)="loginSuccess($event)"></login>
+  <pie-demo></pie-demo>
   `
 
 })
