@@ -7,7 +7,17 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
   selector: 'my-app',
   template: `
   <!--<header *ngIf="isCookieSet()" (logout)="logout($event)"></header> -->
+  
+  
+  <div [ngSwitch]="2"> <!-- this 2 should be the getOption function and that calls the charts -->
+  <template [ngSwitchCase]="1">
   <pie-demo></pie-demo>
+  </template>
+  <template [ngSwitchCase]="2">
+  <div><pie-demo></pie-demo> </div>
+  <div><pie-demo></pie-demo> </div>
+  </template>
+</div>
  <!--
   <div *ngIf="isCookieSet()">
     <div [ngClass]="{'onLeftSide': isShowVoting}">

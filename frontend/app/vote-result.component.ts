@@ -22,7 +22,6 @@ export class ChartOne {
         this.name = "World";
 
     }
-
 }
 
 
