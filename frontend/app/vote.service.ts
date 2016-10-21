@@ -59,8 +59,6 @@ export class VoteService {
 
     public closeVote(closeDate:Date){
         this.socket.emit('closeVote',closeDate);
-        this.
-
     }
 
     public getOptions():any{

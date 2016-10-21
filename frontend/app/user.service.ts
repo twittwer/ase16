@@ -2,8 +2,8 @@
  * Created by Ines Frey on 19.10.2016.
  */
 
-import {EventEmitter, Injectable} from '@angular/core';
-import {Cookie} from 'ng2-cookies';
+import { EventEmitter, Injectable } from '@angular/core';
+import { Cookie } from 'ng2-cookies/ng2-cookies';
 import * as io from 'socket.io-client';
 
 
@@ -16,7 +16,7 @@ export class UserService {
     constructor() {
         this.username = "";
         this.cookiename = "ChatApp";
-        this.socket = io.connect('http://api.local/');
+        this.socket = io.connect('http://localhost:4000/');
         this.checkNameExists();
     }
 
@@ -33,10 +33,11 @@ export class UserService {
      * @param user {String} Username
      * @return data
      */
-    public reg(user: string, cb: (username: string)=>void): void {
+    public reg(user: string, cb: any): void {
         if (user !== null && user !== "") {
+          console.log('UserService reg',user);
             this.socket.emit("register", {username: user});
-            this.socket.on('registered', (user: any)=> {
+            this.socket.on("registered", (user: any)=> {
                 this.username = user.username;
                 Cookie.set(this.cookiename, this.username);
                 cb(this.username);
@@ -51,7 +52,7 @@ export class UserService {
      * @param username
      */
     private checkNameExists() {
-        if (Cookie.check(this.cookiename)) {
+        if (Cookie.get(this.cookiename)) {
             this.username = Cookie.get(this.cookiename);
         }
     }

@@ -6,6 +6,8 @@ import { HeaderComponent }  from './header.component';
 import { MessageBoxComponent }  from './messagebox.component';
 import { NgbdModalBasic } from './modal-login.component';
 import { UserService } from "./user.service";
+import {VotingFormComponent} from "./voting-Form.component";
+import {VotingComponent} from "./voting.component";
 
 @NgModule({
   imports: [
@@ -13,10 +15,12 @@ import { UserService } from "./user.service";
     NgbModule.forRoot()
   ],
   declarations: [
+    NgbdModalBasic,
     AppComponent,
     HeaderComponent,
     MessageBoxComponent,
-    NgbdModalBasic
+    VotingFormComponent,
+    VotingComponent
   ],
   providers: [ UserService ],
   bootstrap: [ AppComponent ]
