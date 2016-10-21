@@ -5,7 +5,6 @@
 
 import {EventEmitter, Injectable} from '@angular/core';
 import {UserService} from './user.service';
-//import {ChatService} from './chat.service';
 import io = require("socket.io-client");
 import {bootstrap} from "@angular/upgrade/src/angular_js";
 
@@ -78,11 +77,11 @@ export class VoteService {
             });
             cb(true);
         } else {
-            let optionDataObject: OptionData = {
+            let optionData: OptionsData = {
                 vote_id: this.currentVote._id,
                 options: options
             };
-            this.socket.emit('updateOptions', optionDataObject);
+            this.socket.emit('updateOptions', optionData);
             this.socket.on('updateOptionsSucceeded', ()=> {
                 cb(true);
             });
@@ -147,7 +146,7 @@ interface VoteRef {
     vote_id: string;
 }
 
-export interface OptionData extends VoteRef {
+export interface OptionsData extends VoteRef {
     options: Option[];
 }
 

@@ -13,8 +13,8 @@ frontend/semantic
 
 # Builds
 build
-frontend/app/**/*.js
-frontend/app/**/*.js.map
+frontend/app/*.js
+frontend/app/*.js.map
 
 # Caches
 .npm
@@ -27,3 +27,5 @@ frontend/app/**/*.js.map
 data/db/**/*
 frontend/app/app.module.js.map
 *.js
+*.js
+frontend/app/app.module.js.map

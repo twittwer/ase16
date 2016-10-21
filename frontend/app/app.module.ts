@@ -5,9 +5,14 @@ import { AppComponent }  from './app.component';
 import { HeaderComponent }  from './header.component';
 import { MessageBoxComponent }  from './messagebox.component';
 import { NgbdModalBasic } from './modal-login.component';
+
 import { UserService } from "./user.service";
-import {VotingFormComponent} from "./voting-Form.component";
-import {VotingComponent} from "./voting.component";
+import { VoteService } from "./vote.service";
+import { VotingComponent } from './voting.component';
+import { VotingFormComponent }  from './voting-Form.component';
+import { QuestionListComponent }  from './question-list.component';
+
+import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 @NgModule({
   imports: [
@@ -19,10 +24,12 @@ import {VotingComponent} from "./voting.component";
     AppComponent,
     HeaderComponent,
     MessageBoxComponent,
+    NgbdModalBasic,
+    VotingComponent,
     VotingFormComponent,
-    VotingComponent
+    QuestionListComponent
   ],
-  providers: [ UserService ],
+  providers: [ UserService, VoteService ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule {
