@@ -1,5 +1,19 @@
 import * as mongoose from "mongoose";
 
+export interface Opinion {
+  decider: string;
+  decision: boolean;
+}
+
+export interface Option {
+  title: string;
+  description?: string;
+  creator?: string;
+  yes_votes?: number;
+  no_votes?: number;
+  opinions?: Opinion[];
+}
+
 export interface Vote extends mongoose.Document {
   _id: string;
   title: string;
@@ -8,16 +22,7 @@ export interface Vote extends mongoose.Document {
   opened_at?: Date;
   closed_at?: Date;
   room: string;
-  options: {
-    title: string;
-    description?: string;
-    yes_votes?: number;
-    no_votes?: number;
-    opinions: {
-      decider: string;
-      decision: boolean;
-    }[];
-  }[];
+  options: Option[];
 }
 
 let voteSchema: mongoose.Schema = new mongoose.Schema({
@@ -46,6 +51,7 @@ let voteSchema: mongoose.Schema = new mongoose.Schema({
       required: true
     },
     description: String,
+    creator: String,
     yes_vote: {
       type: Number,
       default: 0

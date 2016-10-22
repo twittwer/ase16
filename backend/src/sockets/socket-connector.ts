@@ -30,7 +30,7 @@ export class SocketConnector {
 
     this.socketServer.on('connection', (socket: Socket) => {
 
-      console.log('\n\n\n >>> new socket connection <<< \n\n\n');
+      console.log('\n >>> new socket connection <<< \n');
 
       socket.on('register', (data: any) => this.registerDBUser(data.username.trim())
         .then((user: User) => this.registerSocketUser(socket, user))
@@ -45,16 +45,17 @@ export class SocketConnector {
 
   private registerDBUser(username: string): Promise<User> {
     console.info('registerDBUser');
+
     return new Promise((resolve, reject) => {
       UserModel.findOne({ username: username })
         .then((user: User) => {
-          console.info('found user: ', user);
           if (!user) {
-            console.info('create user: ', username);
+            console.info('registerDBUser: unknown user (', user, ')');
             this.createDBUser(username)
               .then((user: User) => resolve(user))
               .catch(() => reject());
           } else {
+            console.info('registerDBUser: existing user (', user, ')');
             resolve(user);
           }
         })
@@ -64,12 +65,12 @@ export class SocketConnector {
 
   private createDBUser(username: string): Promise<User> {
     console.info('createDBUser');
+
     return new Promise((resolve, reject) => {
       let user: User = new UserModel({ username: username });
-      console.info('AAAAAAA');
       user.save()
         .then((user: User) => {
-          console.info('DBUser created');
+          console.info('createDBUser: new user created');
           resolve(user);
         })
         .catch((err: any) => reject());
@@ -83,9 +84,9 @@ export class SocketConnector {
     this.connectedSockets[ user.username ] = socket;
 
     console.log(`
-            \n >> client registration: ${user.username} <<
-            \n   >> socket list: ${Object.keys(this.connectedSockets)}
-            \n`);
+        >> client registration: ${user.username} <<
+        >>>> user list: ${Object.keys(this.connectedSockets)}
+    `);
 
     this.registerCallbacks.forEach((callback: RegisterCallback) => callback(socket, this.socketServer));
 
@@ -94,6 +95,7 @@ export class SocketConnector {
 
   private sendRegistrationFailed(socket: Socket, username: string) {
     console.info('sendRegistrationFailed');
+
     socket.emit('registrationFailed', { failedUsername: username });
   }
 }
