@@ -31,7 +31,7 @@ export default class ChatSocketController {
     this.socketServer = socketServer;
     this.socket = socket;
 
-    console.log(`\n\n >> registration of ChatSocketController for ${this.socket.username} << \n`);
+    console.log(` >> registration of ChatSocketController for ${this.socket.username} << `);
 
     socket.on('joinRoom', (data: RoomData) => this.handleJoinRoom(data.room.trim()));
 

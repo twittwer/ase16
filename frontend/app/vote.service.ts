@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
 import io = require('socket.io-client');
 
-const DEBUG: boolean = true;
+const DEBUG: boolean = false;
 
 @Injectable()
 export class VoteService {

@@ -42,6 +42,8 @@ export default class VoteSocketController {
     this.socketServer = socketServer;
     this.socket = socket;
 
+    console.log(` >> registration of VoteSocketController for ${this.socket.username} << `);
+
     socket.on(EVENTS.SEND_VOTE, (data: VoteData) => this.handleSendVote(data));
     socket.on(EVENTS.UPDATE_OPTIONS, (data: OptionsData) => this.handleUpdateOptions(data));
     socket.on(EVENTS.SEND_OPINION, (data: OpinionData) => this.handleSendOpinion(data));

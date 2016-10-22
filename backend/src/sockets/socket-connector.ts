@@ -37,6 +37,8 @@ export class SocketConnector {
         .catch(() => this.sendRegistrationFailed(socket, data.username)));
 
       socket.on('disconnect', () => {
+        console.info(' >> disconnect ', socket.username);
+
         if (socket.username)
           delete this.connectedSockets[ socket.username ];
       });
@@ -90,7 +92,7 @@ export class SocketConnector {
 
     this.registerCallbacks.forEach((callback: RegisterCallback) => callback(socket, this.socketServer));
 
-    socket.emit('registered', { user: user });
+    socket.emit('registered', user);
   }
 
   private sendRegistrationFailed(socket: Socket, username: string) {
