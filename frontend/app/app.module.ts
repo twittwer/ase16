@@ -12,10 +12,13 @@ import { VotingFormComponent }  from './voting-Form.component';
 import { QuestionListComponent }  from './question-list.component';
 import { ChartOne }  from './vote-result.component';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
+import { Angular2Component } from './angular2chart';
+import {GoogleChart} from '../node_modules/angular2-google-chart/directives/angular2-google-chart.directive';
 
 @NgModule({
   imports: [
     BrowserModule,
+    ChartModule
     NgbModule.forRoot()
   ],
   declarations: [
@@ -27,7 +30,11 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
     VotingComponent,
     VotingFormComponent,
     QuestionListComponent,
-    ChartOne
+    ChartOne,
+    Angular2Component,
+    GoogleChart,
+    lastApp
+
   ],
   providers: [ UserService ],
   bootstrap: [ AppComponent ]

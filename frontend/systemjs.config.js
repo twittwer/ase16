@@ -27,6 +27,9 @@
       '@ng-bootstrap/ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js',
       'ng2-cookies': 'npm:ng2-cookies',
       'socket.io-client': 'node_modules/socket.io-client/socket.io.js',
+      'directives' : 'directives/',
+       'angular2-google-chart': 'node_modules/angular2-google-chart/directives/angular2-google-chart.directive.js'
+      //'angular2-google-chart': 'npm:angular2-google-chart'
 
     },
     // packages tells the System loader how to load when no filename and/or no extension
@@ -46,6 +49,11 @@
         main: 'ng2-cookies.js',
         defaultExtension: 'js'
       },
+      'directives':{
+        defaultExtension: 'js'
+       }
+
+
       // 'socket.io-client': {
       //   main: 'socket.io',
       //   defaultExtension: 'js'
