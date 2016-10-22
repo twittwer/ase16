@@ -15,9 +15,12 @@ function drawChart() {
 
 /*
 
- Vote.yes_votes
+ Vote.yes_votes    var ja = vote();
+ number
+ vote();
  */
-    var ja = 4;
+
+    var ja = 2;
     var nein = 2;
     var data = google.visualization.arrayToDataTable([
         ['Task', 'Hours per Day'],

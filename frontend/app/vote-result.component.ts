@@ -21,7 +21,9 @@ export class ChartOne {
     constructor() {
         this.name = "World";
 
+
     }
-}
+
+
 
 
