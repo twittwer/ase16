@@ -46,6 +46,10 @@ export class UserService {
                     Cookie.set(this.cookieName, this.username);
                     cb(true);
                 });
+                this.socket.on('registrationFailed', (errorObject: SimpleError)=> {
+                    this.username = errorObject.msg;
+                    cb(false);
+                });
             } else {
                 cb(false);
             }
@@ -56,4 +60,10 @@ export class UserService {
 export interface User {
     _id?: string;
     username: string;
+}
+
+export interface SimpleError{
+    msg: string;
+    code?: string;
+    error?: any;
 }

@@ -21,11 +21,19 @@ export class VoteService {
     private setListener() {
         this.socket.on('updateVote', (updatedVote: Vote)=> {
             this.currentVote = updatedVote;
-            //Datum prüfen mit aktuellem
+            let actualDate=new Date;
+            if( this.currentVote.closed_at < actualDate){
+                this.historicVotes.push(this.currentVote);
+                this.currentVote=null;
+            }
         });
         this.socket.on('newVote', (newVote: Vote)=> {
             this.currentVote = newVote;
-            //Datum prüfen mit aktuellem
+            let actualDate=new Date;
+            if( this.currentVote.closed_at < actualDate){
+                this.historicVotes.push(this.currentVote);
+                this.currentVote=null;
+            }
         });
     }
 
@@ -55,6 +63,7 @@ export class VoteService {
         } else {
             this.socket.emit('sendVote', {vote: vote});
             this.socket.on('sentVoteSucceeded', ()=> {
+                console.log("sentVote Success");
                 cb(true);
             });
             this.socket.on('sentVoteFailed', ()=> {
