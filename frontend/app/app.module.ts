@@ -13,9 +13,15 @@ import { VotingFormComponent }  from './voting-form.component';
 import { QuestionListComponent }  from './question-list.component';
 import { VoteComponent } from "./vote.component";
 
+
+import { ChartModule } from 'angular2-highcharts';
+import { ChartApp } from './chartapp.component';
+
+
 @NgModule({
   imports: [
     BrowserModule,
+    ChartModule,
     NgbModule.forRoot()
   ],
   declarations: [
@@ -26,7 +32,8 @@ import { VoteComponent } from "./vote.component";
     VotingComponent,
     VotingFormComponent,
     QuestionListComponent,
-    VoteComponent
+    VoteComponent,
+    ChartApp
   ],
   providers: [ UserService, VoteService ],
   bootstrap: [ AppComponent ]
