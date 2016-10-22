@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import * as io from 'socket.io-client';
 
-const DEBUG: boolean = true;
+const DEBUG: boolean = false;
 
 @Injectable()
 export class UserService {
@@ -41,6 +41,7 @@ export class UserService {
         }else {
             if (username !== null && username !== '') {
                 this.socket.emit('register', { username: username });
+                console.log(username);
                 this.socket.on('registered', (user: User)=> {
                     this.username = user.username;
                     Cookie.set(this.cookieName, this.username);
@@ -54,6 +55,7 @@ export class UserService {
                 cb(false);
             }
         }
+
     };
 }
 

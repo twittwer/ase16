@@ -17,7 +17,6 @@ export class VoteService {
         this.historicVotes = [];
         this.setListener();
     }
-
     private setListener() {
         this.socket.on('updateVote', (updatedVote: Vote)=> {
             this.currentVote = updatedVote;
@@ -47,7 +46,24 @@ export class VoteService {
     }
 
     public getOptions(): Option[] {
-        return this.currentVote.options;
+        if(DEBUG){
+            let arrayOp : Option[]=[];
+            let op1 : Option={
+                title   : 'Gute App',
+                yes_votes : 10,
+                no_votes:20
+            };
+            let op2 : Option={
+                title   : 'Schlechte App',
+                yes_votes : 20,
+                no_votes:46
+            };
+            arrayOp.push(op1);
+            arrayOp.push(op2);
+            return arrayOp;
+        } else{
+            return this.currentVote.options;
+        }
     }
 
     /* Sender */
@@ -57,6 +73,7 @@ export class VoteService {
                 vote._id = 'ab12bn3h4';
                 vote.creator = this.us.getUsername();
                 vote.opened_at = new Date();
+                vote.options[0].opinions =[];
             }
             this.currentVote = vote;
             cb(true);
@@ -99,6 +116,7 @@ export class VoteService {
     public sendOpinion(decisions: Opinion[], cb: (success: boolean)=> void): void {
         if (DEBUG) {
             if (this.currentVote.options.length) {
+                this.currentVote.options[0].opinions =[];
                 this.currentVote.options[0].opinions.push({
                     decision: decisions[0].decision,
                     decider: this.us.getUsername()
