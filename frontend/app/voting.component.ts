@@ -51,6 +51,8 @@ export class VotingComponent {
       console.log("currentVote");
       if(vote._id == this.closedVote._id){
         return false;
+      }else {
+        return true;
       }
     }
   }
