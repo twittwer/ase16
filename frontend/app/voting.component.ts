@@ -42,8 +42,6 @@ export class VotingComponent {
 
   canVote(){
     let vote = this.voteservice.getCurrentVote();
-    console.log(this.closedVote);
-      console.log("checkVote");
     if(this.closedVote == null){
       console.log("can vote true");
       return true;
