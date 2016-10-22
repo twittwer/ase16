@@ -21,7 +21,6 @@ export class UserService {
 
   private checkForExistingCookie() {
     if (Cookie.get(this.cookieName)) {
-      // this.username = Cookie.get(this.cookieName);
       this.reg(Cookie.get(this.cookieName), (success: boolean)=> {
         if (!success)
           this.username = null;
@@ -46,6 +45,7 @@ export class UserService {
   public reg(username: string, cb: (success: boolean)=>void): void {
     if (DEBUG) {
       this.username = 'FooBar';
+      Cookie.set(this.cookieName, this.username);
       cb(true);
     } else {
       console.info('reg');
