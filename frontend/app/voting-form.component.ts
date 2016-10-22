@@ -1,8 +1,8 @@
-import { Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, EventEmitter, Output} from '@angular/core';
 import {VoteService} from './vote.service';
 
 @Component({
-    selector: 'votingForm',
+    selector: 'voting-form',
     template: `
     <div class="modal-dialog">
         <div class="modal-content">

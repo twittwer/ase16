@@ -14,7 +14,7 @@ export class LoginModalComponent {
   }
 
   private logIn(username: string) {
-    this.userService.reg(username, (success: boolean) => {
+    this.userService.login(username, (success: boolean) => {
       if (!success)
         alert('Your Login failed!\nPlease try again.');
     });

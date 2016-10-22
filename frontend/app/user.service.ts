@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import * as io from 'socket.io-client';
 
-const DEBUG: boolean = false;
+const DEBUG: boolean = true;
 
 @Injectable()
 export class UserService {
@@ -15,13 +15,12 @@ export class UserService {
   constructor() {
     this.socket = io.connect(this.serverUrl);
     this.username = null;
-    this.cookieName = 'ChatApp-ASE16';
     this.checkForExistingCookie();
   }
 
   private checkForExistingCookie() {
     if (Cookie.get(this.cookieName)) {
-      this.reg(Cookie.get(this.cookieName), (success: boolean)=> {
+      this.login(Cookie.get(this.cookieName), (success: boolean)=> {
         if (!success)
           this.username = null;
       });
@@ -42,13 +41,12 @@ export class UserService {
   }
 
   /* Sender */
-  public reg(username: string, cb: (success: boolean)=>void): void {
+  public login(username: string, cb: (success: boolean)=>void): void {
     if (DEBUG) {
       this.username = 'FooBar';
       Cookie.set(this.cookieName, this.username);
       cb(true);
     } else {
-      console.info('reg');
       if (username !== null && username !== '') {
         console.info('register user: ', username);
         this.socket.emit('register', { username: username });

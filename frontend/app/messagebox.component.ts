@@ -12,7 +12,7 @@ import {VoteService} from './vote.service';
                 <input type="text" class="form-control" placeholder="Write your Message here">
                 <span class="input-group-btn">
                     <button class="btn btn-default" type="button">Send</button>
-                    <votingForm (showVoting)="showVoting($event)" (closeVotingForm)="closeVotingForm($event)" class="modal fade show in danger" id="myModal" role="dialog" *ngIf="showCreateVotingForm"></votingForm>
+                    <voting-form (showVoting)="showVoting($event)" (closeVotingForm)="closeVotingForm($event)" class="modal fade show in danger" id="myModal" role="dialog" *ngIf="showCreateVotingForm"></voting-form>
                 </span>
             </div>
             <div class="voting-buttons">
