@@ -11,8 +11,8 @@ export class VoteService {
     private historicVotes: Vote[];
 
     /* Init */
-    constructor(private us: UserService) {
-        this.socket = this.us.getSocketConnection();
+    constructor(private userService: UserService) {
+        this.socket = this.userService.getSocketConnection();
         this.currentVote = null;
         this.historicVotes = [];
         this.setListener();
@@ -71,7 +71,7 @@ export class VoteService {
         if (DEBUG) {
             if (!vote._id) {
                 vote._id = 'ab12bn3h4';
-                vote.creator = this.us.getUsername();
+                vote.creator = this.userService.getUsername();
                 vote.opened_at = new Date();
                 vote.options[0].opinions =[];
             }
@@ -94,7 +94,7 @@ export class VoteService {
         if (DEBUG) {
             this.currentVote.options = options;
             this.currentVote.options.forEach((option: Option, index: number, options: Option[])=> {
-                options[index].creator = this.us.getUsername();
+                options[index].creator = this.userService.getUsername();
                 options[index].opinions = [];
             });
             cb(true);
@@ -119,7 +119,7 @@ export class VoteService {
                 this.currentVote.options[0].opinions =[];
                 this.currentVote.options[0].opinions.push({
                     decision: decisions[0].decision,
-                    decider: this.us.getUsername()
+                    decider: this.userService.getUsername()
                 });
                 if (decisions[0].decision)
                     this.currentVote.options[0].yes_votes++;

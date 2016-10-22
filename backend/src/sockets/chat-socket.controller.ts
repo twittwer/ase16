@@ -31,7 +31,7 @@ export default class ChatSocketController {
     this.socketServer = socketServer;
     this.socket = socket;
 
-    console.log(`\n\n >> registration of ChatSocketController for ${this.socket.username} << \n`);
+    console.log(` >> registration of ChatSocketController for ${this.socket.username} << `);
 
     socket.on('joinRoom', (data: RoomData) => this.handleJoinRoom(data.room.trim()));
 
@@ -52,7 +52,7 @@ export default class ChatSocketController {
         .then(() => ChatroomManager.collectRecentMessages(room)
           .then((msgListData: MessageListData) => this.sendJoinedRoom(Object.assign({
             joined: true,
-            vote: null // TODO: getRoomVote()
+            vote: null // TODO-X: getRoomVote()
           }, msgListData)))
           .catch((err: SimpleError) => this.sendJoinedRoomWithError(room, err)))
         .catch((err: SimpleError) => this.sendJoinedRoomWithError(room, err))
@@ -107,7 +107,7 @@ class ChatroomManager {
           resolve(chatroom);
         })
         .catch((err: any) => {
-          // TODO: create new chatroom if not exist
+          // TODO-X: create new chatroom if not exist
           console.log(err);
           reject({ msg: 'room not found', error: err })
         });

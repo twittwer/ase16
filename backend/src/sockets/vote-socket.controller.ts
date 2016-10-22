@@ -1,5 +1,5 @@
 import { SocketServer, Socket } from "./socket-connector";
-import { Vote, VoteModel } from "../models/vote.model";
+import { Vote, VoteModel, Option, Opinion } from "../models/vote.model";
 import { SimpleError } from "../utils/error.interface";
 import { handleDBError } from "../utils/controller.utils";
 
@@ -20,18 +20,17 @@ interface VoteRef {
   vote_id: string;
 }
 
-interface UpdateOptionsData extends VoteRef {
-  options: {
-    title: string;
-    description?: string;
-  }[];
+interface OptionsData extends VoteRef {
+  options: Option[];
 }
 
-interface SendOpinionData extends VoteRef {
-  options: {
-    title: string;
-    decision: boolean;
-  }[];
+interface Decision { // ~> Opinion
+  option_title: string;
+  decision: boolean;
+}
+
+interface OpinionData extends VoteRef {
+  decisions: Decision[];
 }
 
 /* Controller */
@@ -43,9 +42,11 @@ export default class VoteSocketController {
     this.socketServer = socketServer;
     this.socket = socket;
 
+    console.log(` >> registration of VoteSocketController for ${this.socket.username} << `);
+
     socket.on(EVENTS.SEND_VOTE, (data: VoteData) => this.handleSendVote(data));
-    socket.on(EVENTS.UPDATE_OPTIONS, (data: UpdateOptionsData) => this.handleUpdateOptions(data));
-    socket.on(EVENTS.SEND_OPINION, (data: SendOpinionData) => this.handleSendOpinion(data));
+    socket.on(EVENTS.UPDATE_OPTIONS, (data: OptionsData) => this.handleUpdateOptions(data));
+    socket.on(EVENTS.SEND_OPINION, (data: OpinionData) => this.handleSendOpinion(data));
   }
 
   public static bootstrap(socket: Socket, socketServer: SocketServer): void {
@@ -69,15 +70,16 @@ export default class VoteSocketController {
     }
   }
 
-  private handleUpdateOptions(data: UpdateOptionsData) {
-    // TODO: handle update vote options
-    VoteModel.findOne({ _id: data.vote_id })
-      .then()
+  private handleUpdateOptions(data: OptionsData) {
+    VoteManager.updateVoteOptions(data.vote_id, data.options, this.socket.username)
+      .then((vote: Vote) => this.responseUpdateOptions(null, vote))
       .catch((err: any) => this.responseUpdateOptions({ msg: handleDBError(err).msg }, null));
   }
 
-  private handleSendOpinion(data: SendOpinionData) {
-    // TODO: handle opinions
+  private handleSendOpinion(data: OpinionData) {
+    VoteManager.setVoteOpinion(data.vote_id, data.decisions, this.socket.username)
+      .then((vote: Vote) => this.responseSendOpinion(null, vote))
+      .catch((err: any) => this.responseSendOpinion({ msg: handleDBError(err).msg }, null));
   }
 
   /* Send Events */
@@ -108,18 +110,24 @@ export default class VoteSocketController {
         broadcastEvent = 'updateVote';
         break;
     }
-    this.socket.broadcast.in(vote.room).emit(broadcastEvent, { vote: vote });
+    this.socket.broadcast.in(vote.room).emit(broadcastEvent, vote);
   }
 }
 
 class VoteManager {
 
   public static createVote(vote: Vote): Promise<Vote|SimpleError> {
+    console.info('createVote');
+
     return new Promise((resolve, reject) => {
-      VoteModel.count({ room: vote.room, closed_at: { $gt: new Date() } })
+      VoteModel.count({ room: vote.room, closed_at: { $or: [ { $gt: new Date() }, { $eq: null } ] } })
         .then((count: number) => {
+
+          // check room conditions
           if (count)
-            reject({ msg: 'room has already a opened vote' });
+            reject({ msg: 'room has already an opened vote' });
+
+          // save created vote
           vote.save()
             .then(resolve)
             .catch((err: any) => reject({ msg: handleDBError(err).msg }));
@@ -129,16 +137,24 @@ class VoteManager {
   }
 
   public static updateVote(updatedVote: Vote): Promise<Vote|SimpleError> {
+    console.info('updateVote');
+
     return new Promise((resolve, reject) => {
       VoteModel.findOne({ _id: updatedVote._id })
         .then((vote: Vote) => {
+
+          // check vote conditions
           if (!vote)
             reject({ msg: 'vote not found' });
           if (vote.creator !== updatedVote.creator)
             reject({ msg: 'forbidden update' });
           if (vote.closed_at.getTime() < new Date().getTime())
             reject({ msg: 'vote already closed' });
+
+          // update vote
           Object.assign(vote, updatedVote);
+
+          // save updated vote
           vote.save()
             .then(resolve)
             .catch((err: any) => reject({ msg: handleDBError(err).msg }));
@@ -147,17 +163,105 @@ class VoteManager {
     });
   }
 
-  public static updateVoteOptions(updatedVote: Vote): Promise<Vote|SimpleError> {
+  public static updateVoteOptions(voteId: string, newOptions: Option[], editor: string): Promise<Vote|SimpleError> {
+    console.info('updateVoteOptions');
+
     return new Promise((resolve, reject) => {
-      VoteModel.findOne({ _id: updatedVote._id })
+      VoteModel.findOne({ _id: voteId })
         .then((vote: Vote) => {
+
+          // check vote conditions
           if (!vote)
             reject({ msg: 'vote not found' });
-          if (vote.creator !== updatedVote.creator)
-            reject({ msg: 'forbidden update' });
           if (vote.closed_at.getTime() < new Date().getTime())
             reject({ msg: 'vote already closed' });
-          Object.assign(vote, updatedVote);
+
+          // check for deleted options
+          vote.options.forEach((oldOption: Option, oldOptionIndex: number, oldOptions: Option[]) => {
+            let foundMatch: boolean = false;
+            newOptions.forEach((newOption: Option, newOptionindex: number) => {
+              if (newOption.title === oldOption.title) {
+                delete newOptions[ newOptionindex ];
+                foundMatch = true;
+              }
+            });
+            if (!foundMatch) {
+              if (oldOption.creator !== editor) {
+                reject({ msg: 'forbidden update' });
+              } else {
+                delete oldOptions[ oldOptionIndex ];
+              }
+            }
+          });
+
+          // add created options
+          newOptions.forEach((newOption: Option) => {
+            newOption.creator = editor;
+            newOption.opinions = [];
+            vote.options.push(newOption);
+          });
+
+          // save updated vote
+          vote.save()
+            .then(resolve)
+            .catch((err: any) => reject({ msg: handleDBError(err).msg }));
+        })
+        .catch((err: any) => reject({ msg: handleDBError(err).msg }));
+    });
+  }
+
+  public static setVoteOpinion(voteId: string, decisions: Decision[], decider: string): Promise<Vote|SimpleError> {
+    console.info('setVoteOpinion');
+
+    return new Promise((resolve, reject) => {
+      VoteModel.findOne({ _id: voteId })
+        .then((vote: Vote) => {
+
+          // check vote conditions
+          if (!vote)
+            reject({ msg: 'vote not found' });
+          if (vote.closed_at.getTime() < new Date().getTime())
+            reject({ msg: 'vote already closed' });
+
+          // set opinions | loop sent decisions
+          let rejectedDecisions: number = 0;
+          decisions.forEach((decision: Decision) => {
+            vote.options.forEach((option: Option) => {
+              if (option.title === decision.option_title) {
+                // option of decision found
+
+                // check for previous votes of user
+                let alreadyVoted: boolean = false;
+                option.opinions.forEach((opinion: Opinion) => {
+                  if (opinion.decider === decider) { // user voted already
+                    alreadyVoted = true;
+                    // count as rejected if new decision differs from older opinion
+                    if (decision.decision !== opinion.decision)
+                      rejectedDecisions++;
+                  }
+                });
+
+                // add new decision to opinions
+                if (!alreadyVoted) {
+                  option.opinions.push({
+                    decider: decider,
+                    decision: decision.decision
+                  });
+                  if (decision.decision)
+                    option.yes_votes++;
+                  else
+                    option.no_votes++;
+                }
+              }
+            });
+          });
+
+          // reject whole request, if all decisions were rejected
+          if (rejectedDecisions === decisions.length) {
+            reject({ msg: 'user voted already' });
+          }
+
+          // save updated vote
           vote.save()
             .then(resolve)
             .catch((err: any) => reject({ msg: handleDBError(err).msg }));

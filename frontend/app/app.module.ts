@@ -4,15 +4,13 @@ import { NgbModule } from "@ng-bootstrap/ng-bootstrap";
 import { AppComponent }  from './app.component';
 import { HeaderComponent }  from './header.component';
 import { MessageBoxComponent }  from './messagebox.component';
-import { NgbdModalBasic } from './modal-login.component';
+import { LoginModalComponent } from './login-modal.component';
 
 import { UserService } from "./user.service";
 import { VoteService } from "./vote.service";
 import { VotingComponent } from './voting.component';
-import { VotingFormComponent }  from './voting-Form.component';
+import { VotingFormComponent }  from './voting-form.component';
 import { QuestionListComponent }  from './question-list.component';
-
-import { Cookie } from 'ng2-cookies/ng2-cookies';
 
 @NgModule({
   imports: [
@@ -20,11 +18,10 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
     NgbModule.forRoot()
   ],
   declarations: [
-    NgbdModalBasic,
     AppComponent,
+    LoginModalComponent,
     HeaderComponent,
     MessageBoxComponent,
-    NgbdModalBasic,
     VotingComponent,
     VotingFormComponent,
     QuestionListComponent
