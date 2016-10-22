@@ -11,6 +11,7 @@ import { VoteService } from "./vote.service";
 import { VotingComponent } from './voting.component';
 import { VotingFormComponent }  from './voting-Form.component';
 import { QuestionListComponent }  from './question-list.component';
+import { AddOptionComponent }  from './add-option.component';
 
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 
@@ -27,7 +28,8 @@ import { Cookie } from 'ng2-cookies/ng2-cookies';
     NgbdModalBasic,
     VotingComponent,
     VotingFormComponent,
-    QuestionListComponent
+    QuestionListComponent,
+    AddOptionComponent
   ],
   providers: [ UserService, VoteService ],
   bootstrap: [ AppComponent ]

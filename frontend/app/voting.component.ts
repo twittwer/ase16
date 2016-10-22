@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import {VoteService} from './vote.service';
 
 
@@ -13,8 +13,10 @@ import {VoteService} from './vote.service';
               <input type="checkbox"  value="{{option.title}}" name="options" [checked]="voteOptions.indexOf(option.title) >= 0" (change)="updateCheckedOption(option.title, $event)">{{option.title}}
             </label>
         </div>
+        <addUserOption (closeAddOptionForm)="closeAddOptionForm($event)" class="modal fade show in danger" id="myModal" role="dialog" *ngIf="showAddUserOptionForm"></addUserOption>
         <button class="btn btn-default" type="button" (click)="sendVote()">Vote</button>
-      </div>
+        <button class="btn btn-default" type="button" (click)="addNewOption()">Add Option</button>
+       </div>
     </div>
     <div *ngIf="!canVote()" class="panel panel-default">
       <div class="panel-body" >
@@ -31,6 +33,18 @@ export class VotingComponent {
   public voteOptions = this.currentVote.options;
   private optionsMap: any[] =  [];
   public optionsChecked: any[] = [];
+
+    public showAddUserOptionForm : boolean;
+
+    addNewOption(){
+        this.showAddUserOptionForm = true;
+    }
+    closeAddOptionForm(show:boolean){
+        if(show == false){
+            this.showAddUserOptionForm = false;
+        }
+    }
+
   initOptionsMap();
 
   initOptionsMap(){
@@ -43,10 +57,10 @@ export class VotingComponent {
   canVote(){
     let vote = this.voteservice.getCurrentVote();
     if(this.closedVote == null){
-      console.log("can vote true");
+      //console.log("can vote true");
       return true;
     }else{
-      console.log("currentVote");
+      //sconsole.log("currentVote");
       if(vote._id == this.closedVote._id){
         return false;
       }else {
@@ -80,6 +94,5 @@ export class VotingComponent {
       console.log(success);
       // this.closedVote = this.currentVote;
     });
-
   }
 }
