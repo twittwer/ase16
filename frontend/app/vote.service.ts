@@ -17,14 +17,14 @@ export class VoteService {
     this.currentVote = null;
     this.historicVotes = [];
     this.setListener();
+    this.socket.emit('listVotes');
   }
 
   private setListener() {
     this.socket.on('updateVote', (updatedVote: Vote)=> {
       console.log("\n >> updateVote received << \n", updatedVote);
       this.currentVote = updatedVote;
-      let actualDate = new Date;
-      if (this.currentVote.closed_at < actualDate) {
+      if (this.isHistoric(this.currentVote)) {
         this.historicVotes.push(this.currentVote);
         this.currentVote = null;
       }
@@ -32,15 +32,22 @@ export class VoteService {
     this.socket.on('newVote', (newVote: Vote)=> {
       console.log("\n >> newVote received << \n", newVote);
       this.currentVote = newVote;
-      let actualDate = new Date;
-      if (this.currentVote.closed_at < actualDate) {
+      if (this.isHistoric(this.currentVote)) {
         this.historicVotes.push(this.currentVote);
         this.currentVote = null;
       }
     });
+    this.socket.on('loadVotes', (votes: Vote[])=> {
+      console.log("\n >> vote list received << \n", votes);
+      this.injectVotes(votes);
+    });
   }
 
   /* Getter */
+  public hasActiveVote(): boolean {
+    return Boolean(this.currentVote);
+  }
+
   public getCurrentVote(): Vote {
     return this.currentVote;
   }
@@ -51,22 +58,29 @@ export class VoteService {
 
   public getOptions(): Option[] {
     if (DEBUG) {
-      let arrayOp: Option[] = [];
-      let op1: Option = {
-        title: 'Gute App',
+      return [ {
+        title: 'Good App',
         yes_votes: 10,
         no_votes: 20
-      };
-      let op2: Option = {
-        title: 'Schlechte App',
+      }, {
+        title: 'Bad App',
         yes_votes: 20,
         no_votes: 46
-      };
-      arrayOp.push(op1);
-      arrayOp.push(op2);
-      return arrayOp;
+      } ];
     } else {
-      return this.currentVote.options;
+      return this.currentVote ? this.currentVote.options : [];
+    }
+  }
+
+  /* Setter */
+  private injectVotes(votes: Vote[]): void {
+    if (votes) {
+      votes.forEach((vote: Vote) => {
+        if (this.isHistoric(vote))
+          this.historicVotes.push(vote);
+        else
+          this.currentVote = vote;
+      });
     }
   }
 
@@ -118,7 +132,7 @@ export class VoteService {
     }
   };
 
-  public sendOpinion(decisions: Opinion[], cb: (success: boolean)=> void): void {
+  public sendOpinion(decisions: Decision[], cb: (success: boolean)=> void, vote_id: string = this.currentVote._id): void {
     if (DEBUG) {
       if (this.currentVote.options.length) {
         this.currentVote.options[ 0 ].opinions = [];
@@ -134,7 +148,7 @@ export class VoteService {
       cb(true);
     } else {
       let decisionObject: OpinionData = {
-        vote_id: this.currentVote._id,
+        vote_id: vote_id,
         decisions: decisions
       };
       this.socket.emit('sendOpinion', decisionObject);
@@ -147,6 +161,12 @@ export class VoteService {
     }
   }
 
+  /* Utils */
+
+  private isHistoric(vote: Vote): boolean {
+    let actualDate = new Date();
+    return Boolean(vote.closed_at && (vote.closed_at < actualDate.toISOString()));
+  }
 }
 
 export interface Vote {
@@ -164,10 +184,12 @@ export interface Option {
   creator?: string;
   yes_votes?: number;
   no_votes?: number;
-  opinions?: {
-    decider?: string;
-    decision?: boolean;
-  }[]
+  opinions?: Opinion[]
+}
+
+export interface Opinion {
+  decider?: string;
+  decision?: boolean;
 }
 
 interface VoteRef {
@@ -179,10 +201,10 @@ export interface OptionsData extends VoteRef {
 }
 
 export interface OpinionData extends VoteRef {
-  decisions: Opinion[];
+  decisions: Decision[];
 }
 
-export interface Opinion {
+export interface Decision { // ~> Opinion
   option_title: string;
   decision: boolean;
 }

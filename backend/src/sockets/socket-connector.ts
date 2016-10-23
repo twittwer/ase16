@@ -1,5 +1,6 @@
 // import Socket = SocketIO.Socket;
 import { UserModel, User } from "../models/user.model";
+import { VoteModel, Vote } from "../models/vote.model";
 export interface SocketServer extends SocketIO.Server {
 }
 

@@ -1,0 +1,20 @@
+<div>
+  <div *ngIf="!alreadyVoted()" class="panel panel-default">
+    <div class="panel-body">
+      <div *ngFor="let option of vote.options">
+        <label>
+          <input type="checkbox" value="{{option.title}}" name="options"
+                 [checked]="decisions[option.title]"
+                 (change)="onCheckBoxChange(option.title, $event)">
+          {{option.title}}
+        </label>
+      </div>
+      <button class="btn btn-default" type="button" (click)="sendDecisions()">Vote</button>
+    </div>
+  </div>
+  <div *ngIf="alreadyVoted()" class="panel panel-default">
+    <div class="panel-body">
+      <h1>Thanks for your Vote</h1>
+    </div>
+  </div>
+</div>

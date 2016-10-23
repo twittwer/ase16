@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {VoteService} from './vote.service';
+import { VoteService } from './vote.service';
 
 
 @Component({
@@ -25,59 +25,73 @@ import {VoteService} from './vote.service';
   `
 })
 export class VotingComponent {
-  constructor(private voteservice:VoteService){};
-  private currentVote = this.voteservice.getCurrentVote();
-  private closedVote: any;
   public voteOptions = this.currentVote.options;
-  private optionsMap: any[] =  [];
   public optionsChecked: any[] = [];
+  private currentVote = this.voteService.getCurrentVote();
+  private closedVote: any;
+  private optionsMap: any[] = [];
+
+  constructor(private voteService: VoteService) {
+    console.log('VotingComponent: constructor');
+    // this.initOptionsMap();
+  };
+
   initOptionsMap();
 
-  initOptionsMap(){
-    for (var x:any = 0; x<this.voteOptions.length; x++) {
-      this.optionsMap.push([this.voteOptions[x].title, true]);
-        // this.optionsMap[this.voteOptions[x].title] = true;
+  initOptionsMap() {
+    console.log('VotingComponent: initOptionsMap');
+
+    for (var x: any = 0; x < this.voteOptions.length; x++) {
+      this.optionsMap.push([ this.voteOptions[ x ].title, true ]);
+      // this.optionsMap[this.voteOptions[x].title] = true;
     }
   }
 
-  canVote(){
-    let vote = this.voteservice.getCurrentVote();
-    if(this.closedVote == null){
+  canVote() {
+    console.log('VotingComponent: canVote');
+
+    let vote = this.voteService.getCurrentVote();
+    if (this.closedVote == null) {
       console.log("can vote true");
       return true;
-    }else{
+    } else {
       console.log("currentVote");
-      if(vote._id == this.closedVote._id){
+      if (vote._id == this.closedVote._id) {
         return false;
-      }else {
+      } else {
         return true;
       }
     }
   }
 
   updateOptions() {
-      for(var x in this.optionsMap) {
-          if(this.optionsMap[x]) {
-            console.log("push?");
-              this.optionsChecked.push(x);
-          }
+    console.log('VotingComponent: updateOptions');
+
+    for (var x in this.optionsMap) {
+      if (this.optionsMap[ x ]) {
+        console.log("push?");
+        this.optionsChecked.push(x);
       }
-      this.optionsChecked = [];
+    }
+    this.optionsChecked = [];
   }
 
   updateCheckedOption(option, event) {
-    for (var x:any = 0; x<this.voteOptions.length; x++) {
-        this.optionsMap[this.voteOptions[x].title] = true;
-    }
-   this.updateOptions();
- }
+    console.log('VotingComponent: updateCheckedOption');
 
+    for (var x: any = 0; x < this.voteOptions.length; x++) {
+      this.optionsMap[ this.voteOptions[ x ].title ] = true;
+    }
+    this.updateOptions();
+  }
 
 
   sendVote() {
+    console.log('VotingComponent: sendVote');
+
     this.closedVote = this.currentVote;
-    this.voteservice.sendOpinion(this.optionsMap, (success: any)=>{
-      console.log(success);
+    this.voteService.sendOpinion(this.optionsMap, (success: any)=> {
+      console.log('sendOpinionSuccess: ', success);
       // this.closedVote = this.currentVote;
     });
 

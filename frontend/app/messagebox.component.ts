@@ -1,55 +1,46 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
-import {VoteService} from './vote.service';
+import { VoteService } from './vote.service';
 
 @Component({
+  moduleId: module.id,
   selector: 'messagebox',
-  template: `
-    <div class="messagebox-container">
-        <div class="messagebox-showmessage">
-        </div>
-        <div class="messagebox-sendmessage">
-            <div class="input-group">
-                <input type="text" class="form-control" placeholder="Write your Message here">
-                <span class="input-group-btn">
-                    <button class="btn btn-default" type="button">Send</button>
-                    <voting-form (showVoting)="showVoting($event)" (closeVotingForm)="closeVotingForm($event)" class="modal fade show in danger" id="myModal" role="dialog" *ngIf="showCreateVotingForm"></voting-form>
-                </span>
-            </div>
-            <div class="voting-buttons">
-                  <button class="btn btn-default" type="button" (click)="createNewVoting()">Start Voting</button>
-                  <button class="btn btn-default" type="button" (click)="cancelVoting()">Cancel Voting</button>
-            </div>
-        </div>
-    </div>
-  `
+  templateUrl: 'messagebox.component.html'
 })
 export class MessageBoxComponent {
-  @Output() displayVoting = new EventEmitter<boolean>();
   public showCreateVotingForm: boolean;
 
-  constructor(private voteservice:VoteService){};
+  constructor(private voteService: VoteService) {
+  };
 
-  createNewVoting(){
+  createNewVoting() {
     this.showCreateVotingForm = true;
   }
-  closeVotingForm(show:boolean){
-    if(show == false){
+
+  closeVotingForm(show: boolean) {
+    if (show == false) {
       this.showCreateVotingForm = false;
     }
   }
-  showVoting(isVoting:boolean){
-    if(isVoting==true){
-        this.showCreateVotingForm = false;
-        this.displayVoting.emit(true);
+
+  showVoting(isVoting: boolean) {
+    console.log('showVoting', arguments);
+
+    if (isVoting == true) {
+      this.showCreateVotingForm = false;
     }
   }
-  cancelVoting(){
+
+  cancelVoting() {
     let currentDate = new Date();
-    let currentVote = this.voteservice.getCurrentVote();
+    let currentVote = this.voteService.getCurrentVote();
     currentVote.closed_at = currentDate;
-    this.voteservice.sendVote(currentVote, (test: any)=>{
-      console.log(test);
+    this.voteService.sendVote(currentVote, (success: boolean)=> {
+      if(!success) {
+        console.log('updating sendVote failed', currentVote);
+        alert('Sorry, Cancellation of Voting failed.\nPlease try again.');
+      } else {
+        console.log('updating sendVote succeeds');
+      }
     });
-    this.displayVoting.emit(false);
   }
 }

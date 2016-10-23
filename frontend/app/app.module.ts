@@ -11,6 +11,7 @@ import { VoteService } from "./vote.service";
 import { VotingComponent } from './voting.component';
 import { VotingFormComponent }  from './voting-form.component';
 import { QuestionListComponent }  from './question-list.component';
+import { VoteComponent } from "./vote.component";
 
 @NgModule({
   imports: [
@@ -24,7 +25,8 @@ import { QuestionListComponent }  from './question-list.component';
     MessageBoxComponent,
     VotingComponent,
     VotingFormComponent,
-    QuestionListComponent
+    QuestionListComponent,
+    VoteComponent
   ],
   providers: [ UserService, VoteService ],
   bootstrap: [ AppComponent ]

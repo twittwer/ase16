@@ -39,7 +39,10 @@ let voteSchema: mongoose.Schema = new mongoose.Schema({
     type: Date,
     default: Date.now
   },
-  closed_at: Date,
+  closed_at: {
+    type: Date,
+    default: '01/01/2050'
+  },
   room: {
     type: String,
     required: true,
@@ -51,14 +54,17 @@ let voteSchema: mongoose.Schema = new mongoose.Schema({
       required: true
     },
     description: String,
-    creator: String,
-    yes_vote: {
-      type: Number,
-      default: 0
+    creator: {
+      type: String,
+      required: true
     },
-    no_vote: {
+    yes_votes: {
       type: Number,
-      default: 0
+      required: true
+    },
+    no_votes: {
+      type: Number,
+      required: true
     },
     opinions: [ {
       decider: {

@@ -1,0 +1,30 @@
+<div class="messagebox-container">
+  <div class="messagebox-showmessage">
+  </div>
+  <div class="messagebox-sendmessage">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Write your Message here">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Send</button>
+        <voting-form *ngIf="showCreateVotingForm" id="myModal"
+                     (showVoting)="showVoting($event)" (closeVotingForm)="closeVotingForm($event)"
+                     class="modal fade show in danger" role="dialog">
+        </voting-form>
+      </span>
+    </div>
+    <div class="voting-buttons">
+      <button type="button"
+              *ngIf="!voteService.hasActiveVote()"
+              (click)="createNewVoting()"
+              class="btn btn-success">
+        Start Voting
+      </button>
+      <button type="button"
+              *ngIf="voteService.hasActiveVote()"
+              (click)="cancelVoting()"
+              class="btn btn-warning">
+        Cancel Voting
+      </button>
+    </div>
+  </div>
+</div>

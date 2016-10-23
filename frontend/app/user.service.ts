@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import * as io from 'socket.io-client';
 
+// const DEBUG: boolean = true;
 const DEBUG: boolean = false;
 
 @Injectable()

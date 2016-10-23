@@ -1,9 +1,9 @@
-import { Component, EventEmitter, Output} from '@angular/core';
-import {VoteService} from './vote.service';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { VoteService, Option, Vote } from './vote.service';
 
 @Component({
-    selector: 'voting-form',
-    template: `
+  selector: 'voting-form',
+  template: `
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -37,40 +37,44 @@ import {VoteService} from './vote.service';
   `
 })
 export class VotingFormComponent {
-    @Output() closeVotingForm = new EventEmitter<boolean>();
-    @Output() showVoting = new EventEmitter<boolean>();
-    public optionsArray: any = [];
+  @Output() closeVotingForm = new EventEmitter<boolean>();
+  @Output() showVoting = new EventEmitter<boolean>();
+  public optionsArray: any = [];
 
-    constructor(private voteservice:VoteService){};
+  constructor(private voteservice: VoteService) {
+  };
 
 
-    startVoting(description, date){
+  startVoting(description, date) {
+    console.info('startVoting', arguments);
 
-      console.log(new Date(date));
+    // this.showVoting.emit(true);
 
-      this.showVoting.emit(true);
-      let options: any = [];
-      this.optionsArray.forEach((option: string) => {
-        options.push({title:option});
-      });
-      var newVote = {
-            title: description,
-            room: "default",
-            closed_at: new Date(date),
-            options: options
-        };
-
-        this.voteservice.sendVote(newVote, (newVote: any) => {
-            this.showVoting.emit(true);
-        });
+    let options: Option[] = [];
+    this.optionsArray.forEach((option: string) => {
+      options.push({ title: option });
+    });
+    let newVote: Vote = {
+      title: description,
+      room: "default",
+      closed_at: new Date(date),
+      options: options
     };
 
-    closeCreateVotingForm(){
-        this.closeVotingForm.emit(false);
-    }
+    console.log('newVote', newVote);
+    this.voteservice.sendVote(newVote, (success: boolean) => {
+      console.log('sendVoteSuccess', success);
+      if (success)
+        this.showVoting.emit(true);
+    });
+  };
 
-    getOptions(options:Array<any>){
-      this.optionsArray = options;
-    }
+  closeCreateVotingForm() {
+    this.closeVotingForm.emit(false);
+  }
+
+  getOptions(options: Array<any>) {
+    this.optionsArray = options;
+  }
 
 }

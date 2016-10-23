@@ -1,32 +1,16 @@
 import { Component } from '@angular/core';
 import { UserService } from "./user.service";
+import { VoteService } from "./vote.service";
 
 
 @Component({
+  moduleId: module.id,
   selector: 'my-app',
-  template: `
-    <header *ngIf="userService.isLoggedIn()"></header>
-    <div *ngIf="userService.isLoggedIn()">
-      <div [ngClass]="{'onLeftSide': isShowVoting}">
-        <messagebox (displayVoting)="showVotingPanel($event)" class="messagebox-container"></messagebox>
-      </div>
-      <voting class="voting-container" *ngIf="isShowVoting"></voting>
-    </div>
-    <login-modal></login-modal>
-  `
-
+  templateUrl: 'app.component.html'
 })
 export class AppComponent {
-  private isShowVoting: boolean;
 
-  constructor(private userService: UserService) {
-  }
-
-  showVotingPanel(showVotingPanel: boolean) {
-    if (showVotingPanel) {
-      this.isShowVoting = true;
-    } else {
-      this.isShowVoting = false;
-    }
+  constructor(private userService: UserService,
+              private voteService: VoteService) {
   }
 }

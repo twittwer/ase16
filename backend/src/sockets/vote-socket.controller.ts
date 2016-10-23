@@ -2,6 +2,7 @@ import { SocketServer, Socket } from "./socket-connector";
 import { Vote, VoteModel, Option, Opinion } from "../models/vote.model";
 import { SimpleError } from "../utils/error.interface";
 import { handleDBError } from "../utils/controller.utils";
+import { User } from "../models/user.model";
 
 enum EventType { Create, Update }
 
@@ -47,6 +48,16 @@ export default class VoteSocketController {
     socket.on(EVENTS.SEND_VOTE, (data: VoteData) => this.handleSendVote(data));
     socket.on(EVENTS.UPDATE_OPTIONS, (data: OptionsData) => this.handleUpdateOptions(data));
     socket.on(EVENTS.SEND_OPINION, (data: OpinionData) => this.handleSendOpinion(data));
+
+    socket.on('listVotes', () => {
+      VoteModel.find({ room: 'default' })
+        .then((votes: Vote[]) => {
+          socket.emit('loadVotes', votes);
+        })
+        .catch((err: any) => {
+          console.log('list votes failed', err);
+        });
+    });
   }
 
   public static bootstrap(socket: Socket, socketServer: SocketServer): void {
@@ -64,6 +75,8 @@ export default class VoteSocketController {
           .then((vote: Vote) => this.responseSendVote(null, vote, false))
           .catch((err: SimpleError) => this.responseSendVote(err, vote, false));
     } else {
+      vote.creator = this.socket.username;
+      vote.opened_at = new Date();
       VoteManager.createVote(vote)
         .then((vote: Vote) => this.responseSendVote(null, vote, true))
         .catch((err: SimpleError) => this.responseSendVote(err, vote, true));
@@ -79,7 +92,10 @@ export default class VoteSocketController {
   private handleSendOpinion(data: OpinionData) {
     VoteManager.setVoteOpinion(data.vote_id, data.decisions, this.socket.username)
       .then((vote: Vote) => this.responseSendOpinion(null, vote))
-      .catch((err: any) => this.responseSendOpinion({ msg: handleDBError(err).msg }, null));
+      .catch((err: any) => {
+        console.log('sendOpinion failed', err);
+        this.responseSendOpinion({ msg: handleDBError(err).msg }, null);
+      });
   }
 
   /* Send Events */
@@ -96,10 +112,14 @@ export default class VoteSocketController {
   }
 
   private responseVoteEvent(eventType: EventType, event: string, err: SimpleError, vote: Vote) {
-    if (err)
+    if (err) {
       this.socket.emit(event + 'Failed', { msg: err.msg, vote: vote });
+      return;
+    }
 
     this.socket.emit(event + 'Succeeded', { vote: vote });
+
+    // console.info('emit vote', vote);
 
     let broadcastEvent: any;
     switch (eventType) {
@@ -111,28 +131,60 @@ export default class VoteSocketController {
         break;
     }
     this.socket.broadcast.in(vote.room).emit(broadcastEvent, vote);
+    this.socket.emit(broadcastEvent, vote);
   }
 }
 
 class VoteManager {
 
+  private static cleanVoteCollection(cb: any): void {
+    console.info('cleanVoteCollection');
+    VoteModel.remove({}, (err: any)=> {
+      if (!err) {
+        console.info('VoteCollection cleaned');
+        cb();
+      } else
+        console.info('Error while VoteCollection cleaning', err);
+    });
+  }
+
   public static createVote(vote: Vote): Promise<Vote|SimpleError> {
     console.info('createVote');
 
     return new Promise((resolve, reject) => {
-      VoteModel.count({ room: vote.room, closed_at: { $or: [ { $gt: new Date() }, { $eq: null } ] } })
+      // this.cleanVoteCollection(() => {
+      VoteModel.count({ room: vote.room, closed_at: { $gt: new Date() } })
+      // VoteModel.count({ room: vote.room })
         .then((count: number) => {
 
+          console.info('count of opened votes', count);
+
           // check room conditions
-          if (count)
+          if (count) {
             reject({ msg: 'room has already an opened vote' });
+            return;
+          }
+
+          vote.options.forEach((option: Option) => {
+            option.creator = vote.creator;
+            option.yes_votes = 0;
+            option.no_votes = 0;
+            option.opinions = [];
+          });
 
           // save created vote
-          vote.save()
-            .then(resolve)
-            .catch((err: any) => reject({ msg: handleDBError(err).msg }));
+          VoteModel.create(vote)
+            .then((vote: Vote) => {
+              console.info('saved new votes', vote);
+              resolve(vote);
+            })
+            .catch((err: any) => {
+              console.info('fail at vote creation', vote, err);
+              reject({ msg: handleDBError(err).msg });
+            });
         })
         .catch((err: any) => reject({ msg: handleDBError(err).msg }));
+      // });
     });
   }
 
@@ -144,12 +196,16 @@ class VoteManager {
         .then((vote: Vote) => {
 
           // check vote conditions
-          if (!vote)
+          if (!vote) {
             reject({ msg: 'vote not found' });
-          if (vote.creator !== updatedVote.creator)
+            return;
+          }
+          if (vote.creator !== updatedVote.creator) {
             reject({ msg: 'forbidden update' });
-          if (vote.closed_at.getTime() < new Date().getTime())
-            reject({ msg: 'vote already closed' });
+            return;
+          }
+
+          delete updatedVote.options;
 
           // update vote
           Object.assign(vote, updatedVote);
@@ -171,10 +227,15 @@ class VoteManager {
         .then((vote: Vote) => {
 
           // check vote conditions
-          if (!vote)
+          if (!vote) {
             reject({ msg: 'vote not found' });
-          if (vote.closed_at.getTime() < new Date().getTime())
+            return;
+          }
+          // checked by frontend
+          if (vote.closed_at && vote.closed_at.toISOString() < new Date().toISOString()) {
             reject({ msg: 'vote already closed' });
+            return;
+          }
 
           // check for deleted options
           vote.options.forEach((oldOption: Option, oldOptionIndex: number, oldOptions: Option[]) => {
@@ -188,6 +249,7 @@ class VoteManager {
             if (!foundMatch) {
               if (oldOption.creator !== editor) {
                 reject({ msg: 'forbidden update' });
+                return;
               } else {
                 delete oldOptions[ oldOptionIndex ];
               }
@@ -197,6 +259,8 @@ class VoteManager {
           // add created options
           newOptions.forEach((newOption: Option) => {
             newOption.creator = editor;
+            newOption.yes_votes = 0;
+            newOption.no_votes = 0;
             newOption.opinions = [];
             vote.options.push(newOption);
           });
@@ -218,15 +282,21 @@ class VoteManager {
         .then((vote: Vote) => {
 
           // check vote conditions
-          if (!vote)
+          if (!vote) {
             reject({ msg: 'vote not found' });
-          if (vote.closed_at.getTime() < new Date().getTime())
+            return;
+          }
+          if (vote.closed_at && vote.closed_at.toISOString() < new Date().toISOString()) {
             reject({ msg: 'vote already closed' });
+            return;
+          }
+
+          console.info('vote found: ', vote);
 
           // set opinions | loop sent decisions
           let rejectedDecisions: number = 0;
           decisions.forEach((decision: Decision) => {
-            vote.options.forEach((option: Option) => {
+            vote.options.forEach((option: Option, optionIndex: number) => {
               if (option.title === decision.option_title) {
                 // option of decision found
 
@@ -247,10 +317,18 @@ class VoteManager {
                     decider: decider,
                     decision: decision.decision
                   });
-                  if (decision.decision)
-                    option.yes_votes++;
-                  else
-                    option.no_votes++;
+                  if (decision.decision) {
+                    if (vote.options[ optionIndex ].yes_votes)
+                      vote.options[ optionIndex ].yes_votes++;
+                    else
+                      vote.options[ optionIndex ].yes_votes = 1;
+                  }
+                  else {
+                    if (vote.options[ optionIndex ].no_votes)
+                      vote.options[ optionIndex ].no_votes++;
+                    else
+                      vote.options[ optionIndex ].no_votes = 1;
+                  }
                 }
               }
             });
@@ -259,11 +337,23 @@ class VoteManager {
           // reject whole request, if all decisions were rejected
           if (rejectedDecisions === decisions.length) {
             reject({ msg: 'user voted already' });
+            return;
           }
+
+          console.info('vote to save: ', vote);
+          vote.options.forEach((option: Option)=> {
+            console.log(option.title);
+            console.log('yes', option.yes_votes);
+            console.log('no', option.no_votes);
+            console.log(option.opinions);
+          });
 
           // save updated vote
           vote.save()
-            .then(resolve)
+            .then((vote: Vote) => {
+              console.info('saved opinionated votes', vote);
+              resolve(vote);
+            })
             .catch((err: any) => reject({ msg: handleDBError(err).msg }));
         })
         .catch((err: any) => reject({ msg: handleDBError(err).msg }));
