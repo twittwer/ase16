@@ -15,7 +15,7 @@ Backend:
 
 Frontend:
 * [Angular 2](https://angular.io/)
-* [Semantic UI](http://semantic-ui.com/)
+* [Bootstrap for Angular](http://valor-software.com/ng2-bootstrap/)
 
 ## Setup
 
