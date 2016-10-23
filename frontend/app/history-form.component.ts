@@ -33,7 +33,7 @@ import {VoteService} from './vote.service';
             </div>
             <div class="modal-footer">
                 
-                <button type="button" class="btn btn-default" (click)="closeHistoryForm()">Close</button>
+                <button type="button" class="btn btn-default" (click)="onCloseHistoryForm()">Close</button>
             </div>
         </div>
     </div>
@@ -53,7 +53,7 @@ export class HistoryFormComponent {
 
 
 
-    closeHistoryForm(){
+    onCloseHistoryForm(){
         this.closeHistoryForm.emit(false);
     }
 

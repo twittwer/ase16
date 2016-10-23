@@ -164,7 +164,7 @@ export class VoteService {
   /* Utils */
   private isHistoric(vote: Vote): boolean {
     let actualDate = new Date();
-    return Boolean(vote.closed_at && (vote.closed_at < actualDate.toISOString()));
+    return Boolean(vote.closed_at && (vote.closed_at.toString() < actualDate.toISOString()));
   }
 }
 
