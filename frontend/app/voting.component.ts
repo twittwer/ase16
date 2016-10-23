@@ -31,7 +31,7 @@ import myGlobals = require('./globals');
       </div>
         <div *ngIf="showChart">
             <button class="btn btn-primary" (click)="showChart=!showChart;closeChart()">Hide Results</button>
-                <div *ngFor="let chartOption of chartOptions">
+                <div *ngFor="let chartOption of voteService.getOptions()">
                 <label >
                     <simple-chart-example></simple-chart-example>
                 </label>
@@ -60,8 +60,6 @@ export class VotingComponent {
   };
 
   /* BEGIN - Important */
-  public chartOptions = this.voteService.getOptions();
-
   closeChart() {
     myGlobals.chartCounter = 0;
   }

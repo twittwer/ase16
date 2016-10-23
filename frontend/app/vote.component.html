@@ -16,5 +16,18 @@
     <div class="panel-body">
       <h1>Thanks for your Vote</h1>
     </div>
+    <div class="panel-body">
+      <div *ngIf="!showChart">
+        <input type="button" class="btn btn-primary" (click)="showChart=!showChart" value="Show Results">     
+      </div>
+      <div *ngIf="showChart">
+        <button class="btn btn-primary" (click)="showChart=!showChart;closeChart()">Hide Results</button>
+        <div *ngFor="let chartOption of voteService.getOptions()">
+          <label>
+            <simple-chart-example></simple-chart-example>
+          </label>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

@@ -14,11 +14,6 @@ export class MessageBoxComponent {
   constructor(private voteService: VoteService) {
   };
 
-  /* HTML - Important */
-  // next to start voting: <button class="btn btn-default" type="button" (click)="showOldVotes()">Vote History</button>
-  // next to voting-form: <history (showHist)="showHist($event)"  class="modal fade show in danger" id="myModal" role="dialog" *ngIf="showHistoryForm"></history>
-
-  /* BEGIN - Important */
   showOldVotes() {
     this.showHistoryForm = true;
   }
@@ -33,7 +28,6 @@ export class MessageBoxComponent {
       this.showHistoryForm = false;
     }
   }
-  /* END - Important */
 
   createNewVoting() {
     this.showCreateVotingForm = true;

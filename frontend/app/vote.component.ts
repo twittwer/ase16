@@ -1,6 +1,7 @@
 import { Component, OnChanges, SimpleChanges, Input } from '@angular/core';
 import { Vote, Option, Decision, Opinion, VoteService } from "./vote.service";
 import { UserService } from "./user.service";
+import myGlobals = require('./globals');
 
 @Component({
   moduleId: module.id,
@@ -71,6 +72,10 @@ export class VoteComponent implements OnChanges {
 
   private onCheckBoxChange(option_title: string, event: any) {
     this.decisions[ option_title ] = event.target.checked;
+  }
+
+  closeChart() {
+    myGlobals.chartCounter = 0;
   }
 }
 
