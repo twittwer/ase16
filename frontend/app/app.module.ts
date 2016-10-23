@@ -9,7 +9,8 @@ import { LoginModalComponent } from './login-modal.component';
 import { UserService } from "./user.service";
 import { VoteService } from "./vote.service";
 import { VotingComponent } from './voting.component';
-import { VotingFormComponent }  from './voting-form.component';
+import { VotingFormComponent }  from './voting-Form.component';
+import { HistoryFormComponent }  from './history-form.component';
 import { QuestionListComponent }  from './question-list.component';
 import { VoteComponent } from "./vote.component";
 
@@ -33,7 +34,8 @@ import { ChartApp } from './chartapp.component';
     VotingFormComponent,
     QuestionListComponent,
     VoteComponent,
-    ChartApp
+    ChartApp,
+    HistoryFormComponent
   ],
   providers: [ UserService, VoteService ],
   bootstrap: [ AppComponent ]

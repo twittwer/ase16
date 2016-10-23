@@ -7,12 +7,29 @@ import { VoteService } from './vote.service';
   templateUrl: 'messagebox.component.html'
 })
 export class MessageBoxComponent {
+  @Output() displayHist = new EventEmitter<boolean>();
   public showCreateVotingForm: boolean;
+  public showHistoryForm: boolean;
 
   constructor(private voteService: VoteService) {
   };
 
-  createNewVoting() {
+  /* HTML - Important */
+  // next to start voting: <button class="btn btn-default" type="button" (click)="showOldVotes()">Vote History</button>
+  // next to voting-form: <history (showHist)="showHist($event)"  class="modal fade show in danger" id="myModal" role="dialog" *ngIf="showHistoryForm"></history>
+
+  /* BEGIN - Important */
+  showOldVotes() {
+    this.showHistoryForm = true;
+  }
+
+  showHist(){
+    this.showHistoryForm = false;
+    this.displayHist.emit(true);
+  }
+  /* END - Important */
+
+  createNewVoting(){
     this.showCreateVotingForm = true;
   }
 
@@ -30,7 +47,7 @@ export class MessageBoxComponent {
     }
   }
 
-  cancelVoting() {
+  cancelVoting(){
     let currentDate = new Date();
     let currentVote = this.voteService.getCurrentVote();
     currentVote.closed_at = currentDate;
