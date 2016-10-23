@@ -1,0 +1,1 @@
+export var chartCounter: number=0;

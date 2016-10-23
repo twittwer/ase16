@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { VoteService } from './vote.service';
-
+/* BEGIN - Important */
+import myGlobals = require('./globals');
+/* END - Important */
 
 @Component({
   selector: 'voting',
@@ -20,10 +22,31 @@ import { VoteService } from './vote.service';
       <div class="panel-body" >
         <h1>Thanks for your Vote</h1>
       </div>
+      <!-- BEGIN - Important -->
+      <div class="panel-body">
+      
+      <div *ngIf="!showChart">
+            <input type="button" class="btn btn-primary" (click)="showChart=!showChart" value="Show Results">
+            
+      </div>
+        <div *ngIf="showChart">
+            <button class="btn btn-primary" (click)="showChart=!showChart;closeChart()">Hide Results</button>
+                <div *ngFor="let chartOption of voteService.getOptions()">
+                <label >
+                    <simple-chart-example></simple-chart-example>
+                </label>
+           
+              </div>
+        </div> 
+
+    
+    </div>
+    <!-- END - Important -->
     </div>
     </div>
   `
 })
+
 export class VotingComponent {
   public voteOptions = this.currentVote.options;
   public optionsChecked: any[] = [];
@@ -35,6 +58,12 @@ export class VotingComponent {
     console.log('VotingComponent: constructor');
     // this.initOptionsMap();
   };
+
+  /* BEGIN - Important */
+  closeChart() {
+    myGlobals.chartCounter = 0;
+  }
+  /* END - Important */
 
   initOptionsMap();
 

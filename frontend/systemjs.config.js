@@ -27,6 +27,8 @@
       '@ng-bootstrap/ng-bootstrap': 'node_modules/@ng-bootstrap/ng-bootstrap/bundles/ng-bootstrap.js',
       'ng2-cookies': 'npm:ng2-cookies',
       'socket.io-client': 'node_modules/socket.io-client/socket.io.js',
+      'angular2-highcharts':        'https://cdn.rawgit.com/gevgeny/angular2-highcharts/v0.3.0/dist',
+      'highcharts/highstock.src':   'https://cdn.rawgit.com/highcharts/highcharts-dist/v4.2.1/highstock.js',
 
     },
     // packages tells the System loader how to load when no filename and/or no extension
@@ -46,6 +48,11 @@
         main: 'ng2-cookies.js',
         defaultExtension: 'js'
       },
+      'angular2-highcharts': {
+        main: './index.js',
+        defaultExtension: 'js'
+      }
+
       // 'socket.io-client': {
       //   main: 'socket.io',
       //   defaultExtension: 'js'

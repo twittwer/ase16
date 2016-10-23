@@ -7,10 +7,27 @@ import { VoteService } from './vote.service';
   templateUrl: 'messagebox.component.html'
 })
 export class MessageBoxComponent {
+  @Output() displayHistory = new EventEmitter<boolean>();
   public showCreateVotingForm: boolean;
+  public showHistoryForm: boolean;
 
   constructor(private voteService: VoteService) {
   };
+
+  showOldVotes() {
+    this.showHistoryForm = true;
+  }
+
+  showHist() {
+    this.showHistoryForm = false;
+    this.displayHistory.emit(true);
+  }
+
+  closeHistoryForm(show: boolean) {
+    if (show == false) {
+      this.showHistoryForm = false;
+    }
+  }
 
   createNewVoting() {
     this.showCreateVotingForm = true;
@@ -35,7 +52,7 @@ export class MessageBoxComponent {
     let currentVote = this.voteService.getCurrentVote();
     currentVote.closed_at = currentDate;
     this.voteService.sendVote(currentVote, (success: boolean)=> {
-      if(!success) {
+      if (!success) {
         console.log('updating sendVote failed', currentVote);
         alert('Sorry, Cancellation of Voting failed.\nPlease try again.');
       } else {

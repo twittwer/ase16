@@ -10,9 +10,19 @@
                      (showVoting)="showVoting($event)" (closeVotingForm)="closeVotingForm($event)"
                      class="modal fade show in danger" role="dialog">
         </voting-form>
+        <history *ngIf="showHistoryForm" id="myModal"
+                 (showHist)="showHist($event)" (closeHistoryForm)="closeHistoryForm($event)"
+                 class="modal fade show in danger" role="dialog">
+        </history>
       </span>
     </div>
     <div class="voting-buttons">
+      <button type="button"
+              *ngIf="voteService.getHistoricVotes().length"
+              (click)="showOldVotes()"
+              class="btn btn-default">
+        Vote History
+      </button>
       <button type="button"
               *ngIf="!voteService.hasActiveVote()"
               (click)="createNewVoting()"
