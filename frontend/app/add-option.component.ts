@@ -29,7 +29,7 @@ import { UserService } from "./user.service";
 })
 export class AddOptionComponent {
     @Output() closeAddOptionForm = new EventEmitter<boolean>();
-    @Output() showAddOption = new EventEmitter<boolean>();
+    @Output() addNewOption = new EventEmitter<boolean>();
     public optionsArray: any = [];
     private currentVote = this.voteservice.getCurrentVote();
 
@@ -38,18 +38,15 @@ export class AddOptionComponent {
 
     addOption(){
 
-        this.showAddOption.emit(true);
-        let options: any = [];
+        this.closeAddOptionForm.emit(false);
+        let options: any = this.voteservice.getCurrentVote().options;
         this.optionsArray.forEach((option: string) => {
             options.push({title:option});
         });
 
-        var appendVote = {
-            title: options
-        };
-
-        this.voteservice.updateOptions(appendVote, (appendVote: any)=>{
-            this.showAddOption.emit(true);
+        console.log();
+        this.voteservice.updateOptions(options, (success: any)=>{
+            console.log(success);
         });
     };
 
