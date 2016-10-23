@@ -9,7 +9,8 @@ enum EventType { Create, Update }
 const EVENTS = {
   SEND_VOTE: 'sendVote',
   UPDATE_OPTIONS: 'updateOptions',
-  SEND_OPINION: 'sendOpinion'
+  SEND_OPINION: 'sendOpinion',
+  LIST_VOTES: 'listVotes'
 };
 
 /* Interfaces */
@@ -49,7 +50,7 @@ export default class VoteSocketController {
     socket.on(EVENTS.UPDATE_OPTIONS, (data: OptionsData) => this.handleUpdateOptions(data));
     socket.on(EVENTS.SEND_OPINION, (data: OpinionData) => this.handleSendOpinion(data));
 
-    socket.on('listVotes', () => {
+    socket.on(EVENTS.LIST_VOTES, () => {
       VoteModel.find({ room: 'default' })
         .then((votes: Vote[]) => {
           socket.emit('loadVotes', votes);
@@ -91,7 +92,10 @@ export default class VoteSocketController {
 
   private handleSendOpinion(data: OpinionData) {
     VoteManager.setVoteOpinion(data.vote_id, data.decisions, this.socket.username)
-      .then((vote: Vote) => this.responseSendOpinion(null, vote))
+      .then((vote: Vote) => {
+        console.log('sendOpinion succeeded', vote);
+        this.responseSendOpinion(null, vote);
+      })
       .catch((err: any) => {
         console.log('sendOpinion failed', err);
         this.responseSendOpinion({ msg: handleDBError(err).msg }, null);

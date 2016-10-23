@@ -151,11 +151,14 @@ export class VoteService {
         vote_id: vote_id,
         decisions: decisions
       };
+      console.log('sendOpinion', decisionObject);
       this.socket.emit('sendOpinion', decisionObject);
       this.socket.on('sendOpinionSucceeded', ()=> {
+        console.log('sendOpinionSucceeded received');
         cb(true);
       });
       this.socket.on('sendOpinionFailed', ()=> {
+        console.log('sendOpinionFailed received');
         cb(false);
       });
     }
