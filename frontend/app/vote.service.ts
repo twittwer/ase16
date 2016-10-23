@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
-import { UserService } from './user.service';
+import { Injectable } from "@angular/core";
+import { UserService } from "./user.service";
 import io = require('socket.io-client');
 
+// const DEBUG: boolean = true;
 const DEBUG: boolean = false;
 
 @Injectable()
@@ -20,6 +21,7 @@ export class VoteService {
 
   private setListener() {
     this.socket.on('updateVote', (updatedVote: Vote)=> {
+      console.log("\n >> updateVote received << \n", updatedVote);
       this.currentVote = updatedVote;
       let actualDate = new Date;
       if (this.currentVote.closed_at < actualDate) {
@@ -28,6 +30,7 @@ export class VoteService {
       }
     });
     this.socket.on('newVote', (newVote: Vote)=> {
+      console.log("\n >> newVote received << \n", newVote);
       this.currentVote = newVote;
       let actualDate = new Date;
       if (this.currentVote.closed_at < actualDate) {
@@ -80,11 +83,12 @@ export class VoteService {
       cb(true);
     } else {
       this.socket.emit('sendVote', { vote: vote });
-      this.socket.on('sentVoteSucceeded', ()=> {
-        console.log("sentVote Success");
+      this.socket.on('sendVoteSucceeded', ()=> {
+        console.log('sendVoteSucceeded received');
         cb(true);
       });
-      this.socket.on('sentVoteFailed', ()=> {
+      this.socket.on('sendVoteFailed', ()=> {
+        console.log('sendVoteFailed received');
         this.currentVote = null;
         cb(false);
       });
