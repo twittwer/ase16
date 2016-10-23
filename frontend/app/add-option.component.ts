@@ -29,24 +29,23 @@ import { UserService } from "./user.service";
 })
 export class AddOptionComponent {
     @Output() closeAddOptionForm = new EventEmitter<boolean>();
-    @Output() addNewOption = new EventEmitter<boolean>();
     public optionsArray: any = [];
-    private currentVote = this.voteservice.getCurrentVote();
+    private currentVote = this.voteService.getCurrentVote();
 
-    constructor(private voteservice:VoteService){};
+    constructor(private voteService:VoteService){};
 
 
     addOption(){
 
         this.closeAddOptionForm.emit(false);
-        let options: any = this.voteservice.getCurrentVote().options;
+        let options: any = this.voteService.getCurrentVote().options;
         this.optionsArray.forEach((option: string) => {
             options.push({title:option});
         });
 
         console.log();
-        this.voteservice.updateOptions(options, (success: any)=>{
-            console.log(success);
+        this.voteService.updateOptions(options, (success: any)=>{
+            console.log('updateOptions success? ', success);
         });
     };
 
