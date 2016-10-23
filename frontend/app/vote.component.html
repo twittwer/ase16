@@ -9,7 +9,12 @@
           {{option.title}}
         </label>
       </div>
+      <addUserOption *ngIf="showAddUserOptionForm" id="myModal"
+                     (closeAddOptionForm)="closeAddOptionForm($event)"
+                     class="modal fade show in danger" role="dialog">
+      </addUserOption>
       <button class="btn btn-default" type="button" (click)="sendDecisions()">Vote</button>
+      <button class="btn btn-default" type="button" (click)="addNewOption()">Add Option</button>
     </div>
   </div>
   <div *ngIf="alreadyVoted()" class="panel panel-default">

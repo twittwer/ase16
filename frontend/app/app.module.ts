@@ -17,6 +17,7 @@ import { VoteComponent } from "./vote.component";
 
 import { ChartModule } from 'angular2-highcharts';
 import { ChartApp } from './chartapp.component';
+import { AddOptionComponent } from "./add-option.component";
 
 
 @NgModule({
@@ -31,6 +32,7 @@ import { ChartApp } from './chartapp.component';
     HeaderComponent,
     MessageBoxComponent,
     VotingComponent,
+    AddOptionComponent,
     VotingFormComponent,
     QuestionListComponent,
     VoteComponent,

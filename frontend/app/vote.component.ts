@@ -11,6 +11,7 @@ import myGlobals = require('./globals');
 export class VoteComponent implements OnChanges {
   @Input() private vote: Vote;
   private decisions: DecisionMap = {};
+  private showAddUserOptionForm: boolean = false;
 
   constructor(private userService: UserService,
               private voteService: VoteService) {
@@ -76,6 +77,16 @@ export class VoteComponent implements OnChanges {
 
   closeChart() {
     myGlobals.chartCounter = 0;
+  }
+
+  addNewOption() {
+    this.showAddUserOptionForm = true;
+  }
+
+  closeAddOptionForm(show: boolean) {
+    if (show == false) {
+      this.showAddUserOptionForm = false;
+    }
   }
 }
 

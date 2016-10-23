@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { VoteService } from './vote.service';
+import { UserService } from "./user.service";
 
 @Component({
   moduleId: module.id,
@@ -11,7 +12,8 @@ export class MessageBoxComponent {
   public showCreateVotingForm: boolean;
   public showHistoryForm: boolean;
 
-  constructor(private voteService: VoteService) {
+  constructor(private voteService: VoteService,
+              private userService: UserService) {
   };
 
   showOldVotes() {
@@ -45,6 +47,11 @@ export class MessageBoxComponent {
     if (isVoting == true) {
       this.showCreateVotingForm = false;
     }
+  }
+
+  canCancel(): boolean {
+    return this.voteService.hasActiveVote()
+      && (this.voteService.getCurrentVote().creator === this.userService.getUsername());
   }
 
   cancelVoting() {
