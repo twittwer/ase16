@@ -4,28 +4,36 @@ import {VoteService} from './vote.service';
 @Component({
     selector: 'history',
     template: `
-<div class="modal-dialog">
+<div style="overflow:scroll"  class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" (click)="closeCreateVotingForm()">&times;</button>
-                <h4 class="modal-title">Create New Voting</h4>
+              <!--  <button type="button" class="close" data-dismiss="modal" (click)="closeCreateVotingForm()">&times;</button> -->
+                <h4 class="modal-title">Voting History</h4>
             </div>
+            
             <div class="modal-body">
             
            <div *ngFor="let oldVote of oldVotes"> 
-             
-                <label >
-                <!-- <p>{{oldVote.title}}</p> -->
-                  
-                  
-                </label>
+          
+                           <h2 class="divider">{{oldVote.title}}</h2>
+                           
+                         
+                        <div *ngFor="let oldOption of oldVote.options">
+                        
+                               <h3>Voting Options: {{oldOption.title}}</h3>
+                               <h4>Yes Votes: {{oldOption.yes_votes}}</h4>
+                               <h4>No Votes: {{oldOption.no_votes}}</h4>
+                      
+                        </div>
+                            
+                     
            
               </div>
               
             </div>
             <div class="modal-footer">
                 
-                <button type="button" class="btn btn-default" (click)="closeCreateVotingForm()">Close</button>
+                <button type="button" class="btn btn-default" (click)="closeHistoryForm()">Close</button>
             </div>
         </div>
     </div>
@@ -35,15 +43,19 @@ import {VoteService} from './vote.service';
 
 
 export class HistoryFormComponent {
-    @Output() closeHistForm = new EventEmitter<boolean>();
+    @Output() closeHistoryForm = new EventEmitter<boolean>();
+
 
     constructor(private voteservice:VoteService){};
+
     public oldVotes = this.voteservice.getHistoricVotes();
 
 
 
 
-    closeCreateVotingForm(){
-        this.closeHistForm.emit(false);
+    closeHistoryForm(){
+        this.closeHistoryForm.emit(false);
     }
+
+
 }
