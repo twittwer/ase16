@@ -66,7 +66,8 @@ export class ChartApp {
 
 
   //  }
-    options: HighchartsOptions;
+  //   options: HighchartsOptions;
+    options: any;
 
 }
 

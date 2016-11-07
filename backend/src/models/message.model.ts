@@ -1,7 +1,7 @@
 import * as mongoose from "mongoose";
 
 export interface Message extends mongoose.Document {
-  _id: string;
+  _id: any;
   text: string;
   author?: string;
   sent_at?: Date;

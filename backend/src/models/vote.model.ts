@@ -15,7 +15,7 @@ export interface Option {
 }
 
 export interface Vote extends mongoose.Document {
-  _id: string;
+  _id: any;
   title: string;
   description?: string;
   creator?: string;

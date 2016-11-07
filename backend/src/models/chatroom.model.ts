@@ -1,7 +1,7 @@
 import * as mongoose from "mongoose";
 
 export interface Chatroom extends mongoose.Document {
-  _id: string;
+  _id: any;
   name: string;
   members: string[];
   vote: Date;
