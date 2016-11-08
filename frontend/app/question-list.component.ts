@@ -5,15 +5,15 @@ import {Component, EventEmitter, Input, Output} from '@angular/core';
     template: `
     <div>
         <div class="addQuestionControls">
-            <input type="text" class="form-control" #description placeholder="Your Answer here" />
-            <button class="btn btn-primary" (click)="addQuestion(description)">Add</button>
+            <input type="text" class="form-control" #description placeholder="Bezeichnung" />
+            <button class="btn btn-primary" (click)="addQuestion(description)">Hinzufügen</button>
         </div>
         <table class="table">
             <thead>
             </thead>
             <tbody>
                 <tr *ngFor="let question of questions" style="margin-bottom: 10px;">
-                    <td>{{question}}</td><td><button  class="btn btn-primary" (click)="removeQuestion(question)">Delete</button></td>
+                    <td>{{question}}</td><td><button  class="btn btn-primary" (click)="removeQuestion(question)">Löschen</button></td>
                 </tr>
             </tbody>
         </table>

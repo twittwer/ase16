@@ -21,19 +21,19 @@
               *ngIf="voteService.getHistoricVotes().length"
               (click)="showOldVotes()"
               class="btn btn-default">
-        Vote History
+        Abstimmungen Archiv
       </button>
       <button type="button"
               *ngIf="!voteService.hasActiveVote()"
               (click)="createNewVoting()"
               class="btn btn-success">
-        Start Voting
+        Neue Abstimmung
       </button>
       <button type="button"
               *ngIf="canCancel()"
               (click)="cancelVoting()"
               class="btn btn-warning">
-        Cancel Voting
+        Abstimmung beenden
       </button>
     </div>
   </div>

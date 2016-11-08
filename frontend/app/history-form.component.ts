@@ -7,8 +7,8 @@ import {VoteService} from './vote.service';
 <div style="overflow:scroll"  class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-              <!--  <button type="button" class="close" data-dismiss="modal" (click)="closeCreateVotingForm()">&times;</button> -->
-                <h4 class="modal-title">Voting History</h4>
+                <button type="button" class="close" data-dismiss="modal" (click)="onCloseHistoryForm()">&times;</button>
+                <h4 class="modal-title">Abstimmungen Archiv</h4>
             </div>
             
             <div class="modal-body">
@@ -20,9 +20,9 @@ import {VoteService} from './vote.service';
                          
                         <div *ngFor="let oldOption of oldVote.options">
                         
-                               <h3>Voting Options: {{oldOption.title}}</h3>
-                               <h4>Yes Votes: {{oldOption.yes_votes}}</h4>
-                               <h4>No Votes: {{oldOption.no_votes}}</h4>
+                               <h3>Abstimmungsoptionen: {{oldOption.title}}</h3>
+                               <h4>Ja Stimmen: {{oldOption.yes_votes}}</h4>
+                               <h4>Nein Stimmen: {{oldOption.no_votes}}</h4>
                       
                         </div>
                             
@@ -33,7 +33,7 @@ import {VoteService} from './vote.service';
             </div>
             <div class="modal-footer">
                 
-                <button type="button" class="btn btn-default" (click)="onCloseHistoryForm()">Close</button>
+                <button type="button" class="btn btn-default" (click)="onCloseHistoryForm()">Schließen</button>
             </div>
         </div>
     </div>

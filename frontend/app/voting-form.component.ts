@@ -8,29 +8,30 @@ import { VoteService, Option, Vote } from './vote.service';
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" (click)="closeCreateVotingForm()">&times;</button>
-                <h4 class="modal-title">Create New Voting</h4>
+                <h4 class="modal-title">Neue Abstimmung</h4>
             </div>
             <div class="modal-body">
                 <div class="input-group">
                     <div class="input-group">
                         <div class="input-group">
-                            <span class="input-group-addon" id="sizing-addon2">Question</span>
-                            <input type="text" class="form-control" placeholder="Your Question here" aria-describedby="sizing-addon2" #voteDescription>
+                            <span class="input-group-addon" id="sizing-addon2">Beschreibung</span>
+                            <input type="text" class="form-control" placeholder="Beschreibung" aria-describedby="sizing-addon2" #voteDescription>
                         </div>
                         <div class="input-group voting-option">
-                            <span class="input-group-addon" id="sizing-addon2">Expiration Date</span>
-                            <input type="date" class="form-control" placeholder="Date" aria-describedby="sizing-addon2" #date>
+                            <span class="input-group-addon" id="sizing-addon2">Ablaufdatum</span>
+                            <input type="date" class="form-control" placeholder="Ablaufdatum" aria-describedby="sizing-addon2" #date>
                         </div>
                     </div>
                     <div class="voting-answers">
-                        <h3>Anwers</h3>
+                        <h3>Optionen</h3>
+                        <h6>(mindestens 1 Option hinzufügen)</h6>
                         <question-list (getOptions)="getOptions($event)"></question-list>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" (click)="startVoting(voteDescription.value, date.value)">Finish</button>
-                <button type="button" class="btn btn-default" (click)="closeCreateVotingForm()">Close</button>
+                <button type="button" class="btn btn-default" (click)="startVoting(voteDescription.value, date.value)">Speichern</button>
+                <button type="button" class="btn btn-default" (click)="closeCreateVotingForm()">Schließen</button>
             </div>
         </div>
     </div>

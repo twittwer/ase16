@@ -9,19 +9,19 @@ import { VoteService } from './vote.service';
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" (click)="closeAddUserOption()">&times;</button>
-                <h4 class="modal-title">Add New Option</h4>
+                <h4 class="modal-title">Option anlegen</h4>
             </div>
             <div class="modal-body">
                 <div class="input-group">
                     <div>
-                        <h3>Options</h3>
+                        <h3>Optionen</h3>
                         <question-list (getOptions)="getOptions($event)"></question-list>
                     </div>
                 </div>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" (click)="addOption()">Finish</button>
-                <button type="button" class="btn btn-default" (click)="closeAddUserOption()">Close</button>
+                <button type="button" class="btn btn-default" (click)="addOption()">Anlegen</button>
+                <button type="button" class="btn btn-default" (click)="closeAddUserOption()">Schließen</button>
             </div>
         </div>
     </div>

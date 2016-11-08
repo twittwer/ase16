@@ -6,12 +6,12 @@
     <ul class="nav navbar-nav navbar-right">
       <li>
         <p class="navbar-text">
-          Signed in as <span [innerHTML]="userService.getUsername() || 'ERROR'"></span>
+          Angemeldet als <span [innerHTML]="userService.getUsername() || 'ERROR'"></span>
         </p>
       </li>
       <li>
         <button type="button" class="btn btn-default navbar-btn" (click)="userService.logout()">
-          Sign out
+          Abmelden
         </button>
       </li>
     </ul>
