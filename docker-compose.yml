@@ -13,8 +13,6 @@ services:
  mongodb:
   image: mongo:latest
   container_name: mongodb
-  volumes:
-   - ./data/db:/data/db
 
  backend:
   image: node:latest
