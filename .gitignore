@@ -25,3 +25,8 @@ frontend/app/*.js.map
 
 # Application Data
 data/db
+
+# Tests
+/frontend/coverage
+/frontend/e2e/*.js
+/frontend/e2e/*.map

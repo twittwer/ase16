@@ -1,0 +1,40 @@
+<div class="messagebox-container">
+  <div class="messagebox-showmessage">
+  </div>
+  <div class="messagebox-sendmessage">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Write your Message here">
+      <span class="input-group-btn">
+        <button class="btn btn-default" type="button">Send</button>
+        <vote-form *ngIf="showCreateVotingForm" id="myModal"
+                     (showVoting)="showVoting($event)" (closeVotingForm)="closeVotingForm($event)"
+                     class="modal fade show in danger" role="dialog">
+        </vote-form>
+        <history *ngIf="showHistoryForm" id="myModal"
+                 (showHist)="showHist($event)" (closeHistoryForm)="closeHistoryForm($event)"
+                 class="modal fade show in danger" role="dialog">
+        </history>
+      </span>
+    </div>
+    <div class="voting-buttons">
+      <button type="button"
+              *ngIf="voteService.getHistoricVotes().length"
+              (click)="showOldVotes()"
+              class="btn btn-default">
+        Abstimmungen Archiv
+      </button>
+      <button type="button"
+              *ngIf="!voteService.hasActiveVote()"
+              (click)="createNewVoting()"
+              class="btn btn-success">
+        Neue Abstimmung
+      </button>
+      <button type="button"
+              *ngIf="canCancel()"
+              (click)="cancelVoting()"
+              class="btn btn-warning">
+        Abstimmung beenden
+      </button>
+    </div>
+  </div>
+</div>
