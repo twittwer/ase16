@@ -11,8 +11,8 @@
         </label>
       </div>
       <add-option *ngIf="showAddUserOptionForm" id="myModal"
-                     (closeAddOptionForm)="closeAddOptionForm($event)"
-                     class="modal fade show in danger" role="dialog">
+                  (closeAddOptionForm)="closeAddOptionForm($event)"
+                  class="modal fade show in danger" role="dialog">
       </add-option>
       <button class="btn btn-default" type="button" (click)="sendDecisions()">Abstimmen</button>
       <button class="btn btn-default" type="button" (click)="addNewOption()">Option anlegen</button>
@@ -24,7 +24,8 @@
     </div>
     <div class="panel-body">
       <div *ngIf="!showChart">
-        <input type="button" class="btn btn-primary" (click)="showChart=!showChart" value="Ergebnisse anzeigen">     
+        <input type="button" class="btn btn-primary" (click)="showChart=!showChart" value="Ergebnisse anzeigen">
+             
       </div>
       <div *ngIf="showChart">
         <button class="btn btn-primary" (click)="showChart=!showChart;closeChart()">Ergebnisse ausblenden</button>

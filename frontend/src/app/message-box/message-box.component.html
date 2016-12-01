@@ -7,8 +7,8 @@
       <span class="input-group-btn">
         <button class="btn btn-default" type="button">Send</button>
         <vote-form *ngIf="showCreateVotingForm" id="myModal"
-                     (showVoting)="showVoting($event)" (closeVotingForm)="closeVotingForm($event)"
-                     class="modal fade show in danger" role="dialog">
+                   (showVoting)="showVoting($event)" (closeVotingForm)="closeVotingForm($event)"
+                   class="modal fade show in danger" role="dialog">
         </vote-form>
         <history *ngIf="showHistoryForm" id="myModal"
                  (showHist)="showHist($event)" (closeHistoryForm)="closeHistoryForm($event)"

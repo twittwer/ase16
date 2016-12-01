@@ -1,6 +1,6 @@
 <div>
   <div class="addQuestionControls">
-    <input type="text" class="form-control" #description placeholder="Bezeichnung" />
+    <input type="text" class="form-control" #description placeholder="Bezeichnung"/>
     <button class="btn btn-primary" (click)="addQuestion(description)">Hinzufügen</button>
   </div>
   <table class="table">
@@ -8,7 +8,10 @@
     </thead>
     <tbody>
       <tr *ngFor="let question of questions" style="margin-bottom: 10px;">
-        <td>{{question}}</td><td><button  class="btn btn-primary" (click)="removeQuestion(question)">Löschen</button></td>
+        <td>{{question}}</td>
+        <td>
+          <button class="btn btn-primary" (click)="removeQuestion(question)">Löschen</button>
+        </td>
       </tr>
     </tbody>
   </table>

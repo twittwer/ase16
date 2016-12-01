@@ -1,56 +1,58 @@
 /* Master Styles */
 h1 {
-  color: #369;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 250%;
+  color       : #336699;
+  font-family : Arial, Helvetica, sans-serif;
+  font-size   : 250%;
 }
+
 h2, h3 {
-  color: #444;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: lighter;
+  color       : #444444;
+  font-family : Arial, Helvetica, sans-serif;
+  font-weight : lighter;
 }
+
 body {
-  margin: 2em;
+  margin : 2em;
 }
 
-.messagebox-container{
-  margin-left: 10%;
-  margin-right: 10%;
+.messagebox-container {
+  margin-left  : 10%;
+  margin-right : 10%;
 }
 
-.messagebox-showmessage{
-  overflow: scroll;
-  height: 70%;
+.messagebox-showmessage {
+  overflow : scroll;
+  height   : 70%;
 }
 
-.messagebox-sendmessage{
-  margin-top: 10px;
+.messagebox-sendmessage {
+  margin-top : 10px;
 }
 
-
-.onLeftSide{
-  width: 70%;
-}
-.voting-container{
-  width: 30%;
-  float: right;
-  padding-right: 30px;
+.onLeftSide {
+  width : 70%;
 }
 
-.messagebox-container{
-  float:left;
+.voting-container {
+  width         : 30%;
+  float         : right;
+  padding-right : 30px;
 }
 
-.voting-buttons{
-  margin-top: 10px;
-  text-align: right;
+.messagebox-container {
+  float : left;
 }
 
-.voting-option{
-  margin-bottom: 10px;
-  margin-top: 10px;
+.voting-buttons {
+  margin-top : 10px;
+  text-align : right;
 }
 
-.voting-number{
-  width: 30%;
+.voting-option {
+  margin-bottom : 10px;
+  margin-top    : 10px;
+}
+
+.voting-number {
+  width : 30%;
 }
