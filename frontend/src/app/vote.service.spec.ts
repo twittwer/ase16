@@ -1,5 +1,5 @@
 /* tslint:disable:no-unused-variable */
-import { TestBed, inject, it , expect} from '@angular/core/testing';
+import { TestBed, inject} from '@angular/core/testing';
 import { VoteService } from './vote.service';
 import { UserService } from './user.service';
 
