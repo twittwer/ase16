@@ -5,23 +5,23 @@
 logs
 *.log
 npm-debug.log*
+.node_repl_history
 
 # Dependencies
 node_modules
-typings
-frontend/semantic
+backend/typings
+
+# Application Data
+data/db
 
 # Builds
 build
-frontend/app/*.js
-frontend/app/*.js.map
+
+# Tests
+/frontend/coverage
+/frontend/e2e/*.js
+/frontend/e2e/*.map
 
 # Caches
 .npm
 *.swp
-
-# REPL
-.node_repl_history
-
-# Application Data
-data/db

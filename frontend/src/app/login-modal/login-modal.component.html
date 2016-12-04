@@ -1,0 +1,10 @@
+<div *ngIf="!userService.isLoggedIn()" class="loginmodal-container">
+  <h1>Anmeldung</h1>
+  <div class="input-group">
+    <input type="text" #username
+           placeholder="Username"/>
+    <input type="submit"
+           (click)="logIn(username.value)"
+           class="login loginmodal-submit" value="Anmelden"/>
+  </div>
+</div>

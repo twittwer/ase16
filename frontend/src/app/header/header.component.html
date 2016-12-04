@@ -1,0 +1,19 @@
+<nav class="navbar navbar-default">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <a class="navbar-brand">ChatApp-ASE16</a>
+    </div>
+    <ul class="nav navbar-nav navbar-right">
+      <li>
+        <p class="navbar-text">
+          Angemeldet als <span [innerHTML]="userService.getUsername() || 'ERROR'"></span>
+        </p>
+      </li>
+      <li>
+        <button type="button" class="btn btn-default navbar-btn" (click)="userService.logout()">
+          Abmelden
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>
