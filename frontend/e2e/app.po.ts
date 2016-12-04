@@ -6,6 +6,6 @@ export class Ase16Page {
   }
 
   getParagraphText() {
-    return element(by.css('-root h1')).getText();
+    return element(by.css('ase-root h1')).getText();
   }
 }
