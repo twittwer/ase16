@@ -25,7 +25,7 @@ export class MessageBoxComponent {
   }
 
   closeHistoryForm ( show: boolean ) {
-    if ( show == false ) {
+    if ( !show ) {
       this.showHistoryForm = false;
     }
   }
@@ -35,7 +35,7 @@ export class MessageBoxComponent {
   }
 
   closeVotingForm ( show: boolean ) {
-    if ( show == false ) {
+    if ( !show ) {
       this.showCreateVotingForm = false;
     }
   }
@@ -43,7 +43,7 @@ export class MessageBoxComponent {
   showVoting ( isVoting: boolean ) {
     console.log( 'showVoting', arguments );
 
-    if ( isVoting == true ) {
+    if ( isVoting ) {
       this.showCreateVotingForm = false;
     }
   }

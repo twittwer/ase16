@@ -15,7 +15,7 @@ export class VoteFormComponent {
   };
 
   startVoting ( description, date ) {
-    console.info( 'startVoting', arguments );
+    console.log( 'startVoting', arguments );
 
     let options: Option[] = [];
     this.optionsArray.forEach( ( option: string ) => {
@@ -23,7 +23,7 @@ export class VoteFormComponent {
     } );
     let newVote: Vote = {
       title    : description,
-      room     : "default",
+      room     : 'default',
       closed_at: new Date( date ),
       options  : options
     };

@@ -30,7 +30,7 @@ export class ResultChartComponent implements OnInit {
       },
       series: [
         {
-          name: 'Votes', //colorByPoint: true,
+          name: 'Votes', // colorByPoint: true,
           data: [
             {
               name: 'Yes',
