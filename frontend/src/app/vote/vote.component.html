@@ -29,11 +29,12 @@
       </div>
       <div *ngIf="showChart">
         <button class="btn btn-primary" (click)="showChart=!showChart;closeChart()">Ergebnisse ausblenden</button>
-        <div *ngFor="let chartOption of voteService.getOptions()">
+        <!-- <div *ngFor="let chartOption of voteService.getOptions()">
           <label>
             <result-chart></result-chart>
           </label>
-        </div>
+        </div> -->
+        <vote-report [vote]="voteService.getCurrentVote()"> </vote-report>
       </div>
     </div>
   </div>
