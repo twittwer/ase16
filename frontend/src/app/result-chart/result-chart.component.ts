@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { VoteService } from '../vote.service';
 import { Option } from '../interfaces/vote';
-
 // import myGlobals = require('../globals');
 import * as myGlobals from '../globals';
 

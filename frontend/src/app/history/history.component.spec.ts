@@ -14,10 +14,12 @@ describe( 'Component: History', () => {
         VoteService,
         UserService
       ],
-      declarations: [ HistoryComponent,
+      declarations: [
+        HistoryComponent,
         VoteReportComponent,
         ResultChartComponent,
-        ChartComponent ]
+        ChartComponent
+      ]
     } );
 
     this.fixture = TestBed.createComponent( HistoryComponent );
