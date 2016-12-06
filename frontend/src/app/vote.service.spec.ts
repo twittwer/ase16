@@ -13,9 +13,10 @@ describe( 'Service: Vote', () => {
     } );
   } );
 
-  it('vote array is null', inject([VoteService], (service: VoteService) => {
-    expect(service.hasActiveVote()).toBeFalsy();
-  }));
+  it( 'vote array is null', inject( [ VoteService ], ( service: VoteService ) => {
+    expect( service.hasActiveVote() )
+      .toBeFalsy();
+  } ) );
 
   it( 'check for vote', inject( [ VoteService ], ( service: VoteService ) => {
     let vote = {
