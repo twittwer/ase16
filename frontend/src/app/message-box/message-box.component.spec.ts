@@ -6,6 +6,9 @@ import { MessageBoxComponent } from './message-box.component';
 import { VoteFormComponent } from '../vote-form/vote-form.component';
 import { HistoryComponent } from '../history/history.component';
 import { QuestionListComponent } from '../question-list/question-list.component';
+import { VoteReportComponent } from '../vote-report/vote-report.component';
+import { ResultChartComponent } from '../result-chart/result-chart.component';
+import { ChartComponent } from 'angular2-highcharts';
 
 describe( 'Component: MessageBox', () => {
   beforeEach( () => {
@@ -18,7 +21,10 @@ describe( 'Component: MessageBox', () => {
         MessageBoxComponent,
         VoteFormComponent,
         HistoryComponent,
-        QuestionListComponent
+        QuestionListComponent,
+        VoteReportComponent,
+        ResultChartComponent,
+        ChartComponent
       ]
     } );
 

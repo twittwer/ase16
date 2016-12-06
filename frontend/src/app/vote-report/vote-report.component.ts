@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Input } from '@angular/core';
+import { Vote, Option, Decision, Opinion, VoteService } from '../vote.service';
 
 @Component({
   selector: 'vote-report',
@@ -6,6 +7,8 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./vote-report.component.scss']
 })
 export class VoteReportComponent implements OnInit {
+
+  @Input() public vote: Vote;
 
   constructor() { }
 
