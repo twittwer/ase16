@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { VoteService } from '../vote.service';
+import { UserService } from '../user.service';
 
 @Component({
   selector: 'ase-main',
@@ -7,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class AseMainComponent implements OnInit {
 
-  constructor() { }
+  constructor(private voteService: VoteService) { }
 
   ngOnInit() {
   }

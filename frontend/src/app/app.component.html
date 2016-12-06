@@ -1,10 +1,3 @@
 <header *ngIf="userService.isLoggedIn()"></header>
-<div *ngIf="userService.isLoggedIn()">
-  <div [ngClass]="{'onLeftSide': voteService.hasActiveVote()}">
-    <message-box class="messagebox-container"></message-box>
-  </div>
-  <vote-box *ngIf="voteService.hasActiveVote()"
-            [vote]="voteService.getCurrentVote()"
-            class="voting-container"></vote-box>
-</div>
+<ase-main></ase-main>
 <login-modal></login-modal>
