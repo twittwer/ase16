@@ -10,9 +10,9 @@ module.exports = function ( config ) {
     ],
     plugins              : [
       require( 'karma-jasmine' ),
-      require( 'karma-chrome-launcher' ),
       require( 'karma-phantomjs-launcher' ),
       require( 'karma-remap-istanbul' ),
+      require( 'karma-spec-reporter' ),
       require( 'angular-cli/plugins/karma' )
     ],
     files                : [
@@ -36,6 +36,7 @@ module.exports = function ( config ) {
     },
     reporters            : [
       'progress',
+      'spec',
       'karma-remap-istanbul'
     ],
     port                 : 9876,
