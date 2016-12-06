@@ -1,0 +1,7 @@
+<div [ngClass]="{'onLeftSide': voteService.hasActiveVote()}">
+  <message-box class="messagebox-container"></message-box>
+</div>
+<vote-box *ngIf="voteService.hasActiveVote()"
+          [vote]="voteService.getCurrentVote()"
+          class="voting-container">
+</vote-box>
