@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Cookie } from 'ng2-cookies/ng2-cookies';
 import * as io from 'socket.io-client';
+import { SimpleError } from './interfaces/simple-error';
+import { User } from './interfaces/user';
 
 // use environment.ts
 const DEBUG = true;
@@ -76,15 +78,4 @@ export class UserService {
     this.username = null;
     this.socket = io.connect( this.serverUrl );
   }
-}
-
-export interface User {
-  _id?: string;
-  username: string;
-}
-
-export interface SimpleError {
-  msg: string;
-  code?: string;
-  error?: any;
 }
