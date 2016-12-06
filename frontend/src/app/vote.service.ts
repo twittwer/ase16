@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 import { UserService } from './user.service';
+import { OpinionData, Decision, OptionsData } from './interfaces/vote-socket';
+import { Vote, Option } from './interfaces/vote';
 
 // use environment.ts
 // const DEBUG = true;
@@ -175,44 +177,4 @@ export class VoteService {
     let actualDate = new Date();
     return Boolean( vote.closed_at && (vote.closed_at.toString() < actualDate.toISOString()) );
   }
-}
-
-export interface Vote {
-  _id?: string;
-  title: string;
-  room: string;
-  creator?: string;
-  opened_at?: Date;
-  closed_at?: Date;
-  options: Option[];
-}
-
-export interface Option {
-  title: string;
-  creator?: string;
-  yes_votes?: number;
-  no_votes?: number;
-  opinions?: Opinion[];
-}
-
-export interface Opinion {
-  decider?: string;
-  decision?: boolean;
-}
-
-interface VoteRef {
-  vote_id: string;
-}
-
-export interface OptionsData extends VoteRef {
-  options: Option[];
-}
-
-export interface OpinionData extends VoteRef {
-  decisions: Decision[];
-}
-
-export interface Decision { // ~> Opinion
-  option_title: string;
-  decision: boolean;
 }

@@ -1,6 +1,9 @@
 import { Component, OnChanges, SimpleChanges, Input } from '@angular/core';
-import { Vote, Option, Decision, Opinion, VoteService } from '../vote.service';
+import { VoteService } from '../vote.service';
 import { UserService } from '../user.service';
+import { Vote, Option, Opinion } from '../interfaces/vote';
+import { Decision } from '../interfaces/vote-socket';
+
 // import myGlobals = require('../globals');
 import * as myGlobals from '../globals';
 

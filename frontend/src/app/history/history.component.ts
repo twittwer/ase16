@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output, OnInit } from '@angular/core';
-import { VoteService, Vote } from '../vote.service';
+import { VoteService } from '../vote.service';
+import { Vote } from '../interfaces/vote';
 
 @Component( {
   selector   : 'history',

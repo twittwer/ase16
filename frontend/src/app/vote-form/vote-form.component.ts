@@ -1,5 +1,6 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-import { VoteService, Option, Vote } from '../vote.service';
+import { VoteService } from '../vote.service';
+import { Option, Vote } from '../interfaces/vote';
 
 @Component( {
   selector   : 'vote-form',
