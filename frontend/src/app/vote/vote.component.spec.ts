@@ -7,6 +7,7 @@ import { ResultChartComponent } from '../result-chart/result-chart.component';
 import { AddOptionComponent } from '../add-option/add-option.component';
 import { ChartComponent } from 'angular2-highcharts';
 import { QuestionListComponent } from '../question-list/question-list.component';
+import { VoteReportComponent } from '../vote-report/vote-report.component';
 
 describe( 'Component: Vote', () => {
   beforeEach( () => {
@@ -20,7 +21,8 @@ describe( 'Component: Vote', () => {
         ResultChartComponent,
         AddOptionComponent,
         ChartComponent,
-        QuestionListComponent
+        QuestionListComponent,
+        VoteReportComponent
       ]
     } );
 

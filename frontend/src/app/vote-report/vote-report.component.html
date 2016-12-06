@@ -1,3 +1,12 @@
-<p>
-  vote-report works!
-</p>
+<div *ngFor="let chartOption of vote.options">
+
+  <h3>Abstimmungsoptionen: {{chartOption.title}}</h3>
+  <h4>Ja Stimmen: {{chartOption.yes_votes}}</h4>
+  <h4>Nein Stimmen: {{chartOption.no_votes}}</h4>
+
+  <label>
+    <result-chart></result-chart>
+  </label>
+
+
+</div>
