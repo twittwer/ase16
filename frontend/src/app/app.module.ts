@@ -16,6 +16,7 @@ import { UserService } from './user.service';
 import { VoteService } from './vote.service';
 import { ResultChartComponent } from './result-chart/result-chart.component';
 import { HistoryComponent } from './history/history.component';
+import { VoteReportComponent } from './vote-report/vote-report.component';
 
 @NgModule( {
   declarations: [
@@ -28,7 +29,8 @@ import { HistoryComponent } from './history/history.component';
     LoginModalComponent,
     QuestionListComponent,
     ResultChartComponent,
-    HistoryComponent
+    HistoryComponent,
+    VoteReportComponent
   ],
   imports     : [
     BrowserModule,
