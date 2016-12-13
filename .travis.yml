@@ -1,0 +1,21 @@
+dist: trusty
+
+language: node_js
+node_js:
+  - "node"
+
+env:
+  - TEST_DIR=frontend
+
+script:
+  - cd $TEST_DIR && npm install && npm test
+
+#before_deploy:
+#  - cd $TEST_DIR && npm build && tar -cf build.tar ./build/
+#deploy:
+#  provider: realeases
+#  api_key: ""
+#  skip_cleanup: true
+#  file: build.tar
+#  on:
+#    tags: true
