@@ -16,7 +16,9 @@ script:
   - npm test
 
 before_deploy:
-  - npm build && tar -cf build.tar ./build/
+  - npm run build
+  - ls -la
+  - tar -cf build.tar ./build/
 deploy:
   provider: realeases
   api_key: "faf8bed4f35f3991d76a7e3fdeb15fd4c276e54f"
