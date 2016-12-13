@@ -17,5 +17,5 @@ deploy:
   api_key: "faf8bed4f35f3991d76a7e3fdeb15fd4c276e54f"
   skip_cleanup: true
   file: build.tar
-  on:
-    tags: true
+#  on:
+#    tags: true
