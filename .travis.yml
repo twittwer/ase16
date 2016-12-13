@@ -7,11 +7,16 @@ node_js:
 env:
   - TEST_DIR=frontend
 
+before_install:
+  - cd $TEST_DIR
+install:
+  - npm install
+
 script:
-  - cd $TEST_DIR && npm install && npm test
+  - npm test
 
 before_deploy:
-  - cd $TEST_DIR && npm build && tar -cf build.tar ./build/
+  - npm build && tar -cf build.tar ./build/
 deploy:
   provider: realeases
   api_key: "faf8bed4f35f3991d76a7e3fdeb15fd4c276e54f"
