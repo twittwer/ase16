@@ -1,4 +1,4 @@
-# ase16
+# ase16 [![Build Status](https://travis-ci.org/twittwer/ase16.svg?branch=master)](https://travis-ci.org/twittwer/ase16)
 
 This project will end in an Chat Application including 2-person and group chats with the possibility of votings.
 
