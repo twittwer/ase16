@@ -23,5 +23,5 @@ deploy:
   api_key: $GITHUB_TOKEN
   skip_cleanup: true
   file: build.tar
-#  on:
-#    tags: true
+  on:
+    tags: true
