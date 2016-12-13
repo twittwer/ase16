@@ -10,12 +10,12 @@ env:
 script:
   - cd $TEST_DIR && npm install && npm test
 
-#before_deploy:
-#  - cd $TEST_DIR && npm build && tar -cf build.tar ./build/
-#deploy:
-#  provider: realeases
-#  api_key: ""
-#  skip_cleanup: true
-#  file: build.tar
-#  on:
-#    tags: true
+before_deploy:
+  - cd $TEST_DIR && npm build && tar -cf build.tar ./build/
+deploy:
+  provider: realeases
+  api_key: "faf8bed4f35f3991d76a7e3fdeb15fd4c276e54f"
+  skip_cleanup: true
+  file: build.tar
+  on:
+    tags: true
