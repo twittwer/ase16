@@ -17,11 +17,11 @@ script:
 
 before_deploy:
   - npm run build
-  - tar -cf build.tar ./build/
+  - tar -cf frontend-build.tar ./build/
 deploy:
   provider: releases
   api_key: $GITHUB_TOKEN
   skip_cleanup: true
-  file: build.tar
+  file: frontend-build.tar
   on:
     tags: true
